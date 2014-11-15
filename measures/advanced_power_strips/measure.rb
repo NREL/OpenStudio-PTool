@@ -24,9 +24,12 @@ class AdvancedPowerStrips < OpenStudio::Ruleset::ModelUserScript
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
     # Make an argument to apply/not apply this measure
-    apply_measure = OpenStudio::Ruleset::OSArgument::makeBoolArgument('apply_measure', false)
+    chs = OpenStudio::StringVector.new
+    chs << "TRUE"
+    chs << "FALSE"
+    apply_measure = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('apply_measure', chs, true)
     apply_measure.setDisplayName("Apply Measure?")
-    apply_measure.setDefaultValue(true)
+    apply_measure.setDefaultValue("TRUE")
     args << apply_measure
 
     #make an argument for fractional value during specified time
@@ -108,7 +111,7 @@ class AdvancedPowerStrips < OpenStudio::Ruleset::ModelUserScript
     end
 
     # Assign the user inputs to variables
-    apply_measure = runner.getBoolArgumentValue("apply_measure", user_arguments)
+    apply_measure = runner.getStringArgumentValue("apply_measure",user_arguments)
     fraction_value = runner.getDoubleArgumentValue("fraction_value",user_arguments)
     apply_weekday = runner.getBoolArgumentValue("apply_weekday",user_arguments)
     start_weekday = runner.getDoubleArgumentValue("start_weekday",user_arguments)
@@ -121,7 +124,7 @@ class AdvancedPowerStrips < OpenStudio::Ruleset::ModelUserScript
     end_sunday = runner.getDoubleArgumentValue("end_sunday",user_arguments)
     
     # This measure is not applicable if apply_measure is false
-    if apply_measure == false
+    if apply_measure == "FALSE"
       runner.registerAsNotApplicable("Not Applicable - User chose not to apply this measure via the apply_measure argument.")
       return true
     end

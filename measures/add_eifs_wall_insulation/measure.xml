@@ -1,8 +1,8 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <name>add_eifs_wall_insulation</name>
+  <name>add_eI_fS_wall_insulation</name>
   <uid>7245a115-8b31-4ef0-8449-c021307855a9</uid>
-  <version_id>5a993f3c-d63d-4066-b7c4-306354e0b930</version_id>
+  <version_id>bbb74e9a-193d-4f25-87ec-d668b1482739</version_id>
   <xml_checksum>4E797983</xml_checksum>
   <class_name>AddEIFSWallInsulation</class_name>
   <display_name>Add EIFS Wall Insulation</display_name>
@@ -12,18 +12,18 @@
     <argument>
       <name>apply_measure</name>
       <display_name>Apply Measure?</display_name>
-      <type>Boolean</type>
-      <required>false</required>
+      <type>Choice</type>
+      <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>true</default_value>
+      <default_value>TRUE</default_value>
       <choices>
         <choice>
-          <value>true</value>
-          <display_name>true</display_name>
+          <value>TRUE</value>
+          <display_name>TRUE</display_name>
         </choice>
         <choice>
-          <value>false</value>
-          <display_name>false</display_name>
+          <value>FALSE</value>
+          <display_name>FALSE</display_name>
         </choice>
       </choices>
     </argument>
@@ -71,6 +71,12 @@
       <checksum>C0D45853</checksum>
     </file>
     <file>
+      <filename>Different Wall Constructions.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F51DF3CD</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -79,13 +85,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>F6E5E4D1</checksum>
-    </file>
-    <file>
-      <filename>Different Wall Constructions.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>F51DF3CD</checksum>
+      <checksum>79A5790D</checksum>
     </file>
   </files>
 </measure>

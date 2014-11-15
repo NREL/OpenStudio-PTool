@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>wireless_lighting_occupancy_sensors</name>
   <uid>4c6d5136-8946-4914-be69-4738be1ad1a5</uid>
-  <version_id>06734a82-e431-428d-b026-ad2cf30be3bb</version_id>
+  <version_id>25e4c1e0-f7ad-4229-94b7-6499ef7104e6</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>WirelessLightingOccupancySensors</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
@@ -12,18 +12,18 @@
     <argument>
       <name>apply_measure</name>
       <display_name>Apply Measure?</display_name>
-      <type>Boolean</type>
-      <required>false</required>
+      <type>Choice</type>
+      <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>true</default_value>
+      <default_value>TRUE</default_value>
       <choices>
         <choice>
-          <value>true</value>
-          <display_name>true</display_name>
+          <value>TRUE</value>
+          <display_name>TRUE</display_name>
         </choice>
         <choice>
-          <value>false</value>
-          <display_name>false</display_name>
+          <value>FALSE</value>
+          <display_name>FALSE</display_name>
         </choice>
       </choices>
     </argument>
@@ -91,7 +91,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>0FB673AA</checksum>
+      <checksum>7B83166F</checksum>
     </file>
   </files>
 </measure>

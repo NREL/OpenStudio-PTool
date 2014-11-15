@@ -24,9 +24,12 @@ class AddDemandControlVentilation < OpenStudio::Ruleset::ModelUserScript
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
     # Make an argument to apply/not apply this measure
-    apply_measure = OpenStudio::Ruleset::OSArgument::makeBoolArgument('apply_measure', false)
+    chs = OpenStudio::StringVector.new
+    chs << "TRUE"
+    chs << "FALSE"
+    apply_measure = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('apply_measure', chs, true)
     apply_measure.setDisplayName("Apply Measure?")
-    apply_measure.setDefaultValue(true)
+    apply_measure.setDefaultValue("TRUE")
     args << apply_measure
 
     return args
@@ -42,10 +45,10 @@ class AddDemandControlVentilation < OpenStudio::Ruleset::ModelUserScript
     end
 
     # Assign the user inputs to variables
-    apply_measure = runner.getBoolArgumentValue("apply_measure", user_arguments)
+    apply_measure = runner.getStringArgumentValue("apply_measure",user_arguments)
 
     # This measure is not applicable if apply_measure is false
-    if apply_measure == false
+    if apply_measure == "FALSE"
       runner.registerAsNotApplicable("Not Applicable - User chose not to apply this measure via the apply_measure argument.")
       return true
     end

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_demand_control_ventilation</name>
   <uid>88d02c19-7bd1-4c5c-8faf-6cb74da9102c</uid>
-  <version_id>41bbb8d9-e5b5-41d6-ba6c-cadd940e75e5</version_id>
+  <version_id>9546cbd8-e959-422e-838c-92d8d95ddca2</version_id>
   <xml_checksum>61BFE8C1</xml_checksum>
   <class_name>AddDemandControlVentilation</class_name>
   <display_name>Add Demand Control Ventilation</display_name>
@@ -12,18 +12,18 @@
     <argument>
       <name>apply_measure</name>
       <display_name>Apply Measure?</display_name>
-      <type>Boolean</type>
-      <required>false</required>
+      <type>Choice</type>
+      <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>true</default_value>
+      <default_value>TRUE</default_value>
       <choices>
         <choice>
-          <value>true</value>
-          <display_name>true</display_name>
+          <value>TRUE</value>
+          <display_name>TRUE</display_name>
         </choice>
         <choice>
-          <value>false</value>
-          <display_name>false</display_name>
+          <value>FALSE</value>
+          <display_name>FALSE</display_name>
         </choice>
       </choices>
     </argument>
@@ -68,6 +68,12 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
+      <filename>add_demand_control_ventilation_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>43815C9B</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -76,13 +82,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>BFD22143</checksum>
-    </file>
-    <file>
-      <filename>add_demand_control_ventilation_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>43815C9B</checksum>
+      <checksum>511DC0DF</checksum>
     </file>
   </files>
 </measure>
