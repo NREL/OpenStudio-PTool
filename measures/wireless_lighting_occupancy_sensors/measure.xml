@@ -1,8 +1,8 @@
 <measure>
   <schema_version>3.0</schema_version>
   <name>wireless_lighting_occupancy_sensors</name>
-  <uid>4c6d5136-8946-4914-be69-4738be1ad1a5</uid>
-  <version_id>25e4c1e0-f7ad-4229-94b7-6499ef7104e6</version_id>
+  <uid>3ce919e1-5bee-46e7-a48f-383894339313</uid>
+  <version_id>feff4eb0-b467-4a53-a7b6-b2610970b9aa</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>WirelessLightingOccupancySensors</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
@@ -18,11 +18,11 @@
       <default_value>TRUE</default_value>
       <choices>
         <choice>
-          <value>TRUE</value>
+          <value></value>
           <display_name>TRUE</display_name>
         </choice>
         <choice>
-          <value>FALSE</value>
+          <value></value>
           <display_name>FALSE</display_name>
         </choice>
       </choices>
