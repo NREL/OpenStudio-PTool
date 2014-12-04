@@ -1,0 +1,97 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>low_pressure_drop_air_filters</name>
+  <uid>4c6d5136-8946-4914-be69-4738be1ad1a5</uid>
+  <version_id>798a0674-da01-4586-b61f-a0fa35d5425f</version_id>
+  <xml_checksum>D4024775</xml_checksum>
+  <class_name>LowPressureDropAirFilters</class_name>
+  <display_name>Low Pressure Drop Air Filters</display_name>
+  <description></description>
+  <modeler_description></modeler_description>
+  <arguments>
+    <argument>
+      <name>apply_measure</name>
+      <display_name>Apply Measure?</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>TRUE</default_value>
+      <choices>
+        <choice>
+          <value>TRUE</value>
+          <display_name>TRUE</display_name>
+        </choice>
+        <choice>
+          <value>FALSE</value>
+          <display_name>FALSE</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>pressure_drop_reduction_inh2o</name>
+      <display_name>Pressure Drop Reduction</display_name>
+      <type>Double</type>
+      <units>in W.C.</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Electric Lighting.Electric Lighting Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2B663484</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.0</identifier>
+        <min_compatible>1.5.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>A62286BB</checksum>
+    </file>
+    <file>
+      <filename>low_pressure_drop_air_filters_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>21740868</checksum>
+    </file>
+  </files>
+</measure>
