@@ -1,8 +1,8 @@
 <measure>
   <schema_version>3.0</schema_version>
   <name>wireless_lighting_occupancy_sensors</name>
-  <uid>3ce919e1-5bee-46e7-a48f-383894339313</uid>
-  <version_id>feff4eb0-b467-4a53-a7b6-b2610970b9aa</version_id>
+  <uid>ce22143c-46aa-4727-a08c-ef32dbc5e774</uid>
+  <version_id>79e16429-a68d-492d-86d9-85c131feda94</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>WirelessLightingOccupancySensors</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
