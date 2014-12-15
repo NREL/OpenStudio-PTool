@@ -1,0 +1,216 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>desktop_power_management</name>
+  <uid>22589ff6-4572-4b77-b1fe-59aa981b92c6</uid>
+  <version_id>17724525-f9cb-4b6a-b0e1-3b29d85bdbcd</version_id>
+  <xml_checksum>B2EAAD67</xml_checksum>
+  <class_name>DesktopPowerManagement</class_name>
+  <display_name>Desktop Power Management</display_name>
+  <description>Add</description>
+  <modeler_description>Looks through</modeler_description>
+  <arguments>
+    <argument>
+      <name>apply_measure</name>
+      <display_name>Apply Measure?</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>TRUE</default_value>
+      <choices>
+        <choice>
+          <value>TRUE</value>
+          <display_name>TRUE</display_name>
+        </choice>
+        <choice>
+          <value>FALSE</value>
+          <display_name>FALSE</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>fraction_value</name>
+      <display_name>Fractional Value for Night Time Load.</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.1</default_value>
+    </argument>
+    <argument>
+      <name>apply_weekday</name>
+      <display_name>Apply Schedule Changes to Weekday and Default Profiles?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>start_weekday</name>
+      <display_name>Weekday/Default Time to Start Night Time Fraction.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>18</default_value>
+    </argument>
+    <argument>
+      <name>end_weekday</name>
+      <display_name>Weekday/Default Time to End Night Time Fraction.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>9</default_value>
+    </argument>
+    <argument>
+      <name>apply_saturday</name>
+      <display_name>Apply Schedule Changes to Saturdays?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>start_saturday</name>
+      <display_name>Saturday Time to Start Night Time Fraction.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>18</default_value>
+    </argument>
+    <argument>
+      <name>end_saturday</name>
+      <display_name>Saturday Time to End Night Time Fraction.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>9</default_value>
+    </argument>
+    <argument>
+      <name>apply_sunday</name>
+      <display_name>Apply Schedule Changes to Sundays?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>start_sunday</name>
+      <display_name>Sunday Time to Start Night Time Fraction.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>18</default_value>
+    </argument>
+    <argument>
+      <name>end_sunday</name>
+      <display_name>Sunday Time to End Night Time Fraction.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>9</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Equipment.Equipment Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2B663484</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.0</identifier>
+        <min_compatible>1.5.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>F5AF2603</checksum>
+    </file>
+    <file>
+      <filename>desktop_power_management_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3E147938</checksum>
+    </file>
+    <file>
+      <filename>secondary_school_90.1-2010_with_desktop_pwr_mgmt.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8811D20A</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004_with_adv_pwr_strips.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C753F2C0</checksum>
+    </file>
+  </files>
+</measure>
