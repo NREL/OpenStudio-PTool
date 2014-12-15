@@ -1,9 +1,8 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <error>Sizes of choiceValues and choiceDisplayNames do not match</error>
   <name>advanced_power_strips</name>
   <uid>3517b0f3-db26-4d30-896c-c4908ecac8cc</uid>
-  <version_id>f58dea79-754d-46ad-a729-25e7fa3b04d4</version_id>
+  <version_id>266df2d0-987c-405f-8109-34eee9635e85</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>AdvancedPowerStrips</class_name>
   <display_name>Advanced Power Strips</display_name>
@@ -13,18 +12,18 @@
     <argument>
       <name>apply_measure</name>
       <display_name>Apply Measure?</display_name>
-      <type>Boolean</type>
-      <required>false</required>
+      <type>Choice</type>
+      <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>true</default_value>
+      <default_value>TRUE</default_value>
       <choices>
         <choice>
-          <value></value>
-          <display_name>true</display_name>
+          <value>TRUE</value>
+          <display_name>TRUE</display_name>
         </choice>
         <choice>
-          <value></value>
-          <display_name>false</display_name>
+          <value>FALSE</value>
+          <display_name>FALSE</display_name>
         </choice>
       </choices>
     </argument>
@@ -45,11 +44,11 @@
       <default_value>true</default_value>
       <choices>
         <choice>
-          <value></value>
+          <value>true</value>
           <display_name>true</display_name>
         </choice>
         <choice>
-          <value></value>
+          <value>false</value>
           <display_name>false</display_name>
         </choice>
       </choices>
@@ -81,11 +80,11 @@
       <default_value>true</default_value>
       <choices>
         <choice>
-          <value></value>
+          <value>true</value>
           <display_name>true</display_name>
         </choice>
         <choice>
-          <value></value>
+          <value>false</value>
           <display_name>false</display_name>
         </choice>
       </choices>
@@ -117,11 +116,11 @@
       <default_value>true</default_value>
       <choices>
         <choice>
-          <value></value>
+          <value>true</value>
           <display_name>true</display_name>
         </choice>
         <choice>
-          <value></value>
+          <value>false</value>
           <display_name>false</display_name>
         </choice>
       </choices>
@@ -173,12 +172,6 @@
   </attributes>
   <files>
     <file>
-      <filename>advanced_power_strips_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>CBEDBEDF</checksum>
-    </file>
-    <file>
       <filename>secondary_school_90.1-2010.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -200,6 +193,12 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>0E52CF50</checksum>
+    </file>
+    <file>
+      <filename>advanced_power_strips_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8466EA2B</checksum>
     </file>
   </files>
 </measure>

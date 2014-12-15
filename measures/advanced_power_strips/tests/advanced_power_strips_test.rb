@@ -36,7 +36,7 @@ class AdvancedPowerStripsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => false,
+    "apply_measure" => "FALSE",
     "fraction_value" => 0.1,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
@@ -88,7 +88,7 @@ class AdvancedPowerStripsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => true,
+    "apply_measure" => "TRUE",
     "fraction_value" => 0.1,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
@@ -103,6 +103,7 @@ class AdvancedPowerStripsTest < MiniTest::Test
     
     i = 0
     arg_values.each do |name, val|
+      puts "#{name} = #{val}"
       arg = arguments[i].clone
       assert(arg.setValue(val))
       argument_map[name] = arg

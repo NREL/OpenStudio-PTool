@@ -1,8 +1,8 @@
 <measure>
   <schema_version>3.0</schema_version>
   <name>low_pressure_drop_air_filters</name>
-  <uid>4c6d5136-8946-4914-be69-4738be1ad1a5</uid>
-  <version_id>798a0674-da01-4586-b61f-a0fa35d5425f</version_id>
+  <uid>8a17789a-5ac1-4292-9f8d-d5721922674d</uid>
+  <version_id>d2eefc0a-acec-4c5f-90e4-9a744dc08408</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>LowPressureDropAirFilters</class_name>
   <display_name>Low Pressure Drop Air Filters</display_name>
@@ -18,11 +18,11 @@
       <default_value>TRUE</default_value>
       <choices>
         <choice>
-          <value>TRUE</value>
+          <value></value>
           <display_name>TRUE</display_name>
         </choice>
         <choice>
-          <value>FALSE</value>
+          <value></value>
           <display_name>FALSE</display_name>
         </choice>
       </choices>
@@ -77,6 +77,12 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
+      <filename>low_pressure_drop_air_filters_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>21740868</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -85,13 +91,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>A62286BB</checksum>
-    </file>
-    <file>
-      <filename>low_pressure_drop_air_filters_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>21740868</checksum>
+      <checksum>EEA1EEEA</checksum>
     </file>
   </files>
 </measure>

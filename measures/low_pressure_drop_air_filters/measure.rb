@@ -63,7 +63,7 @@ class LowPressureDropAirFilters < OpenStudio::Ruleset::ModelUserScript
     
     # Check arguments for reasonableness
     if pressure_drop_reduction_inh2o >= 4
-      runner.registerError("Percent pressure drop reduction must be less than 100.")
+      runner.registerError("Pressure drop reduction must be less than 4 in W.C. to be reasonable.")
       return false
     end
 
@@ -92,7 +92,7 @@ class LowPressureDropAirFilters < OpenStudio::Ruleset::ModelUserScript
           end
           new_pd_pa = OpenStudio.convert(new_pd_inh2o, "inH_{2}O", "Pa").get
           fan.setPressureRise(new_pd_pa)
-          runner.registerInfo("Lowered pressure drop on #{air_loop.name} from #{current_pd_inh2o.round(1)} in W.C to #{new_pd_inh2o.round(1)} in W.C.")
+          runner.registerInfo("Lowered pressure drop on #{air_loop.name} by #{pressure_drop_reduction_inh2o} in W.C. from #{current_pd_inh2o.round(1)} in W.C to #{new_pd_inh2o.round(1)} in W.C.")
           air_loops_pd_lowered << air_loop
         end
       end
@@ -111,7 +111,7 @@ class LowPressureDropAirFilters < OpenStudio::Ruleset::ModelUserScript
     end  
         
     # Report final condition
-    runner.registerFinalCondition("Lowered pressure drop on filters in #{air_loops_pd_lowered.size}.")
+    runner.registerFinalCondition("Lowered pressure drop on air filters in #{air_loops_pd_lowered.size} air loops.")
 
     return true
 
