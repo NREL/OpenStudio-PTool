@@ -11,7 +11,7 @@
 # http://openstudio.nrel.gov/sites/openstudio.nrel.gov/files/nv_data/cpp_documentation_it/utilities/html/idf_page.html
 
 #start the measure
-class AdvancedRTUControls < OpenStudio::Ruleset::WorkspaceUserScript
+class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
 
   #define the name that a user will see, this method may be deprecated as
   #the display name in PAT comes from the name field in measure.xml
@@ -20,17 +20,18 @@ class AdvancedRTUControls < OpenStudio::Ruleset::WorkspaceUserScript
   end
 
   #define the arguments that the user will input
-  def arguments(workspace)
+  def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new
+    
     return args
   end #end the arguments method
 
   #define what happens when the measure is run
-  def run(workspace, runner, user_arguments)
-    super(workspace, runner, user_arguments)
+  def run(model, runner, user_arguments)
+    super(model, runner, user_arguments)
 
     #use the built-in error checking 
-    if not runner.validateUserArguments(arguments(workspace), user_arguments)
+    if not runner.validateUserArguments(arguments(model), user_arguments)
       return false
     end
    
@@ -335,12 +336,10 @@ class AdvancedRTUControls < OpenStudio::Ruleset::WorkspaceUserScript
     end
     
     #unique initial conditions based on
-    # removed listing ranges for variable values since we are editing multiple fields vs. a single field.
-    runner.registerInitialCondition("The building has #{emsProgram.size} EMS objects.")
+    runner.registerInitialCondition("The building has #{results.length} constant air volume units for which this measure is applicable.")
 
     #reporting final condition of model
-    runner.registerFinalCondition("The building finished with #{emsProgram.size} EMS objects.")
-    #runner.registerValue("m value", mValue, "")
+    runner.registerFinalCondition("The measure added EMS to #{results.length} airloops.")
     return true
 
   end #end the run method
