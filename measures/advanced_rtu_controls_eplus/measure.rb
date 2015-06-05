@@ -11,12 +11,12 @@
 # http://openstudio.nrel.gov/sites/openstudio.nrel.gov/files/nv_data/cpp_documentation_it/utilities/html/idf_page.html
 
 #start the measure
-class AdvancedRTUControlsEPlus < OpenStudio::Ruleset::WorkspaceUserScript
+class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
 
   #define the name that a user will see, this method may be deprecated as
   #the display name in PAT comes from the name field in measure.xml
   def name
-    return "AdvancedRTUControlsEPlus"
+    return "AdvancedRTUControlsEplus"
   end
 
   #define the arguments that the user will input
@@ -35,7 +35,9 @@ class AdvancedRTUControlsEPlus < OpenStudio::Ruleset::WorkspaceUserScript
       return false
     end
      
-    ems_path = '../AdvancedRTUControls/ems_advanced_rtu_controls'
+    #ems_path = '../AdvancedRTUControls/ems_advanced_rtu_controls'
+    ems_path1 = Dir.glob('../../*/ems_advanced_rtu_controls.ems')
+    ems_path = ems_path1[0]
     if File.exist? ems_path
       ems_string = File.read(ems_path)
     else
@@ -57,4 +59,4 @@ class AdvancedRTUControlsEPlus < OpenStudio::Ruleset::WorkspaceUserScript
 end #end the measure
 
 #this allows the measure to be use by the application
-AdvancedRTUControlsEPlus.new.registerWithApplication
+AdvancedRTUControlsEplus.new.registerWithApplication
