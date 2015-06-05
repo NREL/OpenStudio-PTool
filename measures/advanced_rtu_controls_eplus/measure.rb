@@ -41,8 +41,15 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
     else
       ems_path2 = Dir.glob('../../*/ems_advanced_rtu_controls.ems')
       ems_path1 = ems_path2[0]
-      if File.exist? ems_path1
-        ems_string = File.read(ems_path1)
+      if ems_path2.size > 1
+        runner.registerWarning("more than one ems_advanced_rtu_controls.ems file found.  Using first one found.")
+      end
+      if !ems_path1.nil? 
+        if File.exist? ems_path1
+          ems_string = File.read(ems_path1)
+        else
+          runner.registerError("ems_advanced_rtu_controls.ems file not located")
+        end  
       else
         runner.registerError("ems_advanced_rtu_controls.ems file not located")    
       end
