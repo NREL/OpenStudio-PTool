@@ -34,7 +34,8 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     if not runner.validateUserArguments(arguments(model), user_arguments)
       return false
     end
-   
+    require 'json'
+    
     results = {}
     airloop_name = []
     # Loop over the airloops to find valid ones for this measure
@@ -330,8 +331,8 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     
     #save EMS snippet
     runner.registerInfo("Saving ems_advanced_rtu_controls file")
-    FileUtils.mkdir_p(File.dirname("ems_advanced_rtu_controls")) unless Dir.exist?(File.dirname("ems_advanced_rtu_controls"))
-    File.open("ems_advanced_rtu_controls", "w") do |f|
+    FileUtils.mkdir_p(File.dirname("ems_advanced_rtu_controls.ems")) unless Dir.exist?(File.dirname("ems_advanced_rtu_controls.ems"))
+    File.open("ems_advanced_rtu_controls.ems", "w") do |f|
       f.write(ems_string)
     end
     
