@@ -35,14 +35,19 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
       return false
     end
      
-    #ems_path = '../AdvancedRTUControls/ems_advanced_rtu_controls'
-    ems_path1 = Dir.glob('../../*/ems_advanced_rtu_controls.ems')
-    ems_path = ems_path1[0]
+    ems_path = '../AdvancedRTUControls/ems_advanced_rtu_controls.ems'
     if File.exist? ems_path
-      ems_string = File.read(ems_path)
+      ems_string = File.read(ems_path)     
     else
-      runner.registerError("ems_advanced_rtu_controls file not located at #{ems_path}")    
-    end    
+      ems_path2 = Dir.glob('../../*/ems_advanced_rtu_controls.ems')
+      ems_path1 = ems_path2[0]
+      if File.exist? ems_path1
+        ems_string = File.read(ems_path1)
+      else
+        runner.registerError("ems_advanced_rtu_controls.ems file not located")    
+      end
+    end
+    
     idf_file = OpenStudio::IdfFile::load(ems_string, 'EnergyPlus'.to_IddFileType).get
     runner.registerInfo("Adding EMS code to workspace")
     workspace.addObjects(idf_file.objects)
