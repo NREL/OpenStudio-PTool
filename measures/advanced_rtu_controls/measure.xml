@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>advanced_rtu_controls</name>
   <uid>95e83d5c-4ae9-4072-9885-cd51ee02f1e7</uid>
-  <version_id>5e6c7f6a-493d-4d38-bde3-3a869563062e</version_id>
+  <version_id>78e216d5-d658-4162-b431-3e17dd2760c2</version_id>
   <xml_checksum>48FEEDDD</xml_checksum>
   <class_name>AdvancedRTUControls</class_name>
   <display_name>AdvancedRTUControls</display_name>
@@ -50,7 +50,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>0925B915</checksum>
+      <checksum>A1C15BF5</checksum>
     </file>
   </files>
 </measure>

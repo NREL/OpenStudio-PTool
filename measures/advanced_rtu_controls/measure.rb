@@ -340,7 +340,7 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     runner.registerInitialCondition("The building has #{results.length} constant air volume units for which this measure is applicable.")
 
     #reporting final condition of model
-    runner.registerFinalCondition("The measure added EMS to #{results.length} airloops.")
+    runner.registerFinalCondition("VSDs and associated controls were applied to  #{results.length} single-zone, constant air volume units in the model.  Airloops affected were #{airloop_name}")
     return true
 
   end #end the run method
