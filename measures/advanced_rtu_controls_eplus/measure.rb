@@ -72,6 +72,11 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
     # runner.registerInfo("Adding test EMS code to workspace")
     # workspace.addObjects(idf_file1.objects)
     
+    if json.empty?
+      runner.registerWarning("No Airloops are appropriate for this measure")
+      return true
+    end
+    
     #get all emsActuators in model to test if there is an EMS conflict
     emsActuator = workspace.getObjectsByType("EnergyManagementSystem:Actuator".to_IddObjectType)
 

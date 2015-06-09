@@ -155,13 +155,13 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
               runner.registerInfo("Found #{minimumFractionofOutdoorAirSchedule.get.name} on #{air_loop.name}")
               found_oafsch += 1 #found necessary fraction OA schedule
               temp[:minimumFractionofOutdoorAirSchedule] = "#{minimumFractionofOutdoorAirSchedule.get.name}"
-            else
-              always_on = model.alwaysOnDiscreteSchedule
-              controller_oa.setMinimumFractionofOutdoorAirSchedule(always_on)
-              runner.registerInfo("Added #{controller_oa.minimumFractionofOutdoorAirSchedule.get.name} on #{air_loop.name}")
-              runner.registerWarning("Added #{controller_oa.minimumFractionofOutdoorAirSchedule.get.name} on #{air_loop.name}")
-              found_oafsch += 1  #added necessary fraction OA schedule
-              temp[:minimumFractionofOutdoorAirSchedule] = "#{controller_oa.minimumFractionofOutdoorAirSchedule.get.name}"
+            # else
+              # always_on = model.alwaysOnDiscreteSchedule
+              # controller_oa.setMinimumFractionofOutdoorAirSchedule(always_on)
+              # runner.registerInfo("Added #{controller_oa.minimumFractionofOutdoorAirSchedule.get.name} on #{air_loop.name}")
+              # runner.registerWarning("Added #{controller_oa.minimumFractionofOutdoorAirSchedule.get.name} on #{air_loop.name}")
+              # found_oafsch += 1  #added necessary fraction OA schedule
+              # temp[:minimumFractionofOutdoorAirSchedule] = "#{controller_oa.minimumFractionofOutdoorAirSchedule.get.name}"
             end
             if minimumOutdoorAirSchedule.is_initialized
               runner.registerInfo("Found #{minimumOutdoorAirSchedule.get.name} on #{air_loop.name}")
@@ -176,7 +176,7 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
               temp[:minimumOutdoorAirSchedule] = "#{controller_oa.minimumOutdoorAirSchedule.get.name}"
             end
           end
-          if (found_oasch + found_oafsch + found_act + found_oa) == 4  #add valid air loop to results
+          if (found_oasch + found_act + found_oa) == 3  #add valid air loop to results
             results["#{air_loop.name}"] = temp
             airloop_name << "#{air_loop.name}"
             runner.registerInfo("Adding valid AirLoop #{air_loop.name} to results.")
@@ -187,6 +187,11 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     runner.registerInfo("Saving ems_results.json")
     FileUtils.mkdir_p(File.dirname("ems_results.json")) unless Dir.exist?(File.dirname("ems_results.json"))
     File.open("ems_results.json", 'w') {|f| f << JSON.pretty_generate(results)}
+    
+    if results.empty?
+       runner.registerWarning("No Airloops are appropriate for this measure")
+       return true
+    end
     
     runner.registerInfo("Making EMS string for Advanced RTU Controls")
     #start making the EMS code
@@ -205,10 +210,7 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     ems_string << "    SET HeatSpeed = 0.9," + "\n"
     ems_string << "    SET VenSpeed = 0.4," + "\n"
     ems_string << "    SET Stage1Speed = 0.9," + "\n"
-    ems_string << "    SET EcoSpeed = 0.75;" + "\n"
-    ems_string << "\n"
-    ems_string << "EnergyManagementSystem:Program," + "\n"
-    ems_string << "    Set_FanCtl_Par2," + "\n"
+    ems_string << "    SET EcoSpeed = 0.75," + "\n"
     results.each_with_index do |(key, value), i|  
       if i < results.size - 1
       ems_string << "    SET PSZ#{i}_OADesignMass = PSZ#{i}_DesignOAFlowMass," + "\n"
@@ -221,8 +223,7 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     ems_string << "EnergyManagementSystem:ProgramCallingManager," + "\n"
     ems_string << "    Fan_Parameter_manager,  !- Name" + "\n"
     ems_string << "    BeginNewEnvironment,  !- EnergyPlus Model Calling Point" + "\n"
-    ems_string << "    Set_FanCtl_Par1,        !- Program Name 1" + "\n"
-    ems_string << "    Set_FanCtl_Par2;        !- Program Name 1" + "\n"
+    ems_string << "    Set_FanCtl_Par1;        !- Program Name 1" + "\n"
     ems_string << "\n"
 
     results.each_with_index do |(key, value), i|
@@ -249,11 +250,13 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     ems_string << "    #{value[:minimumOutdoorAirSchedule]}," + "\n"
     ems_string << "    Schedule Value;" + "\n"
     ems_string << "\n"
-    ems_string << "EnergyManagementSystem:Sensor," + "\n"
-    ems_string << "    PSZ#{i}_OAFracSch," + "\n"
-    ems_string << "    #{value[:minimumFractionofOutdoorAirSchedule]}," + "\n"
-    ems_string << "    Schedule Value;" + "\n"
-    ems_string << "\n"
+    if !value[:minimumFractionofOutdoorAirSchedule].nil?
+      ems_string << "EnergyManagementSystem:Sensor," + "\n"
+      ems_string << "    PSZ#{i}_OAFracSch," + "\n"
+      ems_string << "    #{value[:minimumFractionofOutdoorAirSchedule]}," + "\n"
+      ems_string << "    Schedule Value;" + "\n"
+      ems_string << "\n"
+    end
     ems_string << "EnergyManagementSystem:Sensor," + "\n"
     ems_string << "    PSZ#{i}_OAFlowMass," + "\n"
     ems_string << "    #{value[:actuatorNodeName]}," + "\n"
@@ -288,8 +291,12 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     ems_string << "    ELSE," + "\n"
     ems_string << "     SET PSZ#{i}_Htg = 0," + "\n"
     ems_string << "     SET PSZ#{i}_MinOA1 = PSZ#{i}_OADesignMass * PSZ#{i}_OASch," + "\n"
-    ems_string << "     SET PSZ#{i}_MinOA2 = PSZ#{i}_DesignFlowMass * PSZ#{i}_OAFracSch," + "\n"
-    ems_string << "     SET PSZ#{i}_MinOA = @Max PSZ#{i}_MinOA1 PSZ#{i}_MinOA2,  " + "\n"
+    if !value[:minimumFractionofOutdoorAirSchedule].nil?
+      ems_string << "     SET PSZ#{i}_MinOA2 = PSZ#{i}_DesignFlowMass * PSZ#{i}_OAFracSch," + "\n"
+      ems_string << "     SET PSZ#{i}_MinOA = @Max PSZ#{i}_MinOA1 PSZ#{i}_MinOA2,  " + "\n"
+    else
+      ems_string << "     SET PSZ#{i}_MinOA = PSZ#{i}_MinOA1,  " + "\n"
+    end
     ems_string << "     IF  PSZ#{i}_ClgRTF > 0,    ! Mechanical cooling is on" + "\n"
     ems_string << "      SET PSZ#{i}_Stage1 = PSZ#{i}_ClgRTF," + "\n"
     ems_string << "      IF PSZ#{i}_OAFlowMass > PSZ#{i}_MinOA,  ! Integrated Economzing mode" + "\n"
