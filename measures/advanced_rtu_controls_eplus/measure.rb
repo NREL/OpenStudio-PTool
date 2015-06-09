@@ -43,7 +43,7 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
     else
       ems_path2 = Dir.glob('../../*/ems_advanced_rtu_controls.ems')
       ems_path1 = ems_path2[0]
-      json_path2 = Dir.glob('../../*/ems_results.json')
+      json_path2 = Dir.glob('../../**/ems_results.json')
       json_path1 = json_path2[0]
       if ems_path2.size > 1
         runner.registerWarning("more than one ems_advanced_rtu_controls.ems file found.  Using first one found.")
