@@ -41,7 +41,7 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
       ems_string = File.read(ems_path)
       json = JSON.parse(File.read(json_path))
     else
-      ems_path2 = Dir.glob('../../*/ems_advanced_rtu_controls.ems')
+      ems_path2 = Dir.glob('../../**/ems_advanced_rtu_controls.ems')
       ems_path1 = ems_path2[0]
       json_path2 = Dir.glob('../../**/ems_results.json')
       json_path1 = json_path2[0]
