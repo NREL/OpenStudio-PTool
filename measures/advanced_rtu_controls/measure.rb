@@ -83,36 +83,36 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
           runner.registerInfo("Found #{clg_coil.name} on #{air_loop.name}")
           found_coil += 1  #found necessary cooling coil DX singlespeed
           temp[:cool_coil] = "#{clg_coil.name}"
-        end
+        
         # Get the heating coil directly from the airloop
-        if component.to_CoilHeatingDXSingleSpeed.is_initialized
+        elsif component.to_CoilHeatingDXSingleSpeed.is_initialized
           htg_coil = component.to_CoilHeatingDXSingleSpeed.get
           runner.registerInfo("Found #{htg_coil.name} on #{air_loop.name}")
           found_hcoil += 1  #found necessary heating coil DX singlespeed
           temp[:heat_coil] = "#{htg_coil.name}"
-        end
+        
         # Get the heating coil directly from the airloop
-        if component.to_CoilHeatingGas.is_initialized
+        elsif component.to_CoilHeatingGas.is_initialized
           htg_coil = component.to_CoilHeatingGas.get
           runner.registerInfo("Found #{htg_coil.name} on #{air_loop.name}")
           found_hcoil += 1  #found necessary heating coil gas
           temp[:heat_coil] = "#{htg_coil.name}"
-        end
+        
         # Get the heating coil directly from the airloop
-        if component.to_CoilHeatingElectric.is_initialized
+        elsif component.to_CoilHeatingElectric.is_initialized
           htg_coil = component.to_CoilHeatingElectric.get
           runner.registerInfo("Found #{htg_coil.name} on #{air_loop.name}")
           found_hcoil += 1  #found necessary heating coil gas
           temp[:heat_coil] = "#{htg_coil.name}"
-        end
+        
         # get the supply fan directly from the airloop
-        if component.to_FanConstantVolume.is_initialized
+        elsif component.to_FanConstantVolume.is_initialized
           supply_fan = component.to_FanConstantVolume.get
           runner.registerInfo("Found #{supply_fan.name} on #{air_loop.name}")
           found_fan += 1  #found necessary Fan object
           temp[:fan] = "#{supply_fan.name}"
-        end
-        if component.to_FanOnOff.is_initialized
+        
+        elsif component.to_FanOnOff.is_initialized
           supply_fan = component.to_FanOnOff.get
           runner.registerInfo("Found #{supply_fan.name} on #{air_loop.name}")
           found_fan += 1  #found necessary Fan object
@@ -188,6 +188,13 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     
     if results.empty?
        runner.registerWarning("No Airloops are appropriate for this measure")
+       #save blank ems_advanced_rtu_controls.ems file so Eplus measure does not crash
+       ems_string = ""
+       runner.registerInfo("Saving blank ems_advanced_rtu_controls file")
+       FileUtils.mkdir_p(File.dirname("ems_advanced_rtu_controls.ems")) unless Dir.exist?(File.dirname("ems_advanced_rtu_controls.ems"))
+       File.open("ems_advanced_rtu_controls.ems", "w") do |f|
+         f.write(ems_string)
+       end
        return true
     end
     
