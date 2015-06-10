@@ -40,7 +40,9 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
     json_path = '../AdvancedRTUControls/ems_results.json'
     if File.exist? ems_path
       ems_string = File.read(ems_path)
-      json = JSON.parse(File.read(json_path))
+      if File.exist? json_path
+        json = JSON.parse(File.read(json_path))
+      end
     else
       ems_path2 = Dir.glob('../../**/ems_advanced_rtu_controls.ems')
       ems_path1 = ems_path2[0]
@@ -52,13 +54,21 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
       if !ems_path1.nil? 
         if File.exist? ems_path1
           ems_string = File.read(ems_path1)
-          json = JSON.parse(File.read(json_path1))
+          if File.exist? json_path1
+            json = JSON.parse(File.read(json_path1))
+          else
+            runner.registerError("ems_results.json file not located") 
+          end  
         else
           runner.registerError("ems_advanced_rtu_controls.ems file not located")
         end  
       else
         runner.registerError("ems_advanced_rtu_controls.ems file not located")    
       end
+    end
+    if json.nil?
+      runner.registerError("ems_results.json file not located")
+      return false
     end
 
     ##testing code

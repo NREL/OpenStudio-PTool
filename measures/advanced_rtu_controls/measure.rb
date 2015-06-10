@@ -49,29 +49,27 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
         if component.to_AirLoopHVACUnitaryHeatPumpAirToAir.is_initialized
           unitary = component.to_AirLoopHVACUnitaryHeatPumpAirToAir.get
           # Get the cooling coil from inside the unitary equipment
-          clg_coil = unitary.coolingCoil
-          if clg_coil.to_CoilCoolingDXSingleSpeed.is_initialized
-            clg_coil = clg_coil.to_CoilCoolingDXSingleSpeed.get
+          if unitary.coolingCoil.to_CoilCoolingDXSingleSpeed.is_initialized
+            clg_coil = unitary.coolingCoil.to_CoilCoolingDXSingleSpeed.get
             runner.registerInfo("Found #{clg_coil.name} on #{air_loop.name}")
             found_coil += 1  #found necessary cooling coil DX singlespeed
             temp[:cool_coil] = "#{clg_coil.name}"
           end
           # get heating coil
-          htg_coil = unitary.heatingCoil
-          if htg_coil.to_CoilHeatingDXSingleSpeed.is_initialized
+          if unitary.heatingCoil.to_CoilHeatingDXSingleSpeed.is_initialized
+          htg_coil = unitary.heatingCoil.to_CoilHeatingDXSingleSpeed.get
             runner.registerInfo("Found #{htg_coil.name} on #{air_loop.name}")
             found_hcoil += 1  #found necessary cooling coil DX singlespeed
             temp[:heat_coil] = "#{htg_coil.name}"
           end
           # get the supply fan from inside the unitary equipment
-          supply_fan = unitary.supplyAirFan
-          if supply_fan.to_FanConstantVolume.is_initialized
-            supply_fan = supply_fan.to_FanConstantVolume.get
+          if unitary.supplyAirFan.to_FanConstantVolume.is_initialized
+            supply_fan = unitary.supplyAirFan.to_FanConstantVolume.get
             runner.registerInfo("Found #{supply_fan.name} on #{air_loop.name}")
             found_fan += 1  #found necessary Fan object
             temp[:fan] = "#{supply_fan.name}"
-          elsif supply_fan.to_FanOnOff.is_initialized
-            supply_fan = supply_fan.to_FanOnOff.get
+          elsif unitary.supplyAirFan.to_FanOnOff.is_initialized
+            supply_fan = unitary.supplyAirFan.to_FanOnOff.get
             runner.registerInfo("Found #{supply_fan.name} on #{air_loop.name}")
             found_fan += 1  #found necessary Fan object
             temp[:fan] = "#{supply_fan.name}"
