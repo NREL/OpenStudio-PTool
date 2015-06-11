@@ -10,6 +10,8 @@
 #see the URL below for access to C++ documentation on workspace objects (click on "workspace" in the main window to view workspace objects)
 # http://openstudio.nrel.gov/sites/openstudio.nrel.gov/files/nv_data/cpp_documentation_it/utilities/html/idf_page.html
 
+require 'json'
+
 #start the measure
 class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
 
@@ -23,6 +25,12 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
   def arguments(workspace)
     args = OpenStudio::Ruleset::OSArgumentVector.new
     
+    #make integer arg to run measure [1 is run, 0 is no run]
+    run_measure = OpenStudio::Ruleset::OSArgument::makeIntegerArgument("run_measure",true)
+    run_measure.setDisplayName("Run Measure")
+    run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
+    run_measure.setDefaultValue(1)
+    args << run_measure
     return args
   end #end the arguments method
 
@@ -34,7 +42,12 @@ class AdvancedRTUControlsEplus < OpenStudio::Ruleset::WorkspaceUserScript
     if not runner.validateUserArguments(arguments(workspace), user_arguments)
       return false
     end
-    require 'json'
+    
+    run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
+    if run_measure == 0
+      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
+      return true     
+    end
     
     ems_path = '../AdvancedRTUControls/ems_advanced_rtu_controls.ems'
     json_path = '../AdvancedRTUControls/ems_results.json'
