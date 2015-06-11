@@ -188,6 +188,7 @@ class AdvancedRTUControls < OpenStudio::Ruleset::ModelUserScript
     
     if results.empty?
        runner.registerWarning("No Airloops are appropriate for this measure")
+       runner.registerAsNotApplicable("No Airloops are appropriate for this measure")
        #save blank ems_advanced_rtu_controls.ems file so Eplus measure does not crash
        ems_string = ""
        runner.registerInfo("Saving blank ems_advanced_rtu_controls file")
