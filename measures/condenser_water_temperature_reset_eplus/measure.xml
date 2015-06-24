@@ -1,13 +1,13 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <name>advanced_rtu_controls_eplus</name>
-  <uid>fad4dd96-f6a9-4a15-a6fc-046adc87b919</uid>
+  <name>condenser_water_temperature_reset_eplus</name>
+  <uid>fad4dd96-f6a9-4a15-a6fc-046adc87b920</uid>
   <version_id>5b6f2c7e-5b69-4fc4-92b6-a47fed660e49</version_id>
   <xml_checksum>F19E874F</xml_checksum>
-  <class_name>AdvancedRTUControlsEplus</class_name>
-  <display_name>AdvancedRTUControlsEplus</display_name>
-  <description>This energy efficiency measure (EEM) adds a variable speed drive (VSD) to existing constant-speed, single-stage cooling rooftop units (RTUs). The VSD reduces the fan speed when the RTU is in economizer or ventilation mode, saving energy compared to a constant-speed fan baseline where the fan is run at 100% flow regardless of need.</description>
-  <modeler_description>This EEM adds EMS logic to the model for each AirLoop object found. The added logic first defines fan speed modifier values based on the unit mode (0.9 for heating, 0.9 for cooling, 0.75 for economizing, 0.4 for ventilation) and a fan power exponent (2.2). The code then checks the heating and cooling runtime fractions and the outdoor air (OA) mass flow rate at each time step. The runtime fractions and OA mass flow rate values are used to determine the percentage of the time step that the unit spends in each mode (heating, cooling, economizing, or ventilation). The mode percentages are then used with the fan speed modifiers and fan power exponent value to calculate a weighted average fan pressure rise for the entire time step. Note that this will affect the fan power for the time step, but does not change the fan flow rate and thus will not affect zone thermal or comfort performance.</modeler_description>
+  <class_name>CondenserWaterTemperatureResetEplus</class_name>
+  <display_name>CondenserWaterTemperatureResetEplus</display_name>
+  <description>This energy efficiency measure (EEM) lowers the condenser loop set point temperature to take advantage of free cooling when the outdoor air wet bulb temperature is low enough. By providing cooler temperature condenser water (when available), the compressor is able to operate more efficiently, using less energy to provide the same amount of cooling to the building.</description>
+  <modeler_description>This EEM adds EMS logic to the model that actuates the condenser loop setpoint manager. The added logic first checks the outdoor air wet-bulb temperature (OAWBT). If 14.3 °C less OAWBT less 22.7 °C then the condenser loop setpoint temperature is set to OAWBT + 4 °C. If the OAWBT greater 22.7 °C, the condenser loop setpoint temperature is set to 26.7 °C. If the OAWBT less 14.3 °C, the condenser loop setpoint temperature is set to 18.3 °C.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>display_power_management</name>
   <uid>716117d3-a549-4f4f-94c3-f21b3fdf77f7</uid>
-  <version_id>7d7f2d47-1b62-45be-8807-5997e1e78368</version_id>
+  <version_id>b9169cd9-4600-44bd-8720-c16fbeabfe13</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>DisplayPowerManagement</class_name>
   <display_name>Advanced Power Strips</display_name>
@@ -199,18 +199,6 @@
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
       <checksum>BBDDAB98</checksum>
-    </file>
-    <file>
-      <filename>secondary_school_90.1-2010_with_adv_pwr_strips.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4C0E7D1F</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_with_adv_pwr_strips.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>B260E570</checksum>
     </file>
   </files>
 </measure>

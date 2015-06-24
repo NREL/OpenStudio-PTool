@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>improved_duct_routing</name>
   <uid>4c6d5136-8946-4914-be69-4738be1ad1a5</uid>
-  <version_id>d08892e9-a6e0-4aaf-ac06-b304ded626b8</version_id>
+  <version_id>59a9153e-2314-4c73-a591-cf9ba1b8aa2e</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>ImprovedDuctRouting</class_name>
   <display_name>Improved Duct Routing</display_name>
@@ -92,12 +92,6 @@
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
       <checksum>10D15350</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_duct_routing.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>9DFF662B</checksum>
     </file>
   </files>
 </measure>

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>controllable_power_outlets</name>
   <uid>662f055b-7f79-42c9-911e-05fd6a0eb7e9</uid>
-  <version_id>0fc65d86-460c-4fe9-92d6-d68f71f1236d</version_id>
+  <version_id>e411e85c-046b-4875-a7dd-f77c9b5149dc</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>ControllablePowerOutlets</class_name>
   <display_name>Controllable Power Outlets</display_name>
@@ -199,12 +199,6 @@
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
       <checksum>05E0F1B8</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_with_adv_pwr_strips.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>6F39AE18</checksum>
     </file>
   </files>
 </measure>

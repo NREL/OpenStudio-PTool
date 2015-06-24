@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>ground_source_heat_pump_with_doas</name>
   <uid>b8ba0b97-9caf-42cd-81bb-16eaa0a4402c</uid>
-  <version_id>bb6852f4-d91b-47b2-a826-42803f0b7da4</version_id>
+  <version_id>7b444283-1957-4e3c-a289-85a8e06eafc5</version_id>
   <xml_checksum>4435983D</xml_checksum>
   <class_name>GroundSourceHeatPumpWithDOAS</class_name>
   <display_name>Ground Source Heat Pump With DOAS</display_name>
@@ -79,12 +79,6 @@
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>2B663484</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_with_gshp_doas.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>202CB3FD</checksum>
     </file>
     <file>
       <filename>RemoveHVAC.Model.rb</filename>

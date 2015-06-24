@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>predictive_thermostats</name>
   <uid>3ce919e1-5bee-46e7-a48f-383894339313</uid>
-  <version_id>cd0d1d6c-f610-454a-9b20-ddd45c912c73</version_id>
+  <version_id>8d696281-c4de-4fba-8e02-313e5c77f603</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>PredictiveThermostats</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
@@ -92,18 +92,6 @@
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
       <checksum>E61822F9</checksum>
-    </file>
-    <file>
-      <filename>secondary_school_90.1-2010_with_pred_tstats.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>54C0B6D0</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_with_pred_tstats.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>5C64C866</checksum>
     </file>
   </files>
 </measure>
