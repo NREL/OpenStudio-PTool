@@ -1,0 +1,66 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>plant_shutdown</name>
+  <uid>95e83d5c-4ae9-4072-9885-cd51ee02f1e8</uid>
+  <version_id>fcf645eb-f813-4cf7-a9c7-ccff879581ae</version_id>
+  <xml_checksum>48FEEDDD</xml_checksum>
+  <class_name>PlantShutdown</class_name>
+  <display_name>PlantShutdown</display_name>
+  <description>This energy efficiency measure (EEM) controls chilled-water loop, hot-water loop, and condenser loop pumps such that when there is no load on the plant, the pumps shut off.</description>
+  <modeler_description>This EEM changes the pump control type for all chilled-water loop, hot-water loop, and condenser loop pumps (both primary and secondary) to “Intermittent”. This measure does not check for any AvailabilityManagerAssignmentList objects, or otherwise use custom logic to force the pumps off when there is no load on the plant. Thus, based on the types of availability managers that are used in the model, it is technically possible for the pumps to operate when there is no load.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.2</identifier>
+        <min_compatible>1.7.2</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>EF3A5042</checksum>
+    </file>
+  </files>
+</measure>
