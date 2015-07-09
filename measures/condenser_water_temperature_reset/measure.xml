@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>condenser_water_temperature_reset</name>
   <uid>95e83d5c-4ae9-4072-9885-cd51ee02f1e8</uid>
-  <version_id>fcf645eb-f813-4cf7-a9c7-ccff879581ae</version_id>
+  <version_id>332950f2-4e33-4481-9772-0e335e6e3ee0</version_id>
   <xml_checksum>48FEEDDD</xml_checksum>
   <class_name>CondenserWaterTemperatureReset</class_name>
   <display_name>CondenserWaterTemperatureReset</display_name>
   <description>This energy efficiency measure (EEM) lowers the condenser loop set point temperature to take advantage of free cooling when the outdoor air wet bulb temperature is low enough. By providing cooler temperature condenser water (when available), the compressor is able to operate more efficiently, using less energy to provide the same amount of cooling to the building.</description>
-  <modeler_description>This EEM adds EMS logic to the model that actuates the condenser loop setpoint manager. The added logic first checks the outdoor air wet-bulb temperature (OAWBT). If 14.3 째C less OAWBT less 22.7 째C then the condenser loop setpoint temperature is set to OAWBT + 4 째C. If the OAWBT greater 22.7 째C, the condenser loop setpoint temperature is set to 26.7 째C. If the OAWBT less 14.3 째C, the condenser loop setpoint temperature is set to 18.3 째C.</modeler_description>
+  <modeler_description>This EEM adds EMS logic to the model that actuates the condenser loop setpoint manager. The added logic first checks the outdoor air wet-bulb temperature (OAWBT). If 14.3 캜 less OAWBT less 22.7 캜 then the condenser loop setpoint temperature is set to OAWBT + 4 캜. If the OAWBT greater 22.7 캜, the condenser loop setpoint temperature is set to 26.7 캜. If the OAWBT less 14.3 캜, the condenser loop setpoint temperature is set to 18.3 캜.</modeler_description>
   <arguments/>
   <provenances/>
   <tags>
@@ -50,7 +50,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EF3A5042</checksum>
+      <checksum>D5955676</checksum>
     </file>
   </files>
 </measure>

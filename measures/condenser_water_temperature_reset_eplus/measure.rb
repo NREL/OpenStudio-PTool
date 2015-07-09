@@ -83,48 +83,12 @@ class CondenserWaterTemperatureResetEplus < OpenStudio::Ruleset::WorkspaceUserSc
       runner.registerError("ems_results.json file not located")
       return false
     end
-
-    ##testing code
-    # ems_string1 = "EnergyManagementSystem:Actuator,
-    # PSZ0_FanPressure, ! Name 
-    # Perimeter_ZN_4 ZN PSZ-AC Fan, ! Actuated Component Unique Name
-    # Fan, ! Actuated Component Type
-    # Fan Pressure Rise; ! Actuated Component Control Type"
-    
-    # idf_file1 = OpenStudio::IdfFile::load(ems_string1, 'EnergyPlus'.to_IddFileType).get
-    # runner.registerInfo("Adding test EMS code to workspace")
-    # workspace.addObjects(idf_file1.objects)
     
     if json.empty?
       runner.registerWarning("No Plantloops are appropriate for this measure")
       return true
     end
-    
-    #get all emsActuators in model to test if there is an EMS conflict
-    emsActuator = workspace.getObjectsByType("EnergyManagementSystem:Actuator".to_IddObjectType)
-
-    # if emsActuator.size == 0
-      # runner.registerInfo("The model does not contain any emsActuators, continuing")
-    # else
-      # runner.registerInfo("The model contains #{emsActuator.size} emsActuators, checking if any are attached to Fans.")
-      # emsActuator.each_with_index do |emsActuatorObject|
-        # emsActuatorObject_name =  emsActuatorObject.getString(1).to_s # Name
-        # runner.registerInfo("EMS string: #{emsActuatorObject_name}")
-        # json.each do |js|
-          # if (emsActuatorObject_name.eql? js[1]["fan"].to_s) && (emsActuatorObject.getString(2).to_s.eql? "Fan") && (emsActuatorObject.getString(3).to_s.eql? "Fan Pressure Rise")
-            # runner.registerInfo("Actuated Component Unique Name: #{emsActuatorObject.getString(1).to_s}")
-            # runner.registerInfo("Actuated Component Type: #{emsActuatorObject.getString(2).to_s}")
-            # runner.registerInfo("Actuated Component Control Type: #{emsActuatorObject.getString(3).to_s}")
-            # runner.registerInfo("EMS control logic modifying fan pressure rise  already exists in the model. EEM not applied")
-            # runner.registerAsNotApplicable("EMS control logic modifying fan pressure rise  already exists in the model. EEM not applied")
-            # return true
-          # else
-            # runner.registerInfo("EMS string: #{js[1]["fan"].to_s} has no EMS conflict")
-          # end
-        # end
-      # end
-    # end
-    
+       
     idf_file = OpenStudio::IdfFile::load(ems_string, 'EnergyPlus'.to_IddFileType).get
     runner.registerInfo("Adding EMS code to workspace")
     workspace.addObjects(idf_file.objects)

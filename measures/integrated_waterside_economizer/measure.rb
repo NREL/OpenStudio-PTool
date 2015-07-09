@@ -87,6 +87,60 @@ class IntegratedWatersideEconomizer < OpenStudio::Ruleset::ModelUserScript
       end
     end
 
+    
+    runner.registerInfo("Making EMS string for Advanced RTU Controls")
+    #start making the EMS code
+    ems_string = ""  #clear out the ems_string
+    
+    ems_string << "EnergyManagementSystem:Sensor," + "\n"
+    ems_string << "TWb,                     !- Name" + "\n"
+    ems_string << "*,                       !- Output:Variable or Output:Meter Index Key Name" + "\n"
+    ems_string << "Site Outdoor Air WetBulb Temperature;  !- Output:Variable or Output:Meter Name" + "\n"
+    ems_string << "" + "\n"
+    ems_string << "EnergyManagementSystem:ProgramCallingManager," + "\n"
+    ems_string << "    WSE_Manager,             !- Name" + "\n"
+    ems_string << "    BeginTimestepBeforePredictor,  !- EnergyPlus Model Calling Point" + "\n"
+    ems_string << "    WSE_Control;             !- Program Name 1" + "\n"
+    ems_string << "\n"
+    ems_string << "EnergyManagementSystem:Program," + "\n"
+    ems_string << "    WSE_Control," + "\n"
+    ems_string << "    IF TWb < 6," + "\n"
+    ems_string << "      SET WSE = 1," + "\n"
+    ems_string << "      SET ChWT = @Max Twb+4.5 6.67," + "\n"
+    ems_string << "      SET TowerT = ChWT - 0.5," + "\n"
+    ems_string << "    ELSE," + "\n"
+    ems_string << "      SET WSE = 0," + "\n"
+    ems_string << "      SET TowerT = 26.7," + "\n"
+    ems_string << "      SET ChWT = 6.67," + "\n"
+    ems_string << "    ENDIF;" + "\n"
+    ems_string << "\n"
+    ems_string << "EnergyManagementSystem:Actuator," + "\n"
+    ems_string << "    WSE,                     !- Name" + "\n"
+    ems_string << "   #{results[:hx_avail_schedule]},  !- Actuated Component Unique Name" + "\n"
+    ems_string << "   Schedule:Constant,       !- Actuated Component Type" + "\n"
+    ems_string << "   Schedule Value;          !- Actuated Component Control Type" + "\n"
+    ems_string << "\n"
+    ems_string << "EnergyManagementSystem:Actuator," + "\n"
+    ems_string << "    TowerT,                  !- Name" + "\n"
+    ems_string << "    #{results[:condenser_loop_schedule]},  !- Actuated Component Unique Name" + "\n"
+    ems_string << "    Schedule:Compact,        !- Actuated Component Type" + "\n"
+    ems_string << "    Schedule Value;          !- Actuated Component Control Type" + "\n"
+    ems_string << "\n"
+    ems_string << "EnergyManagementSystem:Actuator," + "\n"
+    ems_string << "    ChwT,                    !- Name" + "\n"
+    ems_string << "    #{results[:chilled_loop_schedule]},  !- Actuated Component Unique Name" + "\n"
+    ems_string << "    Schedule:Compact,        !- Actuated Component Type" + "\n"
+    ems_string << "    SChedule Value;          !- Actuated Component Control Type" + "\n"
+    ems_string << "\n"
+       
+    #save EMS snippet
+    runner.registerInfo("Saving integrated_waterside_economizer file")
+    FileUtils.mkdir_p(File.dirname("integrated_waterside_economizer.ems")) unless Dir.exist?(File.dirname("integrated_waterside_economizer.ems"))
+    File.open("integrated_waterside_economizer.ems", "w") do |f|
+      f.write(ems_string)
+    end   
+    
+    
     #unique initial conditions based on
     #runner.registerInitialCondition("The building has #{results.length} constant air volume units for which this measure is applicable.")
 

@@ -1,13 +1,13 @@
 <measure>
   <schema_version>3.0</schema_version>
   <name>plant_shutdown</name>
-  <uid>95e83d5c-4ae9-4072-9885-cd51ee02f1e8</uid>
-  <version_id>fcf645eb-f813-4cf7-a9c7-ccff879581ae</version_id>
+  <uid>90b22a26-8649-4e88-9dea-6e7d4b38dd56</uid>
+  <version_id>6491ae56-57eb-4f67-af4c-407237b43c02</version_id>
   <xml_checksum>48FEEDDD</xml_checksum>
   <class_name>PlantShutdown</class_name>
   <display_name>PlantShutdown</display_name>
   <description>This energy efficiency measure (EEM) controls chilled-water loop, hot-water loop, and condenser loop pumps such that when there is no load on the plant, the pumps shut off.</description>
-  <modeler_description>This EEM changes the pump control type for all chilled-water loop, hot-water loop, and condenser loop pumps (both primary and secondary) to ‚ÄúIntermittent‚Äù. This measure does not check for any AvailabilityManagerAssignmentList objects, or otherwise use custom logic to force the pumps off when there is no load on the plant. Thus, based on the types of availability managers that are used in the model, it is technically possible for the pumps to operate when there is no load.</modeler_description>
+  <modeler_description>This EEM changes the pump control type for all chilled-water loop, hot-water loop, and condenser loop pumps (both primary and secondary) to ìIntermittentî. This measure does not check for any AvailabilityManagerAssignmentList objects, or otherwise use custom logic to force the pumps off when there is no load on the plant. Thus, based on the types of availability managers that are used in the model, it is technically possible for the pumps to operate when there is no load.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -60,7 +60,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EF3A5042</checksum>
+      <checksum>52D2BEE6</checksum>
     </file>
   </files>
 </measure>
