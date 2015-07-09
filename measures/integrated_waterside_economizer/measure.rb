@@ -57,8 +57,8 @@ class IntegratedWatersideEconomizer < OpenStudio::Ruleset::ModelUserScript
           # This puts the HX in series with the chiller(s).
           runner.registerInfo("hooking up chilled water side of HX")
           hx.addToNode(comp.to_ChillerElectricEIR.get.plantLoop.get.supplyInletNode)
-          results[:chilled_loop_schedule] = comp.to_ChillerElectricEIR.get.plantLoop.get.loopTemperatureSetpointNode.setpointManagers[0].name.to_s
-          results[:condenser_loop_schedule] = comp.to_ChillerElectricEIR.get.secondaryPlantLoop.get.loopTemperatureSetpointNode.setpointManagers[0].name.to_s
+          results[:chilled_loop_schedule] = comp.to_ChillerElectricEIR.get.plantLoop.get.loopTemperatureSetpointNode.setpointManagers[0].to_SetpointManagerScheduled.get.schedule.name.to_s
+          results[:condenser_loop_schedule] = comp.to_ChillerElectricEIR.get.secondaryPlantLoop.get.loopTemperatureSetpointNode.setpointManagers[0].to_SetpointManagerScheduled.get.schedule.name.to_s
           # Add the HX to the demand side of the CW loop
           runner.registerInfo("hooking up condenser water side of HX")
           plantLoop.addDemandBranchForComponent(hx)
@@ -140,13 +140,13 @@ class IntegratedWatersideEconomizer < OpenStudio::Ruleset::ModelUserScript
     ems_string << "EnergyManagementSystem:Actuator," + "\n"
     ems_string << "    TowerT,                  !- Name" + "\n"
     ems_string << "    #{results[:condenser_loop_schedule]},  !- Actuated Component Unique Name" + "\n"
-    ems_string << "    Schedule:Compact,        !- Actuated Component Type" + "\n"
+    ems_string << "    Schedule:Year,        !- Actuated Component Type" + "\n"
     ems_string << "    Schedule Value;          !- Actuated Component Control Type" + "\n"
     ems_string << "\n"
     ems_string << "EnergyManagementSystem:Actuator," + "\n"
     ems_string << "    ChwT,                    !- Name" + "\n"
     ems_string << "    #{results[:chilled_loop_schedule]},  !- Actuated Component Unique Name" + "\n"
-    ems_string << "    Schedule:Compact,        !- Actuated Component Type" + "\n"
+    ems_string << "    Schedule:Year,        !- Actuated Component Type" + "\n"
     ems_string << "    SChedule Value;          !- Actuated Component Control Type" + "\n"
     ems_string << "\n"
        
