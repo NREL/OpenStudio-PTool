@@ -87,8 +87,25 @@ class IntegratedWatersideEconomizer < OpenStudio::Ruleset::ModelUserScript
       end
     end
 
+    #save plantloop parsing results to ems_results.json
+    runner.registerInfo("Saving ems_results.json")
+    FileUtils.mkdir_p(File.dirname("ems_results.json")) unless Dir.exist?(File.dirname("ems_results.json"))
+    File.open("ems_results.json", 'w') {|f| f << JSON.pretty_generate(results)}
     
-    runner.registerInfo("Making EMS string for Advanced RTU Controls")
+    if results.empty?
+       runner.registerWarning("No Plantloops are appropriate for this measure")
+       runner.registerAsNotApplicable("No Plantloops are appropriate for this measure")
+       #save blank ems_advanced_rtu_controls.ems file so Eplus measure does not crash
+       ems_string = ""
+       runner.registerInfo("Saving blank integrated_waterside_economizer file")
+       FileUtils.mkdir_p(File.dirname("integrated_waterside_economizer.ems")) unless Dir.exist?(File.dirname("integrated_waterside_economizer.ems"))
+       File.open("integrated_waterside_economizer.ems", "w") do |f|
+         f.write(ems_string)
+       end
+       return true
+    end
+    
+    runner.registerInfo("Making EMS string for Integrated Waterside Economizer")
     #start making the EMS code
     ems_string = ""  #clear out the ems_string
     
