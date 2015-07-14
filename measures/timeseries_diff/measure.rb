@@ -151,6 +151,19 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
     end
 
     runner.registerInfo("")
+    if !csv[1][0].split('  ')[0].nil? && !csv[1][0].split('  ')[1].nil?
+      if !csv[1][0].split('  ')[0].split('/')[0][-2,2].nil? && !csv[1][0].split('  ')[0].split('/')[1].nil? && !csv[1][0].split('  ')[1].split(':')[0].nil? && !csv[1][0].split('  ')[1].split(':')[1].nil?
+        runner.registerInfo("CSV Time format is correct: #{csv[1][0]}")
+      else
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Correct format Ex: June 24 1:30am Should be 06/24  01:30:00")
+        return false
+      end      
+    else  
+      runner.registerError("CSV Time format not correct: #{csv[1][0]}. Correct format Ex: June 24 1:30am Should be 06/24  01:30:00")
+      return false
+    end  
+    
+    runner.registerInfo("")
     csv[0].each do |hdr|
       if hdr != 'Date/Time'
         if !map.key? hdr
