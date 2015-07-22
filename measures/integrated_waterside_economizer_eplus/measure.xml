@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>integrated_waterside_economizer_eplus</name>
   <uid>aa9809c2-b99c-4e4c-b119-c034edb86283</uid>
-  <version_id>2c84deba-7c34-4fcb-83f1-fe648536f0ef</version_id>
+  <version_id>2bf58cd0-e111-4d7c-b2eb-2c3ec6c0da92</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>IntegratedWatersideEconomizerEplus</class_name>
   <display_name>IntegratedWatersideEconomizerEplus</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>ACA8CD33</checksum>
+      <checksum>2AEBB19F</checksum>
     </file>
   </files>
 </measure>

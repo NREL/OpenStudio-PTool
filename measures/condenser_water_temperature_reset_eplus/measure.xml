@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>condenser_water_temperature_reset_eplus</name>
   <uid>fad4dd96-f6a9-4a15-a6fc-046adc87b920</uid>
-  <version_id>7a68c2fa-a4e7-4e0a-a681-d8d3ab67021e</version_id>
+  <version_id>c2227b4d-b50d-4363-86c7-f19e30a74ec3</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>CondenserWaterTemperatureResetEplus</class_name>
   <display_name>CondenserWaterTemperatureResetEplus</display_name>
   <description>This energy efficiency measure (EEM) lowers the condenser loop set point temperature to take advantage of free cooling when the outdoor air wet bulb temperature is low enough. By providing cooler temperature condenser water (when available), the compressor is able to operate more efficiently, using less energy to provide the same amount of cooling to the building.</description>
-  <modeler_description>This EEM adds EMS logic to the model that actuates the condenser loop setpoint manager. The added logic first checks the outdoor air wet-bulb temperature (OAWBT). If 14.3 °C less OAWBT less 22.7 °C then the condenser loop setpoint temperature is set to OAWBT + 4 °C. If the OAWBT greater 22.7 °C, the condenser loop setpoint temperature is set to 26.7 °C. If the OAWBT less 14.3 °C, the condenser loop setpoint temperature is set to 18.3 °C.</modeler_description>
+  <modeler_description>This EEM adds EMS logic to the model that actuates the condenser loop setpoint manager. The added logic first checks the outdoor air wet-bulb temperature (OAWBT). If 14.3 ?C less OAWBT less 22.7 ?C then the condenser loop setpoint temperature is set to OAWBT + 4 ?C. If the OAWBT greater 22.7 ?C, the condenser loop setpoint temperature is set to 26.7 ?C. If the OAWBT less 14.3 ?C, the condenser loop setpoint temperature is set to 18.3 ?C.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>88755A36</checksum>
+      <checksum>F9070BEB</checksum>
     </file>
   </files>
 </measure>
