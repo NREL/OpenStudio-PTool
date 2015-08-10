@@ -239,6 +239,20 @@ class OptimalStartStop < OpenStudio::Ruleset::ModelUserScript
               end
             end
           end
+          if space.spaceType.is_initialized
+            space_type = space.spaceType.get   
+            space_type.spaceInfiltrationDesignFlowRates.each do |infil|
+              runner.registerInfo("#{space.name} - infil = #{infil.name}")
+              infil_sch = infil.schedule
+              if infil_sch.is_initialized
+                min_infil = find_min_max_values(infil_sch.get)['min']
+                if min_infil < zn_min_infil
+                  zn_min_infil = min_infil
+                  zn_min_infil_name = infil_sch.get.name.get
+                end
+              end
+            end
+          end
         end
         if zn_min_infil == 999.9
           puts "#{zone.name} min infiltration frac = 1"
