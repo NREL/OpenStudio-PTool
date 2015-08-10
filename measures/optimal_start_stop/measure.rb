@@ -227,7 +227,9 @@ class OptimalStartStop < OpenStudio::Ruleset::ModelUserScript
         zn_min_infil = 999.9
         zn_min_infil_name = nil
         zone.spaces.each do |space|
+          runner.registerInfo("#{space.name}")
           space.spaceInfiltrationDesignFlowRates.each do |infil|
+            runner.registerInfo("#{space.name} - infil = #{infil.name}")
             infil_sch = infil.schedule
             if infil_sch.is_initialized
               min_infil = find_min_max_values(infil_sch.get)['min']
@@ -241,6 +243,14 @@ class OptimalStartStop < OpenStudio::Ruleset::ModelUserScript
         if zn_min_infil == 999.9
           puts "#{zone.name} min infiltration frac = 1"
           temp2[:zn_min_infil] = 1
+          #add schedule since it dont exist
+          #zone.spaces.each do |space|
+          sch = OpenStudio::Model::ScheduleRuleset.new(model)
+          sch.defaultDaySchedule.addValue(OpenStudio::Time.new(0,24,0,0),1)
+          new_space_type_infil = OpenStudio::Model::SpaceInfiltrationDesignFlowRate.new(model)
+          new_space_type_infil.setSchedule(sch)
+          #new_space_type_infil.setSpace(space)
+          #zn_min_infil_name = new_space_type_infil.get.name.get
         else
           puts "#{zone.name} min infiltration frac = #{zn_min_infil}"
           temp2[:zn_min_infil] = zn_min_infil
