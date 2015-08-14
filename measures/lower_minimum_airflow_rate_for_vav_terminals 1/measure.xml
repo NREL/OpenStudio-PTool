@@ -1,0 +1,72 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>lower_minimum_airflow_rate_for_vav_terminals</name>
+  <uid>cf7566f7-cd40-44b4-ae37-83d4a9b16b94</uid>
+  <version_id>77ef6a8b-04c7-4312-a241-eeec1aae0166</version_id>
+  <xml_checksum>356BE47F</xml_checksum>
+  <class_name>LowerMinimumAirflowRateForVavTerminals</class_name>
+  <display_name>lower_minimum_airflow_rate_for_vav_terminals</display_name>
+  <description>asdf</description>
+  <modeler_description>asdf</modeler_description>
+  <arguments>
+    <argument>
+      <name>space_name</name>
+      <display_name>New space name</display_name>
+      <description>This name will be used as the name of the new space.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>40162D12</checksum>
+    </file>
+    <file>
+      <filename>lower_minimum_airflow_rate_for_vav_terminals_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>549F6529</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+  </files>
+</measure>

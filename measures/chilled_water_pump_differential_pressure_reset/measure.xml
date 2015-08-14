@@ -1,0 +1,72 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>chilled_water_pump_differential_pressure_reset</name>
+  <uid>8724574c-23b8-4308-8f61-2ff0f9796c55</uid>
+  <version_id>90ca4f28-1f31-409a-9b08-b781981453e8</version_id>
+  <xml_checksum>356BE47F</xml_checksum>
+  <class_name>ChilledWaterPumpDifferentialPressureReset</class_name>
+  <display_name>chilled_water_pump_differential_pressure_reset</display_name>
+  <description>asdf</description>
+  <modeler_description>asdf</modeler_description>
+  <arguments>
+    <argument>
+      <name>space_name</name>
+      <display_name>New space name</display_name>
+      <description>This name will be used as the name of the new space.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>B68F4D68</checksum>
+    </file>
+    <file>
+      <filename>chilled_water_pump_differential_pressure_reset_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>4BE8D2C1</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+  </files>
+</measure>

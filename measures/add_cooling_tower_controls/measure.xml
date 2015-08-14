@@ -1,0 +1,74 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <error>invalid null reference Expected argument 5 of type std::vector&lt; openstudio::ruleset::OSArgument,std::allocator&lt; openstudio::ruleset::OSArgument > > const &amp;, but got NilClass nil
+	in SWIG method 'RubyUserScriptInfo'</error>
+  <name>add_cooling_tower_controls</name>
+  <uid>b40d0e55-0fd0-46ba-ab35-cded62f55b97</uid>
+  <version_id>abf98b5f-25e7-4af2-81b1-69e7917882bb</version_id>
+  <xml_checksum>356BE47F</xml_checksum>
+  <class_name>AddCoolingTowerControls</class_name>
+  <display_name>add_cooling_tower_controls</display_name>
+  <description>asdf</description>
+  <modeler_description>asdf</modeler_description>
+  <arguments>
+    <argument>
+      <name>space_name</name>
+      <display_name>New space name</display_name>
+      <description>This name will be used as the name of the new space.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>add_cooling_tower_controls_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2BB76B13</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>F992440C</checksum>
+    </file>
+  </files>
+</measure>
