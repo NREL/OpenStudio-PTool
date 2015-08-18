@@ -2,6 +2,7 @@
 # http://openstudio.nrel.gov/openstudio-measure-writing-guide
 
 require 'csv'
+require 'time'
 
 # start the measure
 class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
@@ -32,11 +33,29 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
     csv_name.setDefaultValue("mtr.csv")
     args << csv_name
     
+    csv_time_header = OpenStudio::Ruleset::OSArgument.makeStringArgument("csv_time_header", true)
+    csv_time_header.setDisplayName("CSV Time Header")
+    csv_time_header.setDescription("CSV Time Header Value.")
+    csv_time_header.setDefaultValue("Date/Time")
+    args << csv_time_header
+    
     csv_var = OpenStudio::Ruleset::OSArgument.makeStringArgument("csv_var", true)
     csv_var.setDisplayName("CSV variable name")
     csv_var.setDescription("CSV variable name")
     csv_var.setDefaultValue("Whole Building:Facility Total Electric Demand Power [W](TimeStep)")
     args << csv_var
+    
+    years = OpenStudio::Ruleset::OSArgument.makeBoolArgument("year", true)
+    years.setDisplayName("Year in csv data")
+    years.setDescription("Year in csv data => mm:dd:yy or mm:dd")
+    years.setDefaultValue(true)
+    args << years
+    
+    seconds = OpenStudio::Ruleset::OSArgument.makeBoolArgument("seconds", true)
+    seconds.setDisplayName("Seconds in csv data")
+    seconds.setDescription("Seconds in csv data => hh:mm:ss or hh:mm")
+    seconds.setDefaultValue(true)
+    args << seconds
     
     sql_key = OpenStudio::Ruleset::OSArgument.makeStringArgument("sql_key", true)
     sql_key.setDisplayName("SQL key")
@@ -104,7 +123,10 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
     
     # assign the user inputs to variables
     csv_name = runner.getStringArgumentValue("csv_name", user_arguments)
+    csv_time_header = runner.getStringArgumentValue("csv_time_header", user_arguments)
     csv_var = runner.getStringArgumentValue("csv_var", user_arguments)
+    years = runner.getBoolArgumentValue("year", user_arguments)
+    seconds = runner.getBoolArgumentValue("seconds", user_arguments)
     sql_key = runner.getStringArgumentValue("sql_key", user_arguments)
     sql_var = runner.getStringArgumentValue("sql_var", user_arguments)
     norm = runner.getStringArgumentValue("norm", user_arguments)
@@ -149,25 +171,78 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
         end  
       end  
     end
-
-    runner.registerInfo("")
-    if !csv[1][0].split('  ')[0].nil? && !csv[1][0].split('  ')[1].nil?
-      if !csv[1][0].split('  ')[0].split('/')[0][-2,2].nil? && !csv[1][0].split('  ')[0].split('/')[1].nil? && !csv[1][0].split('  ')[1].split(':')[0].nil? && !csv[1][0].split('  ')[1].split(':')[1].nil?
-        runner.registerInfo("CSV Time format is correct: #{csv[1][0]}")
-      else
-        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Correct format Ex: June 24 1:30am Should be 06/24  01:30:00")
+    runner.registerInfo("year: #{years}")
+    runner.registerInfo("seconds: #{seconds}")
+    if !years && seconds
+    # mm:dd hh:mm:ss
+      # check day time splits into two valid parts
+      if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
+        #check remaining splits are valid
+        if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil? && !csv[1][0].split(' ')[1].split(':')[2].nil?
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd hh:mm:ss")
+        else
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd hh:mm:ss")
+          return false
+        end      
+      else  
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd hh:mm:ss")
         return false
-      end      
-    else  
-      runner.registerError("CSV Time format not correct: #{csv[1][0]}. Correct format Ex: June 24 1:30am Should be 06/24  01:30:00")
-      return false
-    end  
+      end 
+    elsif !years && !seconds
+    # mm:dd hh:mm
+      # check day time splits into two valid parts
+      if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
+        #check remaining splits are valid
+        if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil?
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd hh:mm")
+        else
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd hh:mm")
+          return false
+        end      
+      else  
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd hh:mm")
+        return false
+      end 
+    elsif years && !seconds
+    # mm:dd:yy hh:mm
+      # check day time splits into two valid parts
+      if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
+        #check remaining splits are valid
+        if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[0].split('/')[2].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil?
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd:yy hh:mm")
+        else
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd:yy hh:mm")
+          return false
+        end      
+      else  
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd:yy hh:mm")
+        return false
+      end 
+    elsif years && seconds
+    # mm:dd:yy hh:mm:ss
+      # check day time splits into two valid parts
+      if !csv[1][0].split(' ')[0].nil? && !csv[1][0].split(' ')[1].nil?
+        #check remaining splits are valid
+        if !csv[1][0].split(' ')[0].split('/')[0].nil? && !csv[1][0].split(' ')[0].split('/')[1].nil? && !csv[1][0].split(' ')[0].split('/')[2].nil? && !csv[1][0].split(' ')[1].split(':')[0].nil? && !csv[1][0].split(' ')[1].split(':')[1].nil? && !csv[1][0].split(' ')[1].split(':')[2].nil?
+          runner.registerInfo("CSV Time format is correct: #{csv[1][0]} mm:dd:yy hh:mm:ss")
+        else
+          runner.registerError("CSV Time format not correct: #{csv[1][0]}. Selected format is mm:dd:yy hh:mm:ss")
+          return false
+        end      
+      else  
+        runner.registerError("CSV Time format not correct: #{csv[1][0]}. Does not split into 'day time'. Selected format is mm:dd:yy hh:mm:ss")
+        return false
+      end 
+    end    
     
-    runner.registerInfo("")
+    temp_sim = []
+    temp_mtr = []
+    temp_norm = []
+    runner.registerInfo("Begin timeseries parsing")
     csv[0].each do |hdr|
-      if hdr != 'Date/Time'
+      if (hdr.to_s != csv_time_header.to_s)
         if !map.key? hdr
-          runner.registerInfo("CSV hdr not in map: #{hdr}") if verbose_messages
+          runner.registerInfo("CSV hdr #{hdr} is not in map: #{map}, skipping") if verbose_messages
           next
         end
         runner.registerInfo("hdr is: #{hdr}")
@@ -191,13 +266,44 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
               runner.registerWarning("empty csv row number #{row}")
               next
             end
-            mon = csv[row][0].split('  ')[0].split('/')[0][-2,2].to_i
-            day = csv[row][0].split('  ')[0].split('/')[1].to_i
-            hou = csv[row][0].split('  ')[1].split(':')[0].to_i
-            min = csv[row][0].split('  ')[1].split(':')[1].to_i
-            dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]),day)
-            tim = OpenStudio::Time.new(0,hou,min,0)
+            mon = csv[row][0].split(' ')[0].split('/')[0].to_i
+            day = csv[row][0].split(' ')[0].split('/')[1].to_i
+            if !csv[row][0].split(' ')[0].split('/')[2].nil?
+              year = csv[row][0].split(' ')[0].split('/')[2].to_i
+            else
+              year = nil            
+            end
+            hou = csv[row][0].split(' ')[1].split(':')[0].to_i
+            min = csv[row][0].split(' ')[1].split(':')[1].to_i
+            if !csv[row][0].split(' ')[1].split(':')[2].nil?
+              sec = csv[row][0].split(' ')[1].split(':')[2].to_i
+            else
+              sec = nil            
+            end
+            if year == nil
+              dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]),day)
+            else
+              dat = OpenStudio::Date.new(OpenStudio::MonthOfYear.new(cal[mon]),day,year)
+            end
+            if sec == nil
+              tim = OpenStudio::Time.new(0,hou,min,0)
+            else
+              tim = OpenStudio::Time.new(0,hou,min,sec)
+            end            
             dtm = OpenStudio::DateTime.new(dat,tim)
+            if year == nil
+              if sec == nil
+                etim = Time.gm(2009, mon, day, hou, min).to_i * 1000
+              else
+                etim = Time.gm(2009, mon, day, hou, min, sec).to_i * 1000
+              end
+            else
+              if sec == nil
+                etim = Time.gm(year, mon, day, hou, min).to_i * 1000
+              else
+                etim = Time.gm(year, mon, day, hou, min, sec).to_i * 1000
+              end
+            end
             runner.registerInfo("dtm: #{dtm}") if verbose_messages
             csv[row].each_index do |col|
               if col > 0
@@ -210,7 +316,10 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
                     dif = sim.to_f - mtr.to_f
                   else
                     dif = (mtr.to_f - sim.to_f).abs
-                  end              
+                  end
+                  temp_sim << [etim,sim.to_f]
+                  temp_mtr << [etim,mtr.to_f] 
+                  temp_norm << [etim,dif.to_f]                  
                   diff[diff_index] = diff[diff_index] + dif.to_f
                   simdata[diff_index] = simdata[diff_index] + sim.to_f
                   csvdata[diff_index] = csvdata[diff_index] + mtr.to_f
@@ -223,9 +332,17 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
             end
           end
         end
+      else
+        runner.registerInfo("Found Time Header: #{csv_time_header}")
       end
     end
-
+ 
+    results = {"#{csv_var}_mtr" => temp_mtr, "#{csv_var}_sim" => temp_sim, "#{csv_var}_diff" => temp_norm}
+    runner.registerInfo("Saving timeseries_#{csv_var}.json")
+    FileUtils.mkdir_p(File.dirname("timeseries_#{csv_var}.json")) unless Dir.exist?(File.dirname("timeseries_#{csv_var}.json"))
+    File.open("timeseries_#{csv_var}.json", 'w') {|f| f << JSON.pretty_generate(results)}
+    
+    runner.registerInfo("results: #{results}")
     runner.registerValue("diff", diff[0], "")
     runner.registerValue("simdata", simdata[0], "")
     runner.registerValue("csvdata", csvdata[0], "")
