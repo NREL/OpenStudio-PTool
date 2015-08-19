@@ -45,6 +45,12 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
     csv_var.setDefaultValue("Whole Building:Facility Total Electric Demand Power [W](TimeStep)")
     args << csv_var
     
+    csv_var_dn = OpenStudio::Ruleset::OSArgument.makeStringArgument("csv_var_dn", true)
+    csv_var_dn.setDisplayName("CSV variable display name")
+    csv_var_dn.setDescription("CSV variable display name")
+    csv_var_dn.setDefaultValue("")
+    args << csv_var_dn
+    
     years = OpenStudio::Ruleset::OSArgument.makeBoolArgument("year", true)
     years.setDisplayName("Year in csv data")
     years.setDescription("Year in csv data => mm:dd:yy or mm:dd")
@@ -125,6 +131,7 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
     csv_name = runner.getStringArgumentValue("csv_name", user_arguments)
     csv_time_header = runner.getStringArgumentValue("csv_time_header", user_arguments)
     csv_var = runner.getStringArgumentValue("csv_var", user_arguments)
+    csv_var_dn = runner.getStringArgumentValue("csv_var_dn", user_arguments)
     years = runner.getBoolArgumentValue("year", user_arguments)
     seconds = runner.getBoolArgumentValue("seconds", user_arguments)
     sql_key = runner.getStringArgumentValue("sql_key", user_arguments)
@@ -239,6 +246,23 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
     temp_mtr = []
     temp_norm = []
     runner.registerInfo("Begin timeseries parsing")
+    #get timezone info
+    tzs = model.getSite.timeZone.to_s
+    runner.registerInfo("timezone = #{tzs}")
+    if tzs.to_i >= 0  #positive number
+      if tzs.to_i < 10 #one digit
+        tz = "+0#{tzs.to_i}:00"
+      else  #two digit
+        tz = "+#{tzs.to_i}:00"
+      end              
+    else #negative number
+      if tzs.to_i * -1 < 10 #one digit
+        tz = "-0#{tzs.to_i * -1}:00"
+      else #two digit
+        tz = "-#{tzs.to_i * -1}:00"
+      end
+    end
+    runner.registerInfo("timezone = #{tz}")
     csv[0].each do |hdr|
       if (hdr.to_s != csv_time_header.to_s)
         if !map.key? hdr
@@ -293,15 +317,15 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
             dtm = OpenStudio::DateTime.new(dat,tim)
             if year == nil
               if sec == nil
-                etim = Time.gm(2009, mon, day, hou, min).to_i * 1000
+                etim = Time.new(2009, mon, day, hou, min, 0, tz).to_i * 1000
               else
-                etim = Time.gm(2009, mon, day, hou, min, sec).to_i * 1000
+                etim = Time.new(2009, mon, day, hou, min, sec, tz).to_i * 1000
               end
             else
               if sec == nil
-                etim = Time.gm(year, mon, day, hou, min).to_i * 1000
+                etim = Time.new(year, mon, day, hou, min, 0, tz).to_i * 1000
               else
-                etim = Time.gm(year, mon, day, hou, min, sec).to_i * 1000
+                etim = Time.new(year, mon, day, hou, min, sec, tz).to_i * 1000
               end
             end
             runner.registerInfo("dtm: #{dtm}") if verbose_messages
@@ -337,7 +361,7 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
       end
     end
  
-    results = {"#{csv_var}_mtr" => temp_mtr, "#{csv_var}_sim" => temp_sim, "#{csv_var}_diff" => temp_norm}
+    results = {"metadata" => {"tz" => tzs.to_i, "variables" => {"variable" => csv_var, "variable_display_name" => csv_var_dn}}, "#{csv_var}_mtr" => temp_mtr, "#{csv_var}_sim" => temp_sim, "#{csv_var}_diff" => temp_norm}
     runner.registerInfo("Saving timeseries_#{csv_var}.json")
     FileUtils.mkdir_p(File.dirname("timeseries_#{csv_var}.json")) unless Dir.exist?(File.dirname("timeseries_#{csv_var}.json"))
     File.open("timeseries_#{csv_var}.json", 'w') {|f| f << JSON.pretty_generate(results)}
