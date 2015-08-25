@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>optimal_start_stop</name>
   <uid>96e83d5c-4ae9-4072-9885-cd51ee02f2a9</uid>
-  <version_id>09d0c2fb-0ca3-4684-9ff7-6085eee26a44</version_id>
+  <version_id>b6ae661a-6c36-4922-9f76-adf66b3ca5ae</version_id>
   <xml_checksum>48FEEDDD</xml_checksum>
   <class_name>OptimalStartStop</class_name>
   <display_name>OptimalStartStop</display_name>
@@ -50,7 +50,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>DC3F4518</checksum>
+      <checksum>57C0B1C5</checksum>
     </file>
   </files>
 </measure>
