@@ -1,8 +1,10 @@
 <measure>
   <schema_version>3.0</schema_version>
+  <error>invalid null reference Expected argument 5 of type std::vector&lt; openstudio::ruleset::OSArgument,std::allocator&lt; openstudio::ruleset::OSArgument > > const &amp;, but got NilClass nil
+	in SWIG method 'RubyUserScriptInfo'</error>
   <name>correct_hvac_operation_schedules</name>
   <uid>ec21712c-34b8-435b-bc7a-50a32262ce17</uid>
-  <version_id>7ec4ceb7-3a7b-4a47-a35c-4f5940998f76</version_id>
+  <version_id>71ab4066-cfef-4f2d-adb8-22223342dcf3</version_id>
   <xml_checksum>356BE47F</xml_checksum>
   <class_name>CorrectHvacOperationSchedules</class_name>
   <display_name>correct_hvac_operation_schedules</display_name>
@@ -46,17 +48,6 @@
   </attributes>
   <files>
     <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.8.0</identifier>
-        <min_compatible>1.8.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>A2FD66CB</checksum>
-    </file>
-    <file>
       <filename>correct_hvac_operation_schedules_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
@@ -67,6 +58,17 @@
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>0CDDDC30</checksum>
     </file>
   </files>
 </measure>

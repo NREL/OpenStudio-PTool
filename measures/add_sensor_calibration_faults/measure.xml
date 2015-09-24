@@ -1,0 +1,78 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>add_sensor_calibration_faults</name>
+  <uid>c2a21cf1-c9e3-4432-8111-5d28ab9281eb</uid>
+  <version_id>335a88ac-2fa5-41bd-96f3-e5cf66e4bb9e</version_id>
+  <xml_checksum>A922EE0F</xml_checksum>
+  <class_name>AddSensorCalibrationFaults</class_name>
+  <display_name>add sensor calibration faults</display_name>
+  <description>This energy efficiency measure (EEM) adds sensor drift faults to airside economizer controls by adding  FaultModel:TemperatureSensorOffset:OutdoorAir and FaultModel:TemperatureSensorOffset:ReturnAir objects to all Controller:OutdoorAir objects attached to air loops and having functioning airside economizers present in the model.  The sensor faults are configured based on the pre-existing setting for 'Economizer Control Type'. The sensor drifts are hard coded to values of +2F for the OA Dry Bulb Sensor and -2F for the RA Dry Bulb Sensor and +5 Btu/lb for the OA Enthalpy Calculation and -5 Btu/lb for the RA Enthalpy Calculation.  The enthalpy error is equivalent to having a Relative Humidity sensor error of +/- 4% RH accuracy and Dry Bulb Temperature Sensor of +/-2F accuracy.  Sensor drift limits are hard coded to reasonable values for sensor quality based on published ASHRAE documentation.</description>
+  <modeler_description>This energy efficiency measure (EEM) loops through all Controller:OutdoorAir objects and adds sensor faults to economizer sensor nodes. As appropriate, sensor drifts for return and outside air temperature and enthalpy are added to the model, based on the 'Economizer Control Type' setting. If the Economizer Control Type is set to 'No Economizer', no actions are taken. Drift limits are hard coded to reasonable values for sensor quality based on published ASHRAE documentation.</modeler_description>
+  <arguments/>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>add_sensor_calibration_faults_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FC278D2C</checksum>
+    </file>
+    <file>
+      <filename>test_model_1.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>ADD73C55</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>575EB139</checksum>
+    </file>
+  </files>
+</measure>

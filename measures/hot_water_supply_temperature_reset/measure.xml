@@ -1,8 +1,10 @@
 <measure>
   <schema_version>3.0</schema_version>
+  <error>invalid null reference Expected argument 5 of type std::vector&lt; openstudio::ruleset::OSArgument,std::allocator&lt; openstudio::ruleset::OSArgument > > const &amp;, but got NilClass nil
+	in SWIG method 'RubyUserScriptInfo'</error>
   <name>hot_water_supply_temperature_reset</name>
   <uid>6238b807-7dc3-4f2e-8ae6-5f4b67b6ee4b</uid>
-  <version_id>9e9c213e-233f-4660-9ea3-7c49dc0b91b9</version_id>
+  <version_id>73ddb139-fcea-4fac-b732-a46f4122fd9c</version_id>
   <xml_checksum>2AF3A68E</xml_checksum>
   <class_name>HotWaterSupplyTemperatureReset</class_name>
   <display_name>hot_water_supply_temperature_reset</display_name>
@@ -46,17 +48,6 @@
   </attributes>
   <files>
     <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.8.0</identifier>
-        <min_compatible>1.8.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>2B61B146</checksum>
-    </file>
-    <file>
       <filename>hot_water_supply_temperature_reset_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
@@ -67,6 +58,17 @@
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>904E0AF3</checksum>
     </file>
   </files>
 </measure>
