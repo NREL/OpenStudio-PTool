@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>condenser_water_temperature_reset_ems</name>
   <uid>fad4dd96-f6a9-4a15-a6fc-046adc86b810</uid>
-  <version_id>c2227b4d-b50d-4363-86c7-f19e30a74ec3</version_id>
+  <version_id>848fa578-2ddd-4fea-9e8c-08e85a385664</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>CondenserWaterTemperatureResetEms</class_name>
   <display_name>CondenserWaterTemperatureResetEms</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>F9070BEB</checksum>
+      <checksum>4F4DE8C8</checksum>
     </file>
   </files>
 </measure>

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>static_pressure_reset_ems</name>
   <uid>fad4dd96-f6a9-4a15-a6fc-046adc76b717</uid>
-  <version_id>95dd804b-793f-46c5-91b1-fafec859a803</version_id>
+  <version_id>922b869c-8c89-47f5-8ee9-3c7f6af7efe3</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>StaticPressureResetEms</class_name>
   <display_name>StaticPressureResetEms</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C87521C2</checksum>
+      <checksum>0338DF16</checksum>
     </file>
   </files>
 </measure>
