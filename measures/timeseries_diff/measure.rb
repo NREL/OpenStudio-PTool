@@ -361,10 +361,10 @@ class TimeseriesDiff < OpenStudio::Ruleset::ReportingUserScript
       end
     end
  
-    results = {"metadata" => {"tz" => tzs.to_i, "variables" => {"variable" => csv_var, "variable_display_name" => csv_var_dn}}, "#{csv_var}_mtr" => temp_mtr, "#{csv_var}_sim" => temp_sim, "#{csv_var}_diff" => temp_norm}
+    results = {"metadata" => {"tz" => tzs.to_i, "variables" => {"variable" => csv_var, "variable_display_name" => csv_var_dn}}, "data_mtr" => temp_mtr, "data_sim" => temp_sim, "data_diff" => temp_norm}
     runner.registerInfo("Saving timeseries_#{csv_var}.json")
     FileUtils.mkdir_p(File.dirname("timeseries_#{csv_var}.json")) unless Dir.exist?(File.dirname("timeseries_#{csv_var}.json"))
-    File.open("timeseries_#{csv_var}.json", 'w') {|f| f << JSON.pretty_generate(results)}
+    File.open("timeseries_#{csv_var}.json", 'wb') {|f| f << JSON.pretty_generate(results)}
     
     runner.registerInfo("results: #{results}")
     runner.registerValue("diff", diff[0], "")
