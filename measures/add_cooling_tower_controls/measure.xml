@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_cooling_tower_controls</name>
   <uid>4d58196f-03e2-4e5d-b316-169f61fbce77</uid>
-  <version_id>21a162a2-bee3-4953-a2ba-a6e26c26892d</version_id>
+  <version_id>cb44f5c7-5661-40c9-9388-b61f0e3e395b</version_id>
   <xml_checksum>F27B6ED6</xml_checksum>
   <class_name>AddCoolingTowerControls</class_name>
   <display_name>add_cooling_tower_controls</display_name>
@@ -63,12 +63,6 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>A364FD95</checksum>
-    </file>
-    <file>
-      <filename>cooling_tower_test_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>13144EAF</checksum>
     </file>
   </files>
 </measure>

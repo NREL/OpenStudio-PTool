@@ -55,7 +55,7 @@ class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
 						if @fan_exhaust.availabilitySchedule.is_initialized
 							fan_exh_avail_sch = @fan_exhaust.availabilitySchedule.get # availability schedule of exhausts
 							changed_sch = @fan_exhaust.setAvailabilitySchedule(@airloops_availability_sch) # changing fan schedules to airloop availability schedules
-							runner.registerInfo("Availability Schdule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' has been changed to '#{@airloops_availability_sch.name}' from '#{fan_exh_avail_sch.name}'.")
+							runner.registerInfo("Availability Schedule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' has been changed to '#{@airloops_availability_sch.name}' from '#{fan_exh_avail_sch.name}'.")
 							if changed_sch == true # condition 
 								changed_sch_array_true << changed_sch
 								elsif changed_sch_array_false << changed_sch
@@ -78,7 +78,7 @@ class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
     runner.registerInitialCondition("The initial model contained #{fan_exhaust_array.length} 'Fan:ZoneExhaust' object for which this measure is applicable.")
 
     # report final condition of model
-    runner.registerFinalCondition("The Availability schedules for #{changed_sch_array_true.length} 'Fan:ZoneExhaust' schedule(s) were altered to match the availability schedules of supply fans. The unchanged 'Fan: ZoneExhaust' object(s) = #{changed_sch_array_false.length}.")
+    runner.registerFinalCondition("The Availability Schedules for #{changed_sch_array_true.length} 'Fan:ZoneExhaust' schedule(s) were altered to match the availability schedules of supply fans. The number of unchanged 'Fan: ZoneExhaust' object(s) = #{changed_sch_array_false.length}.")
     return true
 
   end

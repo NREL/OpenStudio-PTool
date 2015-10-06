@@ -6,11 +6,7 @@ require 'fileutils'
 
 class ExhaustFanInterlockTest < MiniTest::Unit::TestCase
 
-  # def setup
-  # end
 
-  # def teardown
-  # end
 
   def test_number_of_arguments_and_argument_names
     # create an instance of the measure
@@ -21,83 +17,91 @@ class ExhaustFanInterlockTest < MiniTest::Unit::TestCase
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(1, arguments.size)
-    assert_equal("space_name", arguments[0].name)
+    assert_equal(0, arguments.size)
   end
 
-  def test_bad_argument_values
-    # create an instance of the measure
-    measure = ExhaustFanInterlock.new
 
-    # create an instance of a runner
-    runner = OpenStudio::Ruleset::OSRunner.new
+  
+  def test_fan_sch_change_primaryschool
+   
+    result, model = applytotestmodel("PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm")
+	assert(result.info.size == 2)
+	fan = model.getFanZoneExhaustByName("Bath_ZN_1_FLR_1 ZN Exhaust Fan")
+	assert fan.is_initialized
+	assert_equal("SchoolPrimary HVACOperationSchd",fan.get.availabilitySchedule.get.name.get)
+	assert_equal("Success", result.value.valueName)
+	
+  end
+  
 
-    # make an empty model
-    model = OpenStudio::Model::Model.new
+  
+ def test_non_applicable_msg_largehotel
+   
+    result, model = applytotestmodel("LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm")
+	assert(result.info.size == 1)
+    assert(result.warnings.size == 0)
+	assert_equal(result.info.first.logMessage, "Measure is not applicable.")
+    assert_equal("NA", result.value.valueName)
 
-    # get arguments
-    arguments = measure.arguments(model)
-    argument_map = OpenStudio::Ruleset.convertOSArgumentVectorToMap(arguments)
-
-    # create hash of argument values
-    args_hash = {}
-    args_hash["space_name"] = ""
-
-    # populate argument with specified hash value if specified
-    arguments.each do |arg|
-      temp_arg_var = arg.clone
-      if args_hash[arg.name]
-        assert(temp_arg_var.setValue(args_hash[arg.name]))
-      end
-      argument_map[arg.name] = temp_arg_var
-    end
-
-    # run the measure
-    measure.run(model, runner, argument_map)
-    result = runner.result
-
-    # show the output
-    show_output(result)
-
-    # assert that it ran correctly
-    assert_equal("Fail", result.value.valueName)
   end
 
-  def test_good_argument_values
-    # create an instance of the measure
-    measure = ExhaustFanInterlock.new
+  def test_non_applicable_msg_smallhotel
+   
+    result, model = applytotestmodel("SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm")
+	assert(result.info.size == 1)
+    assert(result.warnings.size == 0)
+	assert_equal(result.info.first.logMessage, "Measure is not applicable.")
+    assert_equal("NA", result.value.valueName)
+
+  end
+  
+  def test_non_applicable_msg_smalloffice
+   
+    result, model = applytotestmodel("SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm")
+	assert(result.info.size == 1)
+    assert(result.warnings.size == 0)
+	assert_equal(result.info.first.logMessage, "Measure is not applicable.")
+    assert_equal("NA", result.value.valueName)
+
+  end
+  
+  def test_non_applicable_msg_mediumoffice
+   
+    result, model = applytotestmodel("MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm")
+	assert(result.info.size == 1)
+    assert(result.warnings.size == 0)
+	assert_equal(result.info.first.logMessage, "Measure is not applicable.")
+    assert_equal("NA", result.value.valueName)
+
+  end
+  
+  def test_non_applicable_msg_largeoffice
+   
+    result, model = applytotestmodel("LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm")
+	assert(result.info.size == 1)
+    assert(result.warnings.size == 0)
+	assert_equal(result.info.first.logMessage, "Measure is not applicable.")
+    assert_equal("NA", result.value.valueName)
+
+  end
+  
+  def applytotestmodel(model_file)
+  
+  measure = ExhaustFanInterlock.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
 
     # load the test model
     translator = OpenStudio::OSVersion::VersionTranslator.new
-    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/example_model.osm")
+    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/#{model_file}")
     model = translator.loadModel(path)
     assert((not model.empty?))
     model = model.get
 
-    # store the number of spaces in the seed model
-    num_spaces_seed = model.getSpaces.size
-
     # get arguments
     arguments = measure.arguments(model)
     argument_map = OpenStudio::Ruleset.convertOSArgumentVectorToMap(arguments)
-
-    # create hash of argument values.
-    # If the argument has a default that you want to use, you don't need it in the hash
-    args_hash = {}
-    args_hash["space_name"] = "New Space"
-    # using defaults values from measure.rb for other arguments
-
-    # populate argument with specified hash value if specified
-    arguments.each do |arg|
-      temp_arg_var = arg.clone
-      if args_hash[arg.name]
-        assert(temp_arg_var.setValue(args_hash[arg.name]))
-      end
-      argument_map[arg.name] = temp_arg_var
-    end
 
     # run the measure
     measure.run(model, runner, argument_map)
@@ -106,17 +110,12 @@ class ExhaustFanInterlockTest < MiniTest::Unit::TestCase
     # show the output
     show_output(result)
 
-    # assert that it ran correctly
-    assert_equal("Success", result.value.valueName)
-    assert(result.info.size == 1)
-    assert(result.warnings.size == 0)
 
-    # check that there is now 1 space
-    assert_equal(1, model.getSpaces.size - num_spaces_seed)
-
-    # save the model to test output directory
-    output_file_path = OpenStudio::Path.new(File.dirname(__FILE__) + "/output/test_output.osm")
-    model.save(output_file_path,true)
+  
+  return result, model
   end
-
+  
 end
+
+
+
