@@ -1,0 +1,33 @@
+<OSResult>
+  <Value>Success</Value>
+  <Info>
+    <LogMessage>
+      <Channel>openstudio.ruleset.add sensor calibration faults</Channel>
+      <Message>the OA controller type is DifferentialDryBulb.</Message>
+    </LogMessage>
+    <LogMessage>
+      <Channel>openstudio.ruleset.add sensor calibration faults</Channel>
+      <Message>To model dry bulb sensor drift, a FaultModel:TemperatureSensorOffset:ReturnAir object with an offset of -2 deg F and a FaultModel:TemperatureSensorOffset:OutdoorAir object with an offset of +2 deg F has been added to the DifferentialDryBulb controlled airside economizer associated with the Controller:Outdoor air object named DOAS OA Controller. The fault availability is scheduled using the 'Always On Discrete' schedule.</Message>
+    </LogMessage>
+    <LogMessage>
+      <Channel>openstudio.ruleset.add sensor calibration faults</Channel>
+      <Message>the OA controller type is DifferentialDryBulb.</Message>
+    </LogMessage>
+    <LogMessage>
+      <Channel>openstudio.ruleset.add sensor calibration faults</Channel>
+      <Message>To model dry bulb sensor drift, a FaultModel:TemperatureSensorOffset:ReturnAir object with an offset of -2 deg F and a FaultModel:TemperatureSensorOffset:OutdoorAir object with an offset of +2 deg F has been added to the DifferentialDryBulb controlled airside economizer associated with the Controller:Outdoor air object named VAV WITH REHEAT OA Controller. The fault availability is scheduled using the 'Always On Discrete' schedule.</Message>
+    </LogMessage>
+  </Info>
+  <InitialCondition>
+    <LogMessage>
+      <Channel>openstudio.ruleset.add sensor calibration faults</Channel>
+      <Message>The measure started with 4 Outdoor Air Controllers configured for operational airside economizers. 0 Outdoor Air Controller had the Economizer Contrrol Type set to 'NoEconomizer'.</Message>
+    </LogMessage>
+  </InitialCondition>
+  <FinalCondition>
+    <LogMessage>
+      <Channel>openstudio.ruleset.add sensor calibration faults</Channel>
+      <Message>The measure finished by adding outdoor and return air temperature and enthalpy sensor faults to 4 economizer configurations.</Message>
+    </LogMessage>
+  </FinalCondition>
+</OSResult>

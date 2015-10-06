@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_chilled_water_pump_differential_pressure_reset_controls</name>
   <uid>0be1c2cd-ff24-475e-b260-d7f99f1c6ba8</uid>
-  <version_id>f72cf9f2-0ee6-406e-a971-6a8ba4b3663a</version_id>
+  <version_id>ab543ac7-1b90-4429-ba07-2b1bc203ef53</version_id>
   <xml_checksum>F8AD3AA4</xml_checksum>
   <class_name>AddChilledWaterPumpDifferentialPressureResetControls</class_name>
   <display_name> Add Chilled Water Pump Differential Pressure Reset Controls</display_name>
@@ -110,12 +110,6 @@
       <checksum>D417F182</checksum>
     </file>
     <file>
-      <filename>add_chilled_water_pump_differential_pressure_reset_controls_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>96C09772</checksum>
-    </file>
-    <file>
       <filename>HVACSizing.Model.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
@@ -131,6 +125,18 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>5F08A27C</checksum>
+    </file>
+    <file>
+      <filename>add_chilled_water_pump_differential_pressure_reset_controls_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AA0182D9</checksum>
+    </file>
+    <file>
+      <filename>chw_pump_diff_test_model_1.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>08157D06</checksum>
     </file>
   </files>
 </measure>
