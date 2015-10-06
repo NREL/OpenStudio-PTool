@@ -78,10 +78,7 @@ class LowerMinimumAirflowRatesForVAVTerminal < OpenStudio::Ruleset::ModelUserScr
 				# calc the minimum airflow rate needed for the zone
 				thermal_zone_min_flow = (sqft_thermal_zone_area * 0.4)
 				
-				# thermal_zone_min_flow = (OpenStudio.convert(thermal_zone.floorArea,"m^2","ft^2").get * 0.4)
-				
-				
-				
+		
 				
 				#get the VAV boxes for the thermal zone
 				zone_equip = thermal_zone.equipment
