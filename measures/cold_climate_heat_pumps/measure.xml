@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>cold_climate_heat_pumps</name>
   <uid>764b1a22-2592-4087-89ce-ea796de57b81</uid>
-  <version_id>5b78c04f-909a-4776-89d7-14775268b2cb</version_id>
+  <version_id>99b6c435-ed5a-420a-9498-aed31ed51107</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>ColdClimateHeatPumps</class_name>
   <display_name>Cold Climate Heat Pumps</display_name>
@@ -79,7 +79,7 @@ The replacement curves have been developed by regressing manufacturers published
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>86E4639F</checksum>
+      <checksum>14DC90A7</checksum>
     </file>
   </files>
 </measure>

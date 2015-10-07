@@ -49,107 +49,107 @@ The replacement curves have been developed by regressing manufacturers published
 		@heat_coil = zn_eqp.to_ZoneHVACPackagedTerminalHeatPump.get.heatingCoil.to_CoilHeatingDXSingleSpeed.get # getting heating coils: DX single speed 
 		heat_coil_array << @heat_coil
 		@heat_coil_name = @heat_coil.name
-			@initial_cop = @heat_coil.ratedCOP # calling the existing COP
-			@heat_coil.setName("#{@heat_coil_name}-modified") # new name for coil
-			@heat_coil.setRatedCOP(4.07762)	# modified COP
-			comp_t_initial = @heat_coil.minimumOutdoorDryBulbTemperatureforCompressorOperation
-			@heat_coil.setMinimumOutdoorDryBulbTemperatureforCompressorOperation(-20) #temperature to -4F for compressor operation of coil
-			runner.registerInfo ("MinimumOutdoorDryBulbTemperatureforCompressorOperation for OS:CoilHeatingDXSingleSpeed object = '#{@heat_coil_name}' has been changed from #{(((comp_t_initial)*1.8)+32)}F to -4F.")
-			#Create a new Heating Capacity Function of Temperature Curve 
-			#Curve:Biquadratic,
-			#   HP_Heat-Cap-fT3,   !- Name
-			#   0.9620542196000001,-0.00949277772,0.000109212948,0.0247078314,0.000034225092,-0.000125697744,   !- Coefficients (list)
-			#   -100,              !- Minimum Value of x
-			#   100,               !- Maximum Value of x
-			#   -100,              !- Minimum Value of y
-			#   100;               !- Maximum Value of y
-			exist_hp_heat_cap_ft3_name = @heat_coil.totalHeatingCapacityFunctionofTemperatureCurve.name
-			hp_heat_cap_ft3 = OpenStudio::Model::CurveBiquadratic.new(model)
-			hp_heat_cap_ft3.setName("#{exist_hp_heat_cap_ft3_name}-modified")
-			hp_heat_cap_ft3.setCoefficient1Constant(0.962054)
-			hp_heat_cap_ft3.setCoefficient2x(-0.009493)
-			hp_heat_cap_ft3.setCoefficient3xPOW2(0.0001092)
-			hp_heat_cap_ft3.setCoefficient4y(0.024708)
-			hp_heat_cap_ft3.setCoefficient5yPOW2(0.00003423)
-			hp_heat_cap_ft3.setCoefficient6xTIMESY(-0.0001257)
-			hp_heat_cap_ft3.setMinimumValueofx(-100)
-			hp_heat_cap_ft3.setMaximumValueofx(100)
-			hp_heat_cap_ft3.setMinimumValueofy(-100)
-			hp_heat_cap_ft3.setMaximumValueofy(100)
-				
-				#Create a new EIR function of temperature curve
-				#Curve:Biquadratic,
-				#   hp_heat_eir_ft3,   !- Name
-				#   0.5725180114,0.02289624912,0.000266018904,-0.0106675434,0.00049092156,-0.00068136876,   !- Coefficients (List)
-				#   -100,              !- Minimum Value of x
-				#   100,               !- Maximum Value of x
-				#   -100,              !- Minimum Value of y
-				#   100;               !- Maximum Value of y
-				exist_hp_heat_eir_ft3_name = @heat_coil.energyInputRatioFunctionofTemperatureCurve.name
-				hp_heat_eir_ft3 = OpenStudio::Model::CurveBiquadratic.new(model)
-				hp_heat_eir_ft3.setName("#{exist_hp_heat_eir_ft3_name}-modified")
-				hp_heat_eir_ft3.setCoefficient1Constant(0.57252)
-				hp_heat_eir_ft3.setCoefficient2x(0.0229)
-				hp_heat_eir_ft3.setCoefficient3xPOW2(0.00026602)
-				hp_heat_eir_ft3.setCoefficient4y(-0.010668)
-				hp_heat_eir_ft3.setCoefficient5yPOW2(0.000491)
-				hp_heat_eir_ft3.setCoefficient6xTIMESY(-0.0006814)
-				hp_heat_eir_ft3.setMinimumValueofx(-100)
-				hp_heat_eir_ft3.setMaximumValueofx(100)
-				hp_heat_eir_ft3.setMinimumValueofy(-100)
-				hp_heat_eir_ft3.setMaximumValueofy(100)
-							
-					#Create a new part load function correlation curve
-					#Curve:Quadratic,
-					#   hp_heat_plf_fplr3,   !- Name
-					#   0.76,0.24,0,         !- Coefficients (List)
-					#   0,                   !- Minimum Value of x
-					#   1,                   !- Maximum Value of x
-					#   0.7,                 !- Minimum Value of y
-					#   1;                   !- Maximum Value of y
-					exist_hp_heat_plf_fplr3_name = @heat_coil.partLoadFractionCorrelationCurve.name
-					hp_heat_plf_fplr3 = OpenStudio::Model::CurveQuadratic.new(model)
-					hp_heat_plf_fplr3.setName("#{exist_hp_heat_plf_fplr3_name}-modified")
-					hp_heat_plf_fplr3.setCoefficient1Constant(0.76)
-					hp_heat_plf_fplr3.setCoefficient2x(0.24)
-					hp_heat_plf_fplr3.setCoefficient3xPOW2(0.0)
-					hp_heat_plf_fplr3.setMinimumValueofx(0)
-					hp_heat_plf_fplr3.setMaximumValueofx(1)
+		@initial_cop = @heat_coil.ratedCOP # calling the existing COP
+		@heat_coil.setName("#{@heat_coil_name}-modified") # new name for coil
+		@heat_coil.setRatedCOP(4.07762)	# modified COP
+		comp_t_initial = @heat_coil.minimumOutdoorDryBulbTemperatureforCompressorOperation
+		@heat_coil.setMinimumOutdoorDryBulbTemperatureforCompressorOperation(-20) #temperature to -4F for compressor operation of coil
+		runner.registerInfo ("MinimumOutdoorDryBulbTemperatureforCompressorOperation for OS:CoilHeatingDXSingleSpeed object = '#{@heat_coil_name}' has been changed from #{(((comp_t_initial)*1.8)+32)}F to -4F.")
+		#Create a new Heating Capacity Function of Temperature Curve 
+		#Curve:Biquadratic,
+		#   HP_Heat-Cap-fT3,   !- Name
+		#   0.9620542196000001,-0.00949277772,0.000109212948,0.0247078314,0.000034225092,-0.000125697744,   !- Coefficients (list)
+		#   -100,              !- Minimum Value of x
+		#   100,               !- Maximum Value of x
+		#   -100,              !- Minimum Value of y
+		#   100;               !- Maximum Value of y
+		exist_hp_heat_cap_ft3_name = @heat_coil.totalHeatingCapacityFunctionofTemperatureCurve.name
+		hp_heat_cap_ft3 = OpenStudio::Model::CurveBiquadratic.new(model)
+		hp_heat_cap_ft3.setName("#{exist_hp_heat_cap_ft3_name}-modified")
+		hp_heat_cap_ft3.setCoefficient1Constant(0.962054)
+		hp_heat_cap_ft3.setCoefficient2x(-0.009493)
+		hp_heat_cap_ft3.setCoefficient3xPOW2(0.0001092)
+		hp_heat_cap_ft3.setCoefficient4y(0.024708)
+		hp_heat_cap_ft3.setCoefficient5yPOW2(0.00003423)
+		hp_heat_cap_ft3.setCoefficient6xTIMESY(-0.0001257)
+		hp_heat_cap_ft3.setMinimumValueofx(-100)
+		hp_heat_cap_ft3.setMaximumValueofx(100)
+		hp_heat_cap_ft3.setMinimumValueofy(-100)
+		hp_heat_cap_ft3.setMaximumValueofy(100)
 		
-						#Create a new heating capacity of flow fraction curve
-						#Curve:Quadratic,
-						#   hp_heat_cap_fff3,   !- Name
-						#   1,0,0,              !- Coefficients (List)
-						#   0,                  !- Minimum Value of x
-						#   2,                  !- Maximum Value of x
-						#   0,                  !- Minimum Value of y
-						#   2;                  !- Maximum Value of y
-						exist_hp_heat_cap_fff3_name = @heat_coil.totalHeatingCapacityFunctionofFlowFractionCurve.name
-						hp_heat_cap_fff3 = OpenStudio::Model::CurveQuadratic.new(model)
-						hp_heat_cap_fff3.setName("#{exist_hp_heat_cap_fff3_name}-modified")
-						hp_heat_cap_fff3.setCoefficient1Constant(1)
-						hp_heat_cap_fff3.setCoefficient2x(0.0)
-						hp_heat_cap_fff3.setCoefficient3xPOW2(0.0)
-						hp_heat_cap_fff3.setMinimumValueofx(0)
-						hp_heat_cap_fff3.setMaximumValueofx(2)
-							
-							#Create a new EIR of flow fraction curve
-							#Curve:Quadratic,
-							#   hp_heat_eir_fff3,   !- Name
-							#   1,0,0,              !- Coefficients (List)
-							#   0,                  !- Minimum Value of x
-							#   2,                  !- Maximum Value of x
-							#   0,                  !- Minimum Value of y
-							#   2;                  !- Maximum Value of y
-							exist_hp_heat_eir_fff3_name = @heat_coil.energyInputRatioFunctionofFlowFractionCurve.name
-							hp_heat_eir_fff3 = OpenStudio::Model::CurveQuadratic.new(model)
-							hp_heat_eir_fff3.setName("#{exist_hp_heat_eir_fff3_name}-modified")
-							hp_heat_eir_fff3.setCoefficient1Constant(1)
-							hp_heat_eir_fff3.setCoefficient2x(0.0)
-							hp_heat_eir_fff3.setCoefficient3xPOW2(0.0)
-							hp_heat_eir_fff3.setMinimumValueofx(0)
-							hp_heat_eir_fff3.setMaximumValueofx(2)
-							
+		#Create a new EIR function of temperature curve
+		#Curve:Biquadratic,
+		#   hp_heat_eir_ft3,   !- Name
+		#   0.5725180114,0.02289624912,0.000266018904,-0.0106675434,0.00049092156,-0.00068136876,   !- Coefficients (List)
+		#   -100,              !- Minimum Value of x
+		#   100,               !- Maximum Value of x
+		#   -100,              !- Minimum Value of y
+		#   100;               !- Maximum Value of y
+		exist_hp_heat_eir_ft3_name = @heat_coil.energyInputRatioFunctionofTemperatureCurve.name
+		hp_heat_eir_ft3 = OpenStudio::Model::CurveBiquadratic.new(model)
+		hp_heat_eir_ft3.setName("#{exist_hp_heat_eir_ft3_name}-modified")
+		hp_heat_eir_ft3.setCoefficient1Constant(0.57252)
+		hp_heat_eir_ft3.setCoefficient2x(0.0229)
+		hp_heat_eir_ft3.setCoefficient3xPOW2(0.00026602)
+		hp_heat_eir_ft3.setCoefficient4y(-0.010668)
+		hp_heat_eir_ft3.setCoefficient5yPOW2(0.000491)
+		hp_heat_eir_ft3.setCoefficient6xTIMESY(-0.0006814)
+		hp_heat_eir_ft3.setMinimumValueofx(-100)
+		hp_heat_eir_ft3.setMaximumValueofx(100)
+		hp_heat_eir_ft3.setMinimumValueofy(-100)
+		hp_heat_eir_ft3.setMaximumValueofy(100)
+						
+		#Create a new part load function correlation curve
+		#Curve:Quadratic,
+		#   hp_heat_plf_fplr3,   !- Name
+		#   0.76,0.24,0,         !- Coefficients (List)
+		#   0,                   !- Minimum Value of x
+		#   1,                   !- Maximum Value of x
+		#   0.7,                 !- Minimum Value of y
+		#   1;                   !- Maximum Value of y
+		exist_hp_heat_plf_fplr3_name = @heat_coil.partLoadFractionCorrelationCurve.name
+		hp_heat_plf_fplr3 = OpenStudio::Model::CurveQuadratic.new(model)
+		hp_heat_plf_fplr3.setName("#{exist_hp_heat_plf_fplr3_name}-modified")
+		hp_heat_plf_fplr3.setCoefficient1Constant(0.76)
+		hp_heat_plf_fplr3.setCoefficient2x(0.24)
+		hp_heat_plf_fplr3.setCoefficient3xPOW2(0.0)
+		hp_heat_plf_fplr3.setMinimumValueofx(0)
+		hp_heat_plf_fplr3.setMaximumValueofx(1)
+	
+		#Create a new heating capacity of flow fraction curve
+		#Curve:Quadratic,
+		#   hp_heat_cap_fff3,   !- Name
+		#   1,0,0,              !- Coefficients (List)
+		#   0,                  !- Minimum Value of x
+		#   2,                  !- Maximum Value of x
+		#   0,                  !- Minimum Value of y
+		#   2;                  !- Maximum Value of y
+		exist_hp_heat_cap_fff3_name = @heat_coil.totalHeatingCapacityFunctionofFlowFractionCurve.name
+		hp_heat_cap_fff3 = OpenStudio::Model::CurveQuadratic.new(model)
+		hp_heat_cap_fff3.setName("#{exist_hp_heat_cap_fff3_name}-modified")
+		hp_heat_cap_fff3.setCoefficient1Constant(1)
+		hp_heat_cap_fff3.setCoefficient2x(0.0)
+		hp_heat_cap_fff3.setCoefficient3xPOW2(0.0)
+		hp_heat_cap_fff3.setMinimumValueofx(0)
+		hp_heat_cap_fff3.setMaximumValueofx(2)
+						
+		#Create a new EIR of flow fraction curve
+		#Curve:Quadratic,
+		#   hp_heat_eir_fff3,   !- Name
+		#   1,0,0,              !- Coefficients (List)
+		#   0,                  !- Minimum Value of x
+		#   2,                  !- Maximum Value of x
+		#   0,                  !- Minimum Value of y
+		#   2;                  !- Maximum Value of y
+		exist_hp_heat_eir_fff3_name = @heat_coil.energyInputRatioFunctionofFlowFractionCurve.name
+		hp_heat_eir_fff3 = OpenStudio::Model::CurveQuadratic.new(model)
+		hp_heat_eir_fff3.setName("#{exist_hp_heat_eir_fff3_name}-modified")
+		hp_heat_eir_fff3.setCoefficient1Constant(1)
+		hp_heat_eir_fff3.setCoefficient2x(0.0)
+		hp_heat_eir_fff3.setCoefficient3xPOW2(0.0)
+		hp_heat_eir_fff3.setMinimumValueofx(0)
+		hp_heat_eir_fff3.setMaximumValueofx(2)
+						
 		#Assigning the existing curves with new ones
 		@heat_coil.setTotalHeatingCapacityFunctionofTemperatureCurve(hp_heat_cap_ft3)
 		@heat_coil.setTotalHeatingCapacityFunctionofFlowFractionCurve (hp_heat_cap_fff3)

@@ -67,7 +67,7 @@ class LowerMinimumAirflowRatesForVAVTerminal < OpenStudio::Ruleset::ModelUserScr
 			thermal_zones = loop.thermalZones
 
 			
-			#find airflow rates on loop
+			#find thermal zone attached to each air loop
 			thermal_zones.each do |thermal_zone|
 				  
 				# get the thermal zone area

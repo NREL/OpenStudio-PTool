@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require_relative '../measure.rb'
 require 'fileutils'
 
-class CorrectHvacOperationSchedulesTest < MiniTest::Unit::TestCase
+class CloseOutdoorAirDamperDuringUnoccupiedPeriodsTest < MiniTest::Unit::TestCase
 
   # def setup
   # end
@@ -14,7 +14,7 @@ class CorrectHvacOperationSchedulesTest < MiniTest::Unit::TestCase
 
   def test_number_of_arguments_and_argument_names
     # create an instance of the measure
-    measure = CorrectHvacOperationSchedules.new
+    measure = CloseOutdoorAirDamperDuringUnoccupiedPeriods.new
 
     # make an empty model
     model = OpenStudio::Model::Model.new
@@ -27,7 +27,7 @@ class CorrectHvacOperationSchedulesTest < MiniTest::Unit::TestCase
 
   def test_bad_argument_values
     # create an instance of the measure
-    measure = CorrectHvacOperationSchedules.new
+    measure = CloseOutdoorAirDamperDuringUnoccupiedPeriods.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
@@ -65,7 +65,7 @@ class CorrectHvacOperationSchedulesTest < MiniTest::Unit::TestCase
 
   def test_good_argument_values
     # create an instance of the measure
-    measure = CorrectHvacOperationSchedules.new
+    measure = CloseOutdoorAirDamperDuringUnoccupiedPeriods.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new

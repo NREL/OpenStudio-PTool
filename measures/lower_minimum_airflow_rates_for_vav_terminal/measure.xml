@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>lower_minimum_airflow_rates_for_vav_terminal</name>
   <uid>612cc2dc-5673-406d-88c9-5b08bb0b8b77</uid>
-  <version_id>3d6dc5cd-a8f8-4299-a38f-184440fac81b</version_id>
+  <version_id>783f12a3-ef90-49cd-9686-1439df9fa1cd</version_id>
   <xml_checksum>1D1E4CE3</xml_checksum>
   <class_name>LowerMinimumAirflowRatesForVAVTerminal</class_name>
   <display_name>Lower minimum airflow rates for VAV terminal</display_name>
@@ -69,17 +69,6 @@
       <checksum>F9663EDD</checksum>
     </file>
     <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.8.0</identifier>
-        <min_compatible>1.8.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>F90AC3F7</checksum>
-    </file>
-    <file>
       <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -119,7 +108,18 @@
       <filename>lower_minimum_airflow_rates_for_vav_terminal_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>94CC2F7F</checksum>
+      <checksum>B539F8D3</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>BD34D598</checksum>
     </file>
   </files>
 </measure>

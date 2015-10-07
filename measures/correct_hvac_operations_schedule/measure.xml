@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>correct_hvac_operations_schedule</name>
   <uid>22acd06c-84b0-4691-83e1-f994f90c983e</uid>
-  <version_id>8513db52-fc43-4ef6-88e2-8bf48b51b42a</version_id>
+  <version_id>8bd1564b-d4f1-41d0-9dee-7a7872b8061f</version_id>
   <xml_checksum>9B10BC3B</xml_checksum>
   <class_name>CorrectHVACOperationsSchedule</class_name>
   <display_name>Correct HVAC Operations Schedule</display_name>
@@ -94,7 +94,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>339ADD4C</checksum>
+      <checksum>E0F37E05</checksum>
     </file>
   </files>
 </measure>

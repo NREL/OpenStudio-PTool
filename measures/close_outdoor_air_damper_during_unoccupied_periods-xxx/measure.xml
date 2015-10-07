@@ -1,13 +1,12 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <error>invalid null reference Expected argument 5 of type std::vector&lt; openstudio::ruleset::OSArgument,std::allocator&lt; openstudio::ruleset::OSArgument > > const &amp;, but got NilClass nil
-	in SWIG method 'RubyUserScriptInfo'</error>
-  <name>correct_hvac_operation_schedules</name>
-  <uid>ec21712c-34b8-435b-bc7a-50a32262ce17</uid>
-  <version_id>c0a969c7-bea2-4399-b3e6-f7997c2180b9</version_id>
+  <error>C:/OpenStudio-PTool/measures/close_outdoor_air_damper_during_unoccupied_periods/measure.rb:33: syntax error, unexpected end-of-input, expecting keyword_end</error>
+  <name>close_outdoor_air_damper_during_unoccupied_periods</name>
+  <uid>045a2a02-cb17-4941-891c-ea89645aa756</uid>
+  <version_id>682df0ef-49c6-4633-a3c1-f95642c6cc1c</version_id>
   <xml_checksum>356BE47F</xml_checksum>
-  <class_name>CorrectHvacOperationSchedules</class_name>
-  <display_name>correct_hvac_operation_schedules</display_name>
+  <class_name>CloseOutdoorAirDamperDuringUnoccupiedPeriods</class_name>
+  <display_name>close_outdoor_air_damper_during_unoccupied_periods</display_name>
   <description>asdf</description>
   <modeler_description>asdf</modeler_description>
   <arguments>
@@ -48,28 +47,16 @@
   </attributes>
   <files>
     <file>
-      <filename>correct_hvac_operation_schedules_test.rb</filename>
+      <filename>close_outdoor_air_damper_during_unoccupied_periods_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>2EF13175</checksum>
+      <checksum>4965B506</checksum>
     </file>
     <file>
       <filename>example_model.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>C4F35230</checksum>
-    </file>
-    <file>
-      <filename>Standards.AirLoopHVAC.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>D0A6E988</checksum>
-    </file>
-    <file>
-      <filename>Standards.ThermalZoneHVAC.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>E7C2DCB8</checksum>
     </file>
     <file>
       <version>
@@ -80,7 +67,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>E116C8D3</checksum>
+      <checksum>87EC9C61</checksum>
     </file>
   </files>
 </measure>

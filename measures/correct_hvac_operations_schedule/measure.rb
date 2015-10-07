@@ -300,8 +300,16 @@ end # end set equip method
 	
     # report final condition of model
     runner.registerFinalCondition("The measure modified the availability schedules of #{air_loop_count} AirLoops and #{zone_hvac_equip_count} Zone HVAC Equipment objects. #{pump_count} pump objects had control settings modified.")
-    return true
+  
 
+	# Add ASHRAE Standard 55 warnings
+	
+	reporting_frequency = "Timestep"
+	outputVariable = OpenStudio::Model::OutputVariable.new("Zone Thermal Comfort ASHRAE 55 Adaptive Model 90% Acceptability Status []",model)
+    outputVariable.setReportingFrequency(reporting_frequency)
+    runner.registerInfo("Adding output variable for 'Zone Thermal Comfort ASHRAE 55 Adaptive Model 90% Acceptability Status' reporting at the model timestep.")
+	return true
+	
   end # end run method
   
 end # end class
