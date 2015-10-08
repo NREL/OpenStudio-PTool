@@ -98,7 +98,7 @@ class AddSensorCalibrationFaults < OpenStudio::Ruleset::WorkspaceUserScript
 			workspace.addObject(object)
 			
 			differential_dry_bulb = differential_dry_bulb + 1
-
+			# info message
 			runner.registerInfo("To model dry bulb sensor drift, a FaultModel:TemperatureSensorOffset:ReturnAir object with an offset of -2 deg F and a FaultModel:TemperatureSensorOffset:OutdoorAir object with an offset of +2 deg F has been added to the #{oa_controller_economizer_control_type} controlled airside economizer associated with the Controller:Outdoor air object named #{oa_controller_name}. The fault availability is scheduled using the 'Always On Discrete' schedule.")
 			
 
@@ -407,7 +407,7 @@ class AddSensorCalibrationFaults < OpenStudio::Ruleset::WorkspaceUserScript
 	# reporting when N/A condition is appropriate
 	if fixed_dry_bulb +	differential_dry_bulb + fixed_enthalpy + differential_enthalpy + fixed_dew_point_and_dry_bulb +	electronic_enthalpy + differential_dry_bulb_and_enthalpy == 0
 		runner.registerAsNotApplicable("Measure not applicable because the model contains no OutdoorAir:Controller objects with operable economizers.")
-	end
+	end 
 	
 	total = fixed_dry_bulb + differential_dry_bulb + fixed_enthalpy + differential_enthalpy + fixed_dew_point_and_dry_bulb + electronic_enthalpy + differential_dry_bulb_and_enthalpy
 	
@@ -418,7 +418,7 @@ class AddSensorCalibrationFaults < OpenStudio::Ruleset::WorkspaceUserScript
   
     return true
  
-  end # end run method
+   end # end run method
 
 end # end class definition
 

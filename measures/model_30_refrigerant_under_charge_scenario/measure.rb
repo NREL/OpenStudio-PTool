@@ -43,15 +43,17 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 	number_of_coil_cooling_dx_two_speed_with_humidity_control = 0
 	number_of_coil_heating_dx_single_speed = 0
 	number_of_coil_cooling_dx_multi_speed = 0
-
-	model.getModelObjects.each do |model_object|
 	
+	# start the do loop for model objects
+	model.getModelObjects.each do |model_object|
+		# if statement to get single speed DX coils
 		if model_object.to_CoilCoolingDXSingleSpeed.is_initialized
 			coil_cooling_dx_single_speed = model_object.to_CoilCoolingDXSingleSpeed.get
 			coil_name = coil_cooling_dx_single_speed.name
 			if coil_cooling_dx_single_speed.ratedCOP.is_initialized
+				# getting the COP
 				@initial_cop = coil_cooling_dx_single_speed.ratedCOP.get
-			end
+			end # end the if loop for COP
 
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
 			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
@@ -59,38 +61,48 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# Spreadsheet analysis of the regression coefficiencts for modeling heating and cooling annual COP
 			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
 
+			
+			# modify the COPs
 			modified_cop = (@initial_cop * (1 - 0.1102)) 
+			# setting the new name
 			coil_cooling_dx_single_speed.setName("#{coil_name} +30 Percent undercharge")
+			# assign the new COP to single speed DX
 			coil_cooling_dx_single_speed.setRatedCOP((OpenStudio::OptionalDouble.new(modified_cop)))
 			number_of_coil_cooling_dx_single_speed += 1
 			runner.registerInfo("Single Speed DX Cooling Coil object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
-		end 
-			
+		end # end the if loop for DX single speed cooling coils
+		
+		# if statement to get 2 speed DX coils	
 		if model_object.to_CoilCoolingDXTwoSpeed.is_initialized
 			coil_cooling_dx_two_speed = model_object.to_CoilCoolingDXTwoSpeed.get
 			coil_name = coil_cooling_dx_two_speed.name
 			if coil_cooling_dx_two_speed.ratedHighSpeedCOP.is_initialized
+				# get high speed COP
 				@initial_high_speed_cop = coil_cooling_dx_two_speed.ratedHighSpeedCOP.get
-			end
+			end # end if statement for high speed COP
 			if coil_cooling_dx_two_speed.ratedLowSpeedCOP.is_initialized
+				# get low speed COP
 				@initial_low_speed_cop = coil_cooling_dx_two_speed.ratedLowSpeedCOP.get
-			end
+			end # end if statement for low speed COP
 			
+			# modify high & low speed COP
 			modified_high_speed_cop = (@initial_high_speed_cop * (1 - 0.1102)) 
 			modified_low_speed_cop = (@initial_low_speed_cop * (1 - 0.1102)) 
 			
+			# set the new COPs
 			coil_cooling_dx_two_speed.setName("#{coil_name} +30 Percent undercharge")
 			coil_cooling_dx_two_speed.setRatedHighSpeedCOP(modified_high_speed_cop)
 			coil_cooling_dx_two_speed.setRatedLowSpeedCOP(modified_low_speed_cop)
 			
 			number_of_coil_cooling_dx_two_speed += 1
 			runner.registerInfo("Two Speed DX Cooling Coil object renamed #{coil_name} +30 Percent undercharge has had initial high speed COP value of #{@initial_high_speed_cop} derated to a COP value of #{modified_high_speed_cop} and an initial lowspeed COP value of #{@initial_low_speed_cop} derated to a COP value of #{modified_low_speed_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
-		end 
+		end  # end 2 speed cooling coil if statement
 
+		# if statement for heating coil single speed
 		if model_object.to_CoilHeatingDXSingleSpeed.is_initialized
 			coil_heating_dx_single_speed = model_object.to_CoilHeatingDXSingleSpeed.get
 			coil_name = coil_heating_dx_single_speed.name
-		
+			# get the initial COP 
 			@initial_cop = coil_heating_dx_single_speed.ratedCOP
 
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
@@ -99,45 +111,52 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# Spreadsheet analysis of the regression coefficiencts for modeling heating and cooling annual COP
 			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
 
+			# modify the COP
 			modified_cop = (@initial_cop * (1 - 0.0824)) 
 			coil_heating_dx_single_speed.setName("#{coil_name} +30 Percent undercharge")
 			coil_heating_dx_single_speed.setRatedCOP(modified_cop)
 			number_of_coil_heating_dx_single_speed += 1
 			runner.registerInfo("Single Speed DX Heating Coil object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
-		end 
+		end # end if statemen for heating coil single speed
 	
+		# if statement for cooling coil DX 2 stage with humidity control mode
 		if model_object.to_CoilCoolingDXTwoStageWithHumidityControlMode.is_initialized
 			coil_cooling_two_stage_with_humidity_control_mode = model_object.to_CoilCoolingDXTwoStageWithHumidityControlMode.get
 			coil_name = coil_cooling_two_stage_with_humidity_control_mode.name
 			
+			# modification of the coil
 			if coil_cooling_two_stage_with_humidity_control_mode.normalModeStage1CoilPerformance.is_initialized
 				normal_mode_stage_1 = coil_cooling_two_stage_with_humidity_control_mode.normalModeStage1CoilPerformance.get
 				normal_mode_stage_1_initial_COP = normal_mode_stage_1.grossRatedCoolingCOP
 				normal_mode_stage_1_modified_COP = (normal_mode_stage_1_initial_COP * (1 - 0.1102)) 
 				normal_mode_stage_1.setGrossRatedCoolingCOP(normal_mode_stage_1_modified_COP)
-			end
+			end # end the modification if statement
 			
+			# if statement for plus 2 coil performance
 			if coil_cooling_two_stage_with_humidity_control_mode.normalModeStage1Plus2CoilPerformance.is_initialized
 				normal_mode_stage_1_plus_2 = coil_cooling_two_stage_with_humidity_control_mode.normalModeStage1Plus2CoilPerformance.get
 				normal_mode_stage_1_plus_2_initial_COP = normal_mode_stage_1_plus_2.grossRatedCoolingCOP
 				normal_mode_stage_1_plus_2_modified_COP = (normal_mode_stage_1_plus_2_initial_COP * (1 - 0.1102)) 
 				normal_mode_stage_1_plus_2.setGrossRatedCoolingCOP(normal_mode_stage_1_plus_2_modified_COP)
-			end
-							
+			end # end of plus 2 coil performance if statement
+					
+			# if statement for dehumidificationMode1Stage1CoilPerformance		
 			if coil_cooling_two_stage_with_humidity_control_mode.dehumidificationMode1Stage1CoilPerformance.is_initialized
 				dehumid_mode_stage_1 = coil_cooling_two_stage_with_humidity_control_mode.dehumidificationMode1Stage1CoilPerformance.get
 				dehumid_mode_stage_1_initial_COP = normal_mode_stage_1_plus_2.grossRatedCoolingCOP
 				dehumid_mode_stage_1_modified_COP = (dehumid_mode_stage_1_initial_COP * (1 - 0.1102)) 
 				dehumid_mode_stage_1.setGrossRatedCoolingCOP(dehumid_mode_stage_1_modified_COP)
-			end
+			end # end of dehumidificationMode1Stage1CoilPerformance 
 			
+			# if statement for dehumidificationMode1Stage1Plus2CoilPerformance
 			if coil_cooling_two_stage_with_humidity_control_mode.dehumidificationMode1Stage1Plus2CoilPerformance.is_initialized
 				dehumid_mode_stage_1_plus_2 = coil_cooling_two_stage_with_humidity_control_mode.dehumidificationMode1Stage1Plus2CoilPerformance.get
 				dehumid_mode_stage_1_plus_2_initial_COP = normal_mode_stage_1_plus_2.grossRatedCoolingCOP
 				dehumid_mode_stage_1_plus_2_modified_COP = (dehumid_mode_stage_1_plus_2_initial_COP * (1 - 0.1102)) 
 				dehumid_mode_stage_1_plus_2.setGrossRatedCoolingCOP(dehumid_mode_stage_1_plus_2_modified_COP)
-			end
-		
+			end # end for dehumidificationMode1Stage1Plus2CoilPerformance
+			
+			# info messages
 			runner.registerInfo("Two Stage DX Cooling Coil with humidity control renamed #{coil_name} + 30 percent undercharge.")
 			runner.registerInfo("Normal Mode Stage 1 modified with initial COP value of #{normal_mode_stage_1_initial_COP} derated to a COP value of #{normal_mode_stage_1_modified_COP}.")
 			runner.registerInfo("Normal Mode Stage 1 plus 2 modified with initial COP value of #{normal_mode_stage_1_plus_2_initial_COP} derated to a COP value of #{normal_mode_stage_1_plus_2_modified_COP}.")
@@ -146,16 +165,18 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 
 			number_of_coil_cooling_dx_two_speed_with_humidity_control += 1
 
-		end 
+		end #end the cooling coil DX 2 stage with humidity control loop
 
+		# if statement for Cooling coil multispeed coil
 		if model_object.to_CoilCoolingDXMultiSpeed.is_initialized
 			coil_cooling_dx_multispeed = model_object.to_CoilCoolingDXMultiSpeed.get
 			coil_name = coil_cooling_dx_multispeed.name
 			dx_stages = coil_cooling_dx_multispeed.stages
+			# do loop for getting COP
 			dx_stages.each do |dx_stage|
 				count = count +1
 				initial_cop = dx_stage.grossRatedCoolingCOP
-				modified_cop = (initial_cop  * (1 - 0.1102)) 
+				modified_cop = (initial_cop  * (1 - 0.1102)) # modify the COP
 				dx_stage.setGrossRatedCoolingCOP(modified_cop)
 				runner.registerInfo("Stage #{count} of Multispeed DX Cooling coil named #{coil_name} had the initial COP value of #{initial_cop} derated to a value of #{final_cop} to represent a 30 percent refrigerant underchange scenario.")
 			end # end loop through dx stages
@@ -163,9 +184,11 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 		end # end loop through to_CoilCoolingDXMultiSpeed objects  
 		
 	end # end loop through all model objects
-
+	
+	# total number of coils in the model
 	total = number_of_coil_cooling_dx_single_speed + number_of_coil_cooling_dx_two_speed + number_of_coil_cooling_dx_two_speed_with_humidity_control + number_of_coil_heating_dx_single_speed + number_of_coil_cooling_dx_multi_speed = 0
 	
+	# non applicable message
 	if total == 0 
 		runner.registerAsNotApplicable("No qualifed DX cooling or heating objects are present in this model. The measure is not applicible.")
 		return true
