@@ -40,31 +40,40 @@ class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
 	changed_sch_array_true = []
 	changed_sch_array_false = []
 	
-	#STEP1
-	@all_airloops = model.getAirLoopHVACs   # getting all airloops
+	# Get all airloops in model and populate an array
+	@all_airloops = model.getAirLoopHVACs   
 	air_loops_array << @all_airloops
+	#Loop through all airloops in model 
 	@all_airloops.each do |loop| 
-		@airloops_availability_sch = loop.availabilitySchedule # availability schedule for all airloops
-		@thermal_zones = loop.thermalZones # all thermal zones assigned to airloops
+		# Retrieve the existing availability schedule for the airloop
+		@airloops_availability_sch = loop.availabilitySchedule 
+		# Retrieve all thermal zones associated with a single airloop
+		@thermal_zones = loop.thermalZones 
+		# Loop through each thermal zone
 		@thermal_zones.each do |eqip_zn| 
+			# Retrieve ZoneHVACEquipment objects attached to the thermal zone
 			@thermal_zones_equipment = eqip_zn.equipment # zone equipments assigned to thermal zones
-				@thermal_zones_equipment.each do |exh_fan|
-					if exh_fan.to_FanZoneExhaust.is_initialized
-						@fan_exhaust = exh_fan.to_FanZoneExhaust.get # getting all fan exhaust to related thermal zones
-						fan_exhaust_array << @fan_exhaust				
-						if @fan_exhaust.availabilitySchedule.is_initialized
-							fan_exh_avail_sch = @fan_exhaust.availabilitySchedule.get # availability schedule of exhausts
-							changed_sch = @fan_exhaust.setAvailabilitySchedule(@airloops_availability_sch) # changing fan schedules to airloop availability schedules
-							runner.registerInfo("Availability Schedule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' has been changed to '#{@airloops_availability_sch.name}' from '#{fan_exh_avail_sch.name}'.")
-							if changed_sch == true # condition 
-								changed_sch_array_true << changed_sch
-								elsif changed_sch_array_false << changed_sch
-							end
-						end #end fan exhaust availability if loop
-					end  # end fan exhaust 
-				end # end thermal zone equipment do loop
-		end		 #end thermal zone loop
-	end	#end do airloop
+			@thermal_zones_equipment.each do |exh_fan|
+				# Check to see if ZoneHVACEquipment object type = Exhaust Fan, if so map to variable and store in object array
+				if exh_fan.to_FanZoneExhaust.is_initialized
+					@fan_exhaust = exh_fan.to_FanZoneExhaust.get  
+					fan_exhaust_array << @fan_exhaust				
+					# Check to see if Exhaust Fan Object has an availability schedule already defined
+					if @fan_exhaust.availabilitySchedule.is_initialized
+						fan_exh_avail_sch = @fan_exhaust.availabilitySchedule.get 
+						#Set availability schedule for current fan exhaust object. NOTE: boolean set method returns true if successful
+						changed_sch = @fan_exhaust.setAvailabilitySchedule(@airloops_availability_sch) 
+						runner.registerInfo("Availability Schedule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' has been changed to '#{@airloops_availability_sch.name}' from '#{fan_exh_avail_sch.name}'.")
+						if changed_sch == true 
+							changed_sch_array_true << changed_sch
+						elsif  
+							changed_sch_array_false << changed_sch
+						end
+					end #end fan exhaust availability if loop
+				end  # end fan exhaust 
+			end # end loop through zone HVAC equipment objects
+		end	# end loop through thermal zones
+	end	# end loop through airloops
 	
 	# not applicable message if there is no airloop or zone exhaust equipment
 	if
@@ -81,9 +90,9 @@ class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
     runner.registerFinalCondition("The Availability Schedules for #{changed_sch_array_true.length} 'Fan:ZoneExhaust' schedule(s) were altered to match the availability schedules of supply fans. The number of unchanged 'Fan: ZoneExhaust' object(s) = #{changed_sch_array_false.length}.")
     return true
 
-  end
+  end # end run method
   
-end
+end # end class 
 
 # register the measure to be used by the application
 ExhaustFanInterlock.new.registerWithApplication
