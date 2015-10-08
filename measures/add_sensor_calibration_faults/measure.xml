@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_sensor_calibration_faults</name>
   <uid>c2a21cf1-c9e3-4432-8111-5d28ab9281eb</uid>
-  <version_id>335a88ac-2fa5-41bd-96f3-e5cf66e4bb9e</version_id>
+  <version_id>1e56e900-865c-4e16-8cca-6fd119ea6b39</version_id>
   <xml_checksum>A922EE0F</xml_checksum>
   <class_name>AddSensorCalibrationFaults</class_name>
   <display_name>add sensor calibration faults</display_name>
@@ -72,7 +72,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>575EB139</checksum>
+      <checksum>034AB897</checksum>
     </file>
   </files>
 </measure>

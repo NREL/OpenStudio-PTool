@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>exhaust_fan_interlock</name>
   <uid>4e7528ac-4926-400f-8932-a18d924bb1a7</uid>
-  <version_id>e64a482c-65aa-4b36-b9d6-19716460e79e</version_id>
+  <version_id>87a9015d-990b-41e0-a1ea-098429b3ec61</version_id>
   <xml_checksum>3379E2F8</xml_checksum>
   <class_name>ExhaustFanInterlock</class_name>
   <display_name>Exhaust Fan Interlock</display_name>
@@ -58,17 +58,6 @@
       <checksum>827EA127</checksum>
     </file>
     <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.9.0</identifier>
-        <min_compatible>1.9.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>4B5DEAB1</checksum>
-    </file>
-    <file>
       <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -115,6 +104,17 @@
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>EF42DC2D</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>59239C14</checksum>
     </file>
   </files>
 </measure>
