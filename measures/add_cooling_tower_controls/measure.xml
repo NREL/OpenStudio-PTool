@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_cooling_tower_controls</name>
   <uid>4d58196f-03e2-4e5d-b316-169f61fbce77</uid>
-  <version_id>cb44f5c7-5661-40c9-9388-b61f0e3e395b</version_id>
+  <version_id>de3a8752-076f-481b-b3a0-324dc329d61a</version_id>
   <xml_checksum>F27B6ED6</xml_checksum>
   <class_name>AddCoolingTowerControls</class_name>
   <display_name>add_cooling_tower_controls</display_name>
@@ -42,12 +42,6 @@
   </attributes>
   <files>
     <file>
-      <filename>add_cooling_tower_controls_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>2BB76B13</checksum>
-    </file>
-    <file>
       <filename>example_model.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -63,6 +57,60 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>A364FD95</checksum>
+    </file>
+    <file>
+      <filename>add_cooling_tower_controls_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>77D3719A</checksum>
+    </file>
+    <file>
+      <filename>cooling_tower_test_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>13144EAF</checksum>
+    </file>
+    <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FEF48F6F</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F9663EDD</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>56708A27</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3D921039</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EF42DC2D</checksum>
     </file>
   </files>
 </measure>

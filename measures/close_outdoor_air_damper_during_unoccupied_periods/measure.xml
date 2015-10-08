@@ -1,27 +1,17 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <error>C:/OpenStudio-PTool/measures/close_outdoor_air_damper_during_unoccupied_periods/measure.rb:33: syntax error, unexpected end-of-input, expecting keyword_end</error>
   <name>close_outdoor_air_damper_during_unoccupied_periods</name>
-  <uid>045a2a02-cb17-4941-891c-ea89645aa756</uid>
-  <version_id>682df0ef-49c6-4633-a3c1-f95642c6cc1c</version_id>
-  <xml_checksum>356BE47F</xml_checksum>
+  <uid>f4e23550-96ff-457b-aed7-2a250a2d035a</uid>
+  <version_id>2f33e5d3-6807-4bef-8a06-8a2b6794dd6a</version_id>
+  <xml_checksum>4EED0D08</xml_checksum>
   <class_name>CloseOutdoorAirDamperDuringUnoccupiedPeriods</class_name>
-  <display_name>close_outdoor_air_damper_during_unoccupied_periods</display_name>
-  <description>asdf</description>
-  <modeler_description>asdf</modeler_description>
-  <arguments>
-    <argument>
-      <name>space_name</name>
-      <display_name>New space name</display_name>
-      <description>This name will be used as the name of the new space.</description>
-      <type>String</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-  </arguments>
+  <display_name>Close Outdoor Air Damper During Unoccupied Periods</display_name>
+  <description>This energy efficiency measure (EEM) changes the minimum outdoor air flow requirement of all Controller:OutdoorAir objects associated with airloops and present in a model to represent a value equal to 0 cfm during unoccupied periods. For single zone air systems, unoccupied periods are defined as periods when the any connected thermal zone has less than 5% of the peak specified occupancy.  For multi zone air systems, unoccupied periods are defined as periods when the average occupancy of all connected thermal zones is less than 5% of the peak specified occupancy.  In addition to outdoor air controller objects attached to airloops, the measure also limits the outdoor air of Four Pipe Fan Coil Units and Unit Ventilator objects if they are present as Zone HVAC equipment objects. </description>
+  <modeler_description>This measure loops through all Thermal zones connected to Airloops having an Outdoor Air Controller object, and determines a space-weighted occupancy schedule for each attached thermal zone. The resulting occupancy schedules for each thermal zone are stepped through from hour 0 to hour 24. An airloop is considered occupied during a time period if all thermal zones representing occupancy associated with an air loop have a current occupancy value that is greater than 5% of the annual peak occupancy value.  The measure generates a new minimum outdoor air schedule having values of 0 where the all connected thermal zones have less than 5% occupancy and values of 1.0 for all other hours. Finally, the measure examines all Zone HVAC Equipment objects associated with an airloop. If Zone HVAC equipment object of type Four Pipe Fan Coil Unit or Unit Ventilator are found, the occupancy patterns associated with the thermal zone are analyzed and outside air schedules are assigned to allow design outside air levels when the thermal zone is occupied by more than 5 percent of thermal zone peak occupancy, otherwise shit the outside air damper of the Zone HVAC Equipment object completely.</modeler_description>
+  <arguments/>
   <provenances/>
   <tags>
-    <tag>HVAC.HVAC Controls</tag>
+    <tag>HVAC.Ventilation</tag>
   </tags>
   <attributes>
     <attribute>
@@ -44,6 +34,31 @@
       <value>Parametric Analysis Tool</value>
       <datatype>string</datatype>
     </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Calibration</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Sensitivity Analysis</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
   </attributes>
   <files>
     <file>
@@ -59,15 +74,27 @@
       <checksum>C4F35230</checksum>
     </file>
     <file>
+      <filename>Standards.AirLoopHVAC.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>D0A6E988</checksum>
+    </file>
+    <file>
+      <filename>Standards.ThermalZoneHVAC.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E7C2DCB8</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
-        <identifier>1.8.0</identifier>
-        <min_compatible>1.8.0</min_compatible>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
       </version>
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>87EC9C61</checksum>
+      <checksum>BD960F4B</checksum>
     </file>
   </files>
 </measure>

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>exhaust_fan_interlock</name>
   <uid>4e7528ac-4926-400f-8932-a18d924bb1a7</uid>
-  <version_id>ff316fec-de16-4608-a8d3-3a3fc7319c5e</version_id>
+  <version_id>87a9015d-990b-41e0-a1ea-098429b3ec61</version_id>
   <xml_checksum>3379E2F8</xml_checksum>
   <class_name>ExhaustFanInterlock</class_name>
   <display_name>Exhaust Fan Interlock</display_name>
@@ -58,6 +58,54 @@
       <checksum>827EA127</checksum>
     </file>
     <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FEF48F6F</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>56708A27</checksum>
+    </file>
+    <file>
+      <filename>exhaust_fan_interlock_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>37C63F98</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F9663EDD</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3D921039</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EF42DC2D</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.9.0</identifier>
@@ -66,43 +114,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4B5DEAB1</checksum>
-    </file>
-    <file>
-      <filename>erer.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>415FA0E5</checksum>
-    </file>
-    <file>
-      <filename>exhaust_fan_interlock_test_template.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>3D837B4F</checksum>
-    </file>
-    <file>
-      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FEF48F6F</checksum>
-    </file>
-    <file>
-      <filename>exhaust_fan_interlock_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>0CFAAC27</checksum>
-    </file>
-    <file>
-      <filename>exhaust_fan_interlock_test_2.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>9DEF75C9</checksum>
-    </file>
-    <file>
-      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>56708A27</checksum>
+      <checksum>59239C14</checksum>
     </file>
   </files>
 </measure>

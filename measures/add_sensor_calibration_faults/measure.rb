@@ -1,6 +1,16 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
+#	╔═╗┌─┐┬─┐┌─┐┌─┐┬─┐┌┬┐┌─┐┌┐┌┌─┐┌─┐  
+#	╠═╝├┤ ├┬┘├┤ │ │├┬┘│││├─┤││││  ├┤   
+#	╩  └─┘┴└─└  └─┘┴└─┴ ┴┴ ┴┘└┘└─┘└─┘  
+#	╔═╗┬ ┬┌─┐┌┬┐┌─┐┌┬┐┌─┐              
+#	╚═╗└┬┘└─┐ │ ├┤ │││└─┐              
+#	╚═╝ ┴ └─┘ ┴ └─┘┴ ┴└─┘              
+#	╔╦╗┌─┐┬  ┬┌─┐┬  ┌─┐┌─┐┌┬┐┌─┐┌┐┌┌┬┐ 
+#	 ║║├┤ └┐┌┘├┤ │  │ │├─┘│││├┤ │││ │  
+#	═╩╝└─┘ └┘ └─┘┴─┘└─┘┴  ┴ ┴└─┘┘└┘ ┴  
+                                  
 # start the measure
 class AddSensorCalibrationFaults < OpenStudio::Ruleset::WorkspaceUserScript
 
@@ -43,16 +53,13 @@ class AddSensorCalibrationFaults < OpenStudio::Ruleset::WorkspaceUserScript
 	electronic_enthalpy = 0
 	differential_dry_bulb_and_enthalpy = 0
 	
-	
 	# Retrieve all Controller:Outdoor air objects in the idf  	
 	oa_controllers = workspace.getObjectsByType("Controller:OutdoorAir".to_IddObjectType)
-	
 	
 	# Get the names of each Controller:Outdoor Air object
 	oa_controllers.each do |oa_controller|
 
 		oa_controller_name = oa_controller.getString(0).to_s #(0) is field Name
-
 		oa_controller_economizer_control_type = oa_controller.getString(7).to_s #(7) is field Economizer Control Type
 	
 		# test for presence No economizer controller setting 
