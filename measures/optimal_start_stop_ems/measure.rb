@@ -287,6 +287,8 @@ class OptimalStartStopEms < OpenStudio::Ruleset::WorkspaceUserScript
           sch.defaultDaySchedule.addValue(OpenStudio::Time.new(0,24,0,0),1)
           new_space_type_infil = OpenStudio::Model::SpaceInfiltrationDesignFlowRate.new(model)
           new_space_type_infil.setSchedule(sch)
+          #try skipping for now until E+ can be figured out
+          next
           #new_space_type_infil.setSpace(space)
           #zn_min_infil_name = new_space_type_infil.get.name.get
         else
