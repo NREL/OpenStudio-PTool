@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>model_30_refrigerant_under_charge_scenario</name>
   <uid>6cdf2104-04d3-4a8a-88bf-d5e1136a27fd</uid>
-  <version_id>913d5ee2-c2d9-4808-9454-a2afa5d6bfa5</version_id>
+  <version_id>ba4e6dac-4ab3-475c-97c2-a6348fae96f3</version_id>
   <xml_checksum>BB559B79</xml_checksum>
   <class_name>Model30RefrigerantUnderChargeScenario</class_name>
   <display_name>Model 30% Refrigerant UnderCharge Scenario</display_name>
@@ -67,7 +67,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9428AA26</checksum>
+      <checksum>82B9334D</checksum>
     </file>
   </files>
 </measure>

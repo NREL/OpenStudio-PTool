@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>chilled_water_supply_temperature_reset</name>
   <uid>ece0e213-408a-4f6a-a2ac-6d15f9bacff3</uid>
-  <version_id>d73273d2-b533-487a-9894-43ea7b78c20e</version_id>
+  <version_id>6962fdaa-62f6-494f-b23b-48a2873dd7c2</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>ChilledWaterSupplyTemperatureReset</class_name>
   <display_name>Chilled Water Supply Temperature Reset</display_name>
@@ -72,7 +72,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>712DAED3</checksum>
+      <checksum>AC0BE8EB</checksum>
     </file>
   </files>
 </measure>
