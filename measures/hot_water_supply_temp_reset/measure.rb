@@ -48,16 +48,15 @@ class HotWaterSupplyTempReset < OpenStudio::Ruleset::ModelUserScript
 				loop_type = plantLoop.sizingPlant.loopType
 				total_loop = plantLoop.sizingPlant.loopType.length
 				loop_temp = plantLoop.sizingPlant.designLoopExitTemperature
-				
 				if loop_type == "Heating" && loop_temp > 43.33 # finding all the 'heating' type loops
 					heating_plant_loop_array_initial << plantLoop	
 				end #end the heating loop condition		
-			end #end the heating loop
+			end #end loop through plant loops
 			
+			# remove any heating plant loop that have water use connection objects associated
 			heating_plant_loop_array = heating_plant_loop_array_initial.select {|l| not l.demandComponents.any? {|dc| dc.to_WaterUseConnections.is_initialized}} # removing SWH loops from all heating loops considering all SWH will have wateruseconnections for DHW consumptions
 			heating_plant_loop_array.each do |l| 
 			end
-			
 			
 			if
 				heating_plant_loop_array.length == 0
@@ -68,99 +67,100 @@ class HotWaterSupplyTempReset < OpenStudio::Ruleset::ModelUserScript
 			
 			# Loop through heating_plant_loop_array to find setpoint objects	
 			heating_plant_loop_array.each do |pl| #runner.registerInfo("XXX = #{pl.supplyComponents.length}") 
-				pl.supplyComponents.each do |sc|
-					if sc.iddObjectType.valueDescription == "OS:Node"
-						@setpoint_list = sc.to_Node.get.setpointManagers #runner.registerInfo("list of setpoints = #{@setpoint_list.length}") 
+			pl.supplyComponents.each do |sc|
+				if sc.iddObjectType.valueDescription == "OS:Node"
+					@setpoint_list = sc.to_Node.get.setpointManagers #runner.registerInfo("list of setpoints = #{@setpoint_list.length}") 
+				end
+				
+				@setpoint_list.each do |managertype|
+					# get count of OS:SetpointManagerOutdoorAirReset objects & assign a new setpoint manager:OA reset to the same node the existing one was attached
+					if managertype.to_SetpointManagerOutdoorAirReset.is_initialized
+						setpoint_OA_reset_array << managertype.to_SetpointManagerOutdoorAirReset.get
+						setpoint_OA_reset_array.each do |sp|
+							if sp.setpointNode.is_initialized
+								set_point_node_oa = sp.setpointNode.get
+								new_setpoint_OA_reset = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
+								new_setpoint_OA_reset.addToNode(set_point_node_oa)
+								new_setpoint_OA_reset.setName("#{managertype.name}_replaced")
+								new_setpoint_OA_reset.setOutdoorHighTemperature(15.56)
+								new_setpoint_OA_reset.setOutdoorLowTemperature(-6.67)
+								new_setpoint_OA_reset.setSetpointatOutdoorHighTemperature(71.1)
+								new_setpoint_OA_reset.setSetpointatOutdoorLowTemperature(82.2)
+								runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_OA_reset.name} has replaced the existing outdoor air reset setpoint manager object serving the hot water plant loop named #{pl.name}. The setpoint manager resets the hot water setpoint from 71.1 deg C to 82.2 deg C between outdoor air temps of 15.56 Deg C and -6.67 Deg C.")
+							end
+						end
+					end
+				
+					# get count of OS:SetpointManagerScheduled objects	& assign a new setpoint manager:OA reset to the same node the existing one was attached	
+					if managertype.to_SetpointManagerScheduled.is_initialized
+						setpoint_scheduled_array << managertype.to_SetpointManagerScheduled.get
+						setpoint_scheduled_array.each do |sp1|
+							if sp1.setpointNode.is_initialized
+								set_point_node_sched = sp1.setpointNode.get
+								new_setpoint_sched = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
+								new_setpoint_sched.addToNode(set_point_node_sched)
+								new_setpoint_sched.setName("#{managertype.name}_replaced")
+								new_setpoint_sched.setOutdoorHighTemperature(15.56)
+								new_setpoint_sched.setOutdoorLowTemperature(-6.67)
+								new_setpoint_sched.setSetpointatOutdoorHighTemperature(71.1)
+								new_setpoint_sched.setSetpointatOutdoorLowTemperature(82.2)
+								runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_OA_reset.name} has replaced the existing scheduled setpoint manager object serving the hot water plant loop named #{pl.name}. The setpoint manager resets the hot water setpoint from 71.1 deg C to 82.2 deg C between outdoor air temps of 15.56 Deg C and -6.67 Deg C.")
+								runner.registerInfo("Information about New Setpoint:manager:OA reset: \n#{new_setpoint_sched}")
+							end
+						end
+					end	
+					
+					# get count of OS:SetpointManagerScheduledDualSetpoint objects	& assign a new setpoint manager:OA reset to the same node the existing one was attached	
+					if managertype.to_SetpointManagerScheduledDualSetpoint.is_initialized
+						setpoint_scheduled_dual_array << managertype.to_SetpointManagerScheduledDualSetpoint.get
+						setpoint_scheduled_dual_array.each do |sp2|
+							if sp2.setpointNode.is_initialized
+								set_point_node_dual = sp2.setpointNode.get
+								new_setpoint_dual = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
+								new_setpoint_dual.addToNode(set_point_node_dual)
+								new_setpoint_dual.setName("#{managertype.name}_replaced")
+								new_setpoint_dual.setOutdoorHighTemperature(15.56)
+								new_setpoint_dual.setOutdoorLowTemperature(-6.67)
+								new_setpoint_dual.setSetpointatOutdoorHighTemperature(71.1)
+								new_setpoint_dual.setSetpointatOutdoorLowTemperature(82.2)
+								runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_OA_reset.name} has replaced the existing dual setpoint setpoint manager object serving the hot water plant loop named #{pl.name}. The setpoint manager resets the hot water setpoint from 71.1 deg C to 82.2 deg C between outdoor air temps of 15.56 Deg C and -6.67 Deg C.")
+							end
+						end
 					end
 					
-						@setpoint_list.each do |managertype|
-							# get count of OS:SetpointManagerOutdoorAirReset objects & assign a new setpoint manager:OA reset to the same node the existing one was attached
-							if managertype.to_SetpointManagerOutdoorAirReset.is_initialized
-								setpoint_OA_reset_array << managertype.to_SetpointManagerOutdoorAirReset.get
-									setpoint_OA_reset_array.each do |sp|
-										if sp.setpointNode.is_initialized
-											set_point_node_oa = sp.setpointNode.get
-											new_setpoint_OA_reset = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
-											new_setpoint_OA_reset.addToNode(set_point_node_oa)
-												new_setpoint_OA_reset.setName("#{managertype.name}_replaced")
-												new_setpoint_OA_reset.setOutdoorHighTemperature(15.56)
-												new_setpoint_OA_reset.setOutdoorLowTemperature(-6.67)
-												new_setpoint_OA_reset.setSetpointatOutdoorHighTemperature(71.1)
-												new_setpoint_OA_reset.setSetpointatOutdoorLowTemperature(82.2)
-											runner.registerInfo("Information about New Setpoint:manager:OA reset: \n#{new_setpoint_OA_reset}")
-										end
-									end
+					# get count of OS:SetpointManagerFollowOutdoorAirTemperature objects & assign a new setpoint manager:OA reset to the same node the existing one was attached		
+					if managertype.to_SetpointManagerFollowOutdoorAirTemperature.is_initialized
+						setpoint_follow_oa_temp_array << managertype.to_SetpointManagerFollowOutdoorAirTemperature.get
+						setpoint_follow_oa_temp_array.each do |sp3|
+							if sp3.setpointNode.is_initialized
+								set_point_node_follow_oa = sp3.setpointNode.get
+								new_setpoint_follow_oa = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
+								new_setpoint_follow_oa.addToNode(set_point_node_follow_oa)
+								new_setpoint_follow_oa.setName("#{managertype.name}_replaced")
+								new_setpoint_follow_oa.setOutdoorHighTemperature(15.555)
+								new_setpoint_follow_oa.setOutdoorLowTemperature(-6.666)
+								new_setpoint_follow_oa.setSetpointatOutdoorHighTemperature(71.12)
+								new_setpoint_follow_oa.setSetpointatOutdoorLowTemperature(82.23)
+								runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_OA_reset.name} has replaced the existing follow outdoor air temperature setpoint manager object serving the hot water plant loop named #{pl.name}. The setpoint manager resets the hot water setpoint from 71.1 deg C to 82.2 deg C between outdoor air temps of 15.56 Deg C and -6.67 Deg C.")
+
 							end
-				
-							
-							# get count of OS:SetpointManagerScheduled objects	& assign a new setpoint manager:OA reset to the same node the existing one was attached	
-							if managertype.to_SetpointManagerScheduled.is_initialized
-								setpoint_scheduled_array << managertype.to_SetpointManagerScheduled.get
-									setpoint_scheduled_array.each do |sp1|
-										if sp1.setpointNode.is_initialized
-											set_point_node_sched = sp1.setpointNode.get
-											new_setpoint_sched = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
-											new_setpoint_sched.addToNode(set_point_node_sched)
-												new_setpoint_sched.setName("#{managertype.name}_replaced")
-												new_setpoint_sched.setOutdoorHighTemperature(15.56)
-												new_setpoint_sched.setOutdoorLowTemperature(-6.67)
-												new_setpoint_sched.setSetpointatOutdoorHighTemperature(71.1)
-												new_setpoint_sched.setSetpointatOutdoorLowTemperature(82.2)
-											runner.registerInfo("Information about New Setpoint:manager:OA reset: \n#{new_setpoint_sched}")
-										end
-									end
-							end		
-							# get count of OS:SetpointManagerScheduledDualSetpoint objects	& assign a new setpoint manager:OA reset to the same node the existing one was attached	
-							if managertype.to_SetpointManagerScheduledDualSetpoint.is_initialized
-								setpoint_scheduled_dual_array << managertype.to_SetpointManagerScheduledDualSetpoint.get
-									setpoint_scheduled_dual_array.each do |sp2|
-										if sp2.setpointNode.is_initialized
-											set_point_node_dual = sp2.setpointNode.get
-											new_setpoint_dual = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
-											new_setpoint_dual.addToNode(set_point_node_dual)
-												new_setpoint_dual.setName("#{managertype.name}_replaced")
-												new_setpoint_dual.setOutdoorHighTemperature(15.56)
-												new_setpoint_dual.setOutdoorLowTemperature(-6.67)
-												new_setpoint_dual.setSetpointatOutdoorHighTemperature(71.1)
-												new_setpoint_dual.setSetpointatOutdoorLowTemperature(82.2)
-											runner.registerInfo("Information about New Setpoint:manager:OA reset: \n#{new_setpoint_dual}")
-										end
-									end
-							end
-							# get count of OS:SetpointManagerFollowOutdoorAirTemperature objects & assign a new setpoint manager:OA reset to the same node the existing one was attached		
-							if managertype.to_SetpointManagerFollowOutdoorAirTemperature.is_initialized
-								setpoint_follow_oa_temp_array << managertype.to_SetpointManagerFollowOutdoorAirTemperature.get
-									setpoint_follow_oa_temp_array.each do |sp3|
-										if sp3.setpointNode.is_initialized
-											set_point_node_follow_oa = sp3.setpointNode.get
-											new_setpoint_follow_oa = OpenStudio::Model::SetpointManagerOutdoorAirReset.new(model)
-											new_setpoint_follow_oa.addToNode(set_point_node_follow_oa)
-												new_setpoint_follow_oa.setName("#{managertype.name}_replaced")
-												new_setpoint_follow_oa.setOutdoorHighTemperature(15.555)
-												new_setpoint_follow_oa.setOutdoorLowTemperature(-6.666)
-												new_setpoint_follow_oa.setSetpointatOutdoorHighTemperature(71.12)
-												new_setpoint_follow_oa.setSetpointatOutdoorLowTemperature(82.23)
-											runner.registerInfo("Information about New Setpoint:manager:OA reset: \n#{new_setpoint_follow_oa}")
-										end
-									end
-							end			
-							
-						end #loop through setpoint do loop
-						
-				end # end supply component do loop
+						end
+					end			
+					
+				end #loop through setpoint do loop
+					
+			end # end supply component do loop
 		
 			# report initial condition of model
 			runner.registerInitialCondition("There are '#{heating_plant_loop_array.length}' eligible heating loops out of '#{model.getPlantLoops.length}' plant loops. \nEligible loops name(s): '#{eligible_heatingloop_names}'")
 
-
 			# report final condition of model
 			runner.registerFinalCondition("Hot Water Supply Temperature Reset has been applied to #{heating_plant_loop_array.length} plant loop(s). \nPlant Loops affected are: '#{eligible_heatingloop_names}'.")
-
 			return true
 
-			end #end the heating plant do loop
+		end #end the loop through the heating plant array
 	  
-	  end # end the run loop
+	end # end the run method
 
  end # end the class
 # register the measure to be used by the application
