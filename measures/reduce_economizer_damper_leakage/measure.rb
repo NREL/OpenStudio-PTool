@@ -31,7 +31,7 @@ class ReduceEconomizerDamperLeakage < OpenStudio::Ruleset::ModelUserScript
 	def run(model, runner, user_arguments)
 		super(model, runner, user_arguments)
 		
-			
+		# define neat numbers	
 		def neat_numbers(number, roundto = 2) #round to 0 or 2)
 			if roundto == 2
 				number = sprintf "%.2f", number
@@ -69,9 +69,8 @@ class ReduceEconomizerDamperLeakage < OpenStudio::Ruleset::ModelUserScript
 				if max_oa_autosize_status == true
 					sizing_run_required_counter +=1
 				end # end the min_oa_autosize if statement
-			end	
+			end	 # end control type if statement
 		end # end the do loop through airloops
-		
 		# execute the sizing run
 		if sizing_run_required_counter !=0
 			if model.runSizingRun("#{Dir.pwd}/SizingRun") == false
@@ -79,43 +78,55 @@ class ReduceEconomizerDamperLeakage < OpenStudio::Ruleset::ModelUserScript
 				return false
 			else 
 				runner.registerInfo("A sizing run for determining maximum OA flow rate '#{@initial_oa_controller.name}' completed - look in folder #{Dir.pwd}/SizingRun for results.")
-			end
+			end # end model.sizing run if statement
 		end # end the sizing run
 		# set the value of min_oa_flow for autosized or hardsized conditions
 		all_airloops = model.getAirLoopHVACs
 		all_airloops.each do |loop|
 			oa_air_sys = loop.airLoopHVACOutdoorAirSystem.get 
+			# get OA controllers
 			@initial_oa_controller = oa_air_sys.getControllerOutdoorAir
 			initial_oa_controller_array << @initial_oa_controller # array for all controllers
 			@econ_control_type_initial = @initial_oa_controller.getEconomizerControlType
+			# if condition if control type is not equal to 'noEconomizer'
 			if @econ_control_type_initial != "NoEconomizer"
 			economizer_array_true << @initial_oa_controller
-				max_oa_autosize_status = @initial_oa_controller.isMaximumOutdoorAirFlowRateAutosized
-				if max_oa_autosize_status == true
-					autosized_max_oa_rate = @initial_oa_controller.autosizedMaximumOutdoorAirFlowRate.get
-					existing_cfm = OpenStudio.convert(autosized_max_oa_rate,"m^3/s","cfm")
-					existing_cfm = neat_numbers(existing_cfm,2)
-					new_value_OA = 0.1 * autosized_max_oa_rate
-					new_cfm = OpenStudio.convert(new_value_OA,"m^3/s","cfm")
-					new_cfm = neat_numbers(new_cfm,2)
-					@initial_oa_controller.setMinimumOutdoorAirFlowRate(new_value_OA)
-					@initial_oa_controller.setMinimumOutdoorAirSchedule(always_on)
-					runner.registerInfo("The airloop '#{loop.name}' with OA controller named '#{@initial_oa_controller.name}' has had a minimum OA rate set to #{new_cfm} from #{existing_cfm}.")
-				else
-					# testing to see if maximum OA flow rate is empty
-					if @initial_oa_controller.maximumOutdoorAirFlowRate.is_initialized
-						init_min_oa_rate = @initial_oa_controller.maximumOutdoorAirFlowRate.get	
-						existing_cfm = OpenStudio.convert(init_min_oa_rate,"m^3/s","cfm")
-						existing_cfm = neat_numbers(existing_cfm,2)
-					end	
-					new_value_OA = init_min_oa_rate * 0.1
-					new_cfm = OpenStudio.convert(new_value_OA,"m^3/s","cfm")
-					new_cfm = neat_numbers(new_cfm,2)
-					@initial_oa_controller.setMinimumOutdoorAirFlowRate(new_value_OA)
-					@initial_oa_controller.setMinimumOutdoorAirSchedule(always_on)
-					runner.registerInfo("the OA controller named '#{@initial_oa_controller.name}' has had a minimum OA rate set to #{new_cfm} from #{existing_cfm}.")
-				end
+			# check autosizing for maximum OA air flowrate	
+			max_oa_autosize_status = @initial_oa_controller.isMaximumOutdoorAirFlowRateAutosized
+			# if condition when status is true
+			if max_oa_autosize_status == true
+				autosized_max_oa_rate = @initial_oa_controller.autosizedMaximumOutdoorAirFlowRate.get
+				# convert existing CFM into IP unit
+				existing_cfm = OpenStudio.convert(autosized_max_oa_rate,"m^3/s","cfm")
+				existing_cfm = neat_numbers(existing_cfm,2)
+				# Setting minimum OA flow rate equals to 10% of autosized max OA rate
+				new_value_OA = 0.1 * autosized_max_oa_rate
+				#conversion
+				new_cfm = OpenStudio.convert(new_value_OA,"m^3/s","cfm")
+				new_cfm = neat_numbers(new_cfm,2)
+				#assign the new value for min OA air flow
+				@initial_oa_controller.setMinimumOutdoorAirFlowRate(new_value_OA)
+				# assign the new schedule = always ON
+				@initial_oa_controller.setMinimumOutdoorAirSchedule(always_on)
+				runner.registerInfo("The airloop '#{loop.name}' with OA controller named '#{@initial_oa_controller.name}' has had a minimum OA rate set to #{new_cfm} from #{existing_cfm}.")
 			else
+				# testing to see if maximum OA flow rate is empty
+				if @initial_oa_controller.maximumOutdoorAirFlowRate.is_initialized
+					init_max_oa_rate = @initial_oa_controller.maximumOutdoorAirFlowRate.get	
+					# convert existing CFM into IP unit
+					existing_cfm = OpenStudio.convert(init_max_oa_rate,"m^3/s","cfm")
+					existing_cfm = neat_numbers(existing_cfm,2)
+				end	
+				# Setting minimum OA flow rate equals to 10% of autosized max OA rate
+				new_value_OA = init_max_oa_rate * 0.1
+				new_cfm = OpenStudio.convert(new_value_OA,"m^3/s","cfm")
+				new_cfm = neat_numbers(new_cfm,2)
+				# assign new values & schedules
+				@initial_oa_controller.setMinimumOutdoorAirFlowRate(new_value_OA)
+				@initial_oa_controller.setMinimumOutdoorAirSchedule(always_on)
+				runner.registerInfo("the OA controller named '#{@initial_oa_controller.name}' has had a minimum OA rate set to #{new_cfm} from #{existing_cfm}.")
+			end
+		else
 				economizer_array_false << @initial_oa_controller
 				runner.registerAsNotApplicable("The measure is not applicable for airloop '#{loop.name}' as the OA controllers for given loop has economizer control type = 'no economizer'.")	
 			end
