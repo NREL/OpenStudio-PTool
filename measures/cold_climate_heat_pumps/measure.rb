@@ -4,6 +4,15 @@
 # start the measure
 class ColdClimateHeatPumps < OpenStudio::Ruleset::ModelUserScript
 
+	# The modified dx heating coil object replacement object will follow the decriptions from page 19 (of 45) from here:
+		# http://apps1.eere.energy.gov/buildings/publications/pdfs/building_america/minisplit_multifamily_retrofit.pdf
+		# Because BEopt does not currently model MSHPs, the closest approximation (central variable-speed heat pump without ducts) was used 
+		# on the advice of BEopt developers. The performance of the variable-speed heat pump was left unchanged: SEER 22 and HSPF 10
+		#. These values are slightly conservative when compared to MSHP testing data from NREL (Winkler, 2011). Additional modeling 
+		#assumptions are shown in Table 7 and Table 8...." We will use the 3rd stage performance for our measure.
+		# Stage 3 from BeOpt item #11 from the space conditioning category, air source heat pump type,(SEER 22, HSPF 10), is the item we will mimic to represent 
+		# a low temp MSHP
+
   # human readable name
   def name
     return "Cold Climate Heat Pumps"
@@ -11,7 +20,7 @@ class ColdClimateHeatPumps < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return  "This energy efficiency measure (EEM) adds cold-climate Air-Source Heat Pumps (ccASHP) to all air loops in a model having heat pump heating coils. The measure modifies all existing CoilHeatingDXSingleSpeed coils in a model by replacing performance curves with those representing the heating performance of a cold-climate Air-Source Heat Pumps (ccASHP).  ccASHP are defined as ducted or ductless, air-to-air, split system heat pumps serving either single-zone or multi-zone systems with capacities less than <65 kBtu/hour at 47F dry bulb), best suited to heat efficiently in cold climates (IECC climate zone 4 and higher). ccASHP DOES NOT include ground-source or air-to-water heat pump systems. This measure also sets the Min. OADB Temperature for ccASHP operation to -4F. The performance specifications for ccASHP have been derived from published performance data from the Northeast Energy Efficiency Partnership (NEEP) specification found here:   http://www.neep.org/sites/default/files/resources/NEEP%20cold%20climate%20Air-Source%20Heat%20Pump%20Specification.pdf"
+    return  "This energy efficiency measure (EEM) adds cold-climate Air-Source Heat Pumps (ccASHP) to all air loops in a model having heat pump heating coils. The measure modifies all existing CoilHeatingDXSingleSpeed coils in a model by replacing performance curves with those representing the heating performance of a cold-climate Air-Source Heat Pumps (ccASHP).  ccASHP are defined as ducted or ductless, air-to-air, split system heat pumps serving either single-zone or multi-zone, best suited to heat efficiently in cold climates (IECC climate zone 4 and higher). ccASHP DOES NOT include ground-source or air-to-water heat pump systems. This measure also sets the Min. OADB Temperature for ccASHP operation to -4F. "
   end
   # human readable description of modeling approach
   def modeler_description
@@ -21,8 +30,9 @@ class ColdClimateHeatPumps < OpenStudio::Ruleset::ModelUserScript
 3)	EnergyInputRatioFunctionofTemperature 
 4)	EnergyInputRatioFunctionofFlowFraction 
 5)	PartLoadFractionCorrelationCurve.
-In addition, the setting for the MinimumOutdoorDryBulbTemperatureforCompressorOperation will be changed to -4F.
-The replacement curves have been developed by regressing manufacturers published performance data for commercially available ccASHP from the NEEP website."
+In addition, the setting for the MinimumOutdoorDryBulbTemperatureforCompressorOperation will be changed to -4F.
+The replacement curves have been developed by using the 3rd stage of a 4 stage heat pump description of performance curve data used in BeOpt v2.4 for low temperature dx heat pump heating coils. 
+"
   end
 
   # define the arguments that the user will input
@@ -40,21 +50,20 @@ The replacement curves have been developed by regressing manufacturers published
       return false
     end
 
-	# initialize counter variables for ZoneHVACPackagedTerminalHeatPump objects at the global level
-	zn_eqp_array = []
-	heat_coil_array = []
+	# initialize counter variables for SingleSpeedDXHeatingCoil objects at the global level
+	dx_htg_coil_count = 0
 
-	model.getObjectsByType(OpenStudio::Model::ZoneHVACPackagedTerminalHeatPump.iddObjectType).each do |zn_eqp| # getting ZoneHVACPackagedTerminalHeatPump objects 
-		zn_eqp_array << zn_eqp 
-		@heat_coil = zn_eqp.to_ZoneHVACPackagedTerminalHeatPump.get.heatingCoil.to_CoilHeatingDXSingleSpeed.get # getting heating coils: DX single speed 
-		heat_coil_array << @heat_coil
-		@heat_coil_name = @heat_coil.name
-		@initial_cop = @heat_coil.ratedCOP # calling the existing COP
-		@heat_coil.setName("#{@heat_coil_name}-modified") # new name for coil
-		@heat_coil.setRatedCOP(4.07762)	# modified COP
-		comp_t_initial = @heat_coil.minimumOutdoorDryBulbTemperatureforCompressorOperation
-		@heat_coil.setMinimumOutdoorDryBulbTemperatureforCompressorOperation(-20) #temperature to -4F for compressor operation of coil
+	model.getObjectsByType(OpenStudio::Model::CoilHeatingDXSingleSpeed.iddObjectType).each do |dx_htg_coil| # getting DX_heating_coil
+		dx_htg_coil = dx_htg_coil.to_CoilHeatingDXSingleSpeed.get
+		dx_htg_coil_count +=1
+		@heat_coil_name = dx_htg_coil.name
+		@initial_cop = dx_htg_coil.ratedCOP # calling the existing COP
+		dx_htg_coil.setName("#{@heat_coil_name}-modified") # new name for coil
+		dx_htg_coil.setRatedCOP(4.07762)	# modified COP
+		comp_t_initial = dx_htg_coil.minimumOutdoorDryBulbTemperatureforCompressorOperation
+		dx_htg_coil.setMinimumOutdoorDryBulbTemperatureforCompressorOperation(-20) #temperature to -4F for compressor operation of coil
 		runner.registerInfo ("MinimumOutdoorDryBulbTemperatureforCompressorOperation for OS:CoilHeatingDXSingleSpeed object = '#{@heat_coil_name}' has been changed from #{(((comp_t_initial)*1.8)+32)}F to -4F.")
+		
 		#Create a new Heating Capacity Function of Temperature Curve 
 		#Curve:Biquadratic,
 		#   HP_Heat-Cap-fT3,   !- Name
@@ -63,7 +72,8 @@ The replacement curves have been developed by regressing manufacturers published
 		#   100,               !- Maximum Value of x
 		#   -100,              !- Minimum Value of y
 		#   100;               !- Maximum Value of y
-		exist_hp_heat_cap_ft3_name = @heat_coil.totalHeatingCapacityFunctionofTemperatureCurve.name
+		
+		exist_hp_heat_cap_ft3_name = dx_htg_coil.totalHeatingCapacityFunctionofTemperatureCurve.name
 		hp_heat_cap_ft3 = OpenStudio::Model::CurveBiquadratic.new(model)
 		hp_heat_cap_ft3.setName("#{exist_hp_heat_cap_ft3_name}-modified")
 		hp_heat_cap_ft3.setCoefficient1Constant(0.962054)
@@ -85,7 +95,8 @@ The replacement curves have been developed by regressing manufacturers published
 		#   100,               !- Maximum Value of x
 		#   -100,              !- Minimum Value of y
 		#   100;               !- Maximum Value of y
-		exist_hp_heat_eir_ft3_name = @heat_coil.energyInputRatioFunctionofTemperatureCurve.name
+		
+		exist_hp_heat_eir_ft3_name = dx_htg_coil.energyInputRatioFunctionofTemperatureCurve.name
 		hp_heat_eir_ft3 = OpenStudio::Model::CurveBiquadratic.new(model)
 		hp_heat_eir_ft3.setName("#{exist_hp_heat_eir_ft3_name}-modified")
 		hp_heat_eir_ft3.setCoefficient1Constant(0.57252)
@@ -107,7 +118,8 @@ The replacement curves have been developed by regressing manufacturers published
 		#   1,                   !- Maximum Value of x
 		#   0.7,                 !- Minimum Value of y
 		#   1;                   !- Maximum Value of y
-		exist_hp_heat_plf_fplr3_name = @heat_coil.partLoadFractionCorrelationCurve.name
+		
+		exist_hp_heat_plf_fplr3_name = dx_htg_coil.partLoadFractionCorrelationCurve.name
 		hp_heat_plf_fplr3 = OpenStudio::Model::CurveQuadratic.new(model)
 		hp_heat_plf_fplr3.setName("#{exist_hp_heat_plf_fplr3_name}-modified")
 		hp_heat_plf_fplr3.setCoefficient1Constant(0.76)
@@ -124,7 +136,7 @@ The replacement curves have been developed by regressing manufacturers published
 		#   2,                  !- Maximum Value of x
 		#   0,                  !- Minimum Value of y
 		#   2;                  !- Maximum Value of y
-		exist_hp_heat_cap_fff3_name = @heat_coil.totalHeatingCapacityFunctionofFlowFractionCurve.name
+		exist_hp_heat_cap_fff3_name = dx_htg_coil.totalHeatingCapacityFunctionofFlowFractionCurve.name
 		hp_heat_cap_fff3 = OpenStudio::Model::CurveQuadratic.new(model)
 		hp_heat_cap_fff3.setName("#{exist_hp_heat_cap_fff3_name}-modified")
 		hp_heat_cap_fff3.setCoefficient1Constant(1)
@@ -141,7 +153,7 @@ The replacement curves have been developed by regressing manufacturers published
 		#   2,                  !- Maximum Value of x
 		#   0,                  !- Minimum Value of y
 		#   2;                  !- Maximum Value of y
-		exist_hp_heat_eir_fff3_name = @heat_coil.energyInputRatioFunctionofFlowFractionCurve.name
+		exist_hp_heat_eir_fff3_name = dx_htg_coil.energyInputRatioFunctionofFlowFractionCurve.name
 		hp_heat_eir_fff3 = OpenStudio::Model::CurveQuadratic.new(model)
 		hp_heat_eir_fff3.setName("#{exist_hp_heat_eir_fff3_name}-modified")
 		hp_heat_eir_fff3.setCoefficient1Constant(1)
@@ -151,123 +163,46 @@ The replacement curves have been developed by regressing manufacturers published
 		hp_heat_eir_fff3.setMaximumValueofx(2)
 						
 		#Assigning the existing curves with new ones
-		@heat_coil.setTotalHeatingCapacityFunctionofTemperatureCurve(hp_heat_cap_ft3)
-		@heat_coil.setTotalHeatingCapacityFunctionofFlowFractionCurve (hp_heat_cap_fff3)
-		@heat_coil.setEnergyInputRatioFunctionofTemperatureCurve(hp_heat_eir_ft3)
-		@heat_coil.setEnergyInputRatioFunctionofFlowFractionCurve(hp_heat_eir_fff3)
-		@heat_coil.setPartLoadFractionCorrelationCurve (hp_heat_plf_fplr3)
+		dx_htg_coil.setTotalHeatingCapacityFunctionofTemperatureCurve(hp_heat_cap_ft3)
+		dx_htg_coil.setTotalHeatingCapacityFunctionofFlowFractionCurve (hp_heat_cap_fff3)
+		dx_htg_coil.setEnergyInputRatioFunctionofTemperatureCurve(hp_heat_eir_ft3)
+		dx_htg_coil.setEnergyInputRatioFunctionofFlowFractionCurve(hp_heat_eir_fff3)
+		dx_htg_coil.setPartLoadFractionCorrelationCurve (hp_heat_plf_fplr3)
 		runner.registerInfo("Info about curve changes for OS:CoilHeatingDXSingleSpeed object = '#{@heat_coil_name}': 
 		\n1. Heating Capacity Function of Temperature Curve from '#{exist_hp_heat_cap_ft3_name}' to '#{exist_hp_heat_cap_ft3_name}-modified',
 		\n2. EIR function of temperature curve from '#{exist_hp_heat_eir_ft3_name}' to '#{exist_hp_heat_eir_ft3_name}-modified',
 		\n3. Part load function correlation curve from '#{exist_hp_heat_plf_fplr3_name}' to '#{exist_hp_heat_plf_fplr3_name}-modified',
 		\n4. Heating capacity of flow fraction curve from '#{exist_hp_heat_cap_fff3_name}' to '#{exist_hp_heat_cap_fff3_name}-modified',
 		\n5. EIR of flow fraction curve from '#{exist_hp_heat_eir_fff3_name}' to '#{exist_hp_heat_eir_fff3_name}-modified'.")
-		
-	end #end the do loop
+	end #end the do loop through single stage dx heating coil objects
 	
 	# not applicable message if there is no valid heating coil
 	if
-		zn_eqp_array.length == 0
+		dx_htg_coil_count == 0
 		runner.registerAsNotApplicable("The measure is not applicable due to absence of valid object 'OS:CoilHeatingDXSingleSpeed'.")
-	return true
+		return true
 	end #end the not applicable if condition for heating plant loop
-	
-	
-	
-	
-			
-		# The modified dx heating coil object replacement object will follow the decriptions from page 19 (of 45) from here:
-		# http://apps1.eere.energy.gov/buildings/publications/pdfs/building_america/minisplit_multifamily_retrofit.pdf
-		# Because BEopt does not currently model MSHPs, the closest approximation (central variable-speed heat pump without ducts) was used 
-		# on the advice of BEopt developers. The performance of the variable-speed heat pump was left unchanged: SEER 22 and HSPF 10
-		#. These values are slightly conservative when compared to MSHP testing data from NREL (Winkler, 2011). Additional modeling 
-		#assumptions are shown in Table 7 and Table 8...." We will use the 3rd stage performance for our measure.
-		# Stage 3 from BeOpt item #11 from the space conditioning category, air source heat pump type,(SEER 22, HSPF 10), is the item we will mimic to represent 
-		# a low temp MSHP
-		
-		#Here are snippets of the idf created by beopt v2.4.0.0 for the 3rd stage low temp MSHP
-		
-		#write info messages
-		
-		#write intitial and final conditions message
-		
-		#Curve Definitions			
 
-		#Curve:Biquadratic,
-		#   HP_Heat-Cap-fT3,   !- Name
-		#   0.9620542196000001,-0.00949277772,0.000109212948,0.0247078314,0.000034225092,-0.000125697744,   !- Coefficients (list)
-		#   -100,              !- Minimum Value of x
-		#   100,               !- Maximum Value of x
-		#   -100,              !- Minimum Value of y
-		#   100;               !- Maximum Value of y
-
-		#Curve:Biquadratic,
-		#   HP_Heat-EIR-fT3,   !- Name
-		#   0.5725180114,0.02289624912,0.000266018904,-0.0106675434,0.00049092156,-0.00068136876,   !- Coefficients (List)
-		#   -100,              !- Minimum Value of x
-		#   100,               !- Maximum Value of x
-		#   -100,              !- Minimum Value of y
-		#   100;               !- Maximum Value of y
-
-		#Curve:Quadratic,
-		#   HP_Heat-PLF-fPLR3,   !- Name
-		#   0.76,0.24,0,         !- Coefficients (List)
-		#   0,                   !- Minimum Value of x
-		#   1,                   !- Maximum Value of x
-		#   0.7,                 !- Minimum Value of y
-		#   1;                   !- Maximum Value of y
-		#
-		#Curve:Quadratic,
-		#   HP_Heat-Cap-fFF3,   !- Name
-		#   1,0,0,              !- Coefficients (List)
-		#   0,                  !- Minimum Value of x
-		#   2,                  !- Maximum Value of x
-		#   0,                  !- Minimum Value of y
-		#   2;                  !- Maximum Value of y
-
-		#Curve:Quadratic,
-		#   HP_Heat-EIR-fFF3,   !- Name
-		#   1,0,0,              !- Coefficients (List)
-		#   0,                  !- Minimum Value of x
-		#   2,                  !- Maximum Value of x
-		#   0,                  !- Minimum Value of y
-		#   2;                  !- Maximum Value of y
-
-		#Curve:Biquadratic,
-		#   DefrostEIR,         !- Name
-		#   0.1528,0,0,0,0,0,   !- Coefficients (List)
-		#   -100,               !- Minimum Value of x
-		#   100,                !- Maximum Value of x
-		#   -100,               !- Minimum Value of y
-		#   100;                !- Maximum Value of y
-					
-	
-
-	
-
-	# change the minimum OA temp for compressor operation at equipment level
-	zn_eqp_array.each do |comp_temp|
-		if comp_temp.to_ZoneHVACPackagedTerminalHeatPump.is_initialized
-			a_1 = comp_temp.to_ZoneHVACPackagedTerminalHeatPump.get
+	# getting zone equipment PTHP objects
+	model.getObjectsByType(OpenStudio::Model::ZoneHVACPackagedTerminalHeatPump.iddObjectType).each do |zone_pthp| 
+		if zone_pthp.to_ZoneHVACPackagedTerminalHeatPump.is_initialized
+			a_1 = zone_pthp.to_ZoneHVACPackagedTerminalHeatPump.get
 			initial_comp_temp_zone = a_1.minimumOutdoorDryBulbTemperatureforCompressorOperation
 			a_1.setMinimumOutdoorDryBulbTemperatureforCompressorOperation(-20) #changing the temp to -20C (-4F)
-			runner.registerInfo("MinimumOutdoorDryBulbTemperatureforCompressorOperation for Zone equipment = '#{a_1.name}' has been changed from #{(((initial_comp_temp_zone)*1.8)+32)}F to -4F.")	
+			runner.registerInfo("MinimumOutdoorDryBulbTemperatureforCompressorOperation attribute for PTHP ZoneHVACEquipment object named #{a_1.name} has been changed from #{(((initial_comp_temp_zone)*1.8)+32)}F to -4F.")	
 		end #end if statement
 	end  # end the do loop
-	
-	@heat_coil_names = heat_coil_array.collect{ |l| l.name.to_s }.join(', ') # to get all the names of heatcoil array objects
-	
+
     # report initial condition of model
-    runner.registerInitialCondition("The initial model contains #{zn_eqp_array.length} applicable 'OS:CoilHeatingDXSingleSpeed' objects for which this measure is applicable.")
+    runner.registerInitialCondition("The initial model contains #{dx_htg_coil_count} applicable 'OS:CoilHeatingDXSingleSpeed' objects for which this measure is applicable.")
 
     # report final condition of model
-    runner.registerFinalCondition("Performance curves representing 'ccASHP heating technology' has been applied to #{zn_eqp_array.length} 'OS:CoilHeatingDXSingleSpeed' objects in the model. \nName(s) of affected coil objects are: \n#{@heat_coil_names}")
-
+    runner.registerFinalCondition("Performance curves representing 'ccASHP heating technology' has been applied to #{dx_htg_coil_count} OS:CoilHeatingDXSingleSpeed objects in the model.")
     return true
-
-  end
+	
+  end # end run method
   
-end
+end # end class
 
 # register the measure to be used by the application
 ColdClimateHeatPumps.new.registerWithApplication
