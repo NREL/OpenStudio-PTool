@@ -29,6 +29,7 @@ class CorrectHVACOperationsSchedule < OpenStudio::Ruleset::ModelUserScript
 	return args
   end
   
+ #  
  def set_equip_availability_schedule (occ_sch, zone_equip_hvac_obj)
  	object_name = zone_equip_hvac_obj.name
 	old_schedule = zone_equip_hvac_obj.availabilitySchedule
@@ -66,7 +67,9 @@ end # end set equip method
 	#loop through each thermal zone
 	model.getThermalZones.sort.each do |thermal_zone|
 	
-		thermal_zone_equipment = thermal_zone.equipment # zone equipments assigned to thermal zones
+		# zone equipments assigned to thermal zones
+		thermal_zone_equipment = thermal_zone.equipment 
+		
 		if thermal_zone_equipment.size >= 1
 			# run schedule method to create a new schedule ruleset, routines 
 			occ_sch = thermal_zone.get_occupancy_schedule(0.05)
@@ -76,15 +79,18 @@ end # end set equip method
 			
 				equip_type = equip.iddObjectType
 				
+				# getting the fan exhaust object & getting relevant information for it. 
 				if equip_type == OpenStudio::Model::FanZoneExhaust.iddObjectType
 					zone_equip_hvac_obj = equip.to_FanZoneExhaust.get
 					object_name = zone_equip_hvac_obj.name
 					old_schedule = zone_equip_hvac_obj.availabilitySchedule.get
 					old_sch_name = old_schedule.name
+					#assign the 'occ_sch' here as exhaust's availability schedule
 					zone_equip_hvac_obj.setAvailabilitySchedule(occ_sch)
 					runner.registerInfo("The availability schedule named #{old_sch_name} for the Fan Zone Exhaust Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
 					zone_hvac_equip_count =+ 1 
-				end 	
+				end # end the if statement for fan zone exhaust
+						
 						
 				if equip_type == OpenStudio::Model::RefrigerationAirChiller.iddObjectType
 					zone_equip_hvac_obj = equip.to_RefrigerationAirChiller.get
