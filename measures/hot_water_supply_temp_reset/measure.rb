@@ -104,11 +104,10 @@ class HotWaterSupplyTempReset < OpenStudio::Ruleset::ModelUserScript
 								new_setpoint_sched.setOutdoorLowTemperature(-6.67)
 								new_setpoint_sched.setSetpointatOutdoorHighTemperature(71.1)
 								new_setpoint_sched.setSetpointatOutdoorLowTemperature(82.2)
-								runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_OA_reset.name} has replaced the existing scheduled setpoint manager object serving the hot water plant loop named #{pl.name}. The setpoint manager resets the hot water setpoint from 71.1 deg C to 82.2 deg C between outdoor air temps of 15.56 Deg C and -6.67 Deg C.")
-								runner.registerInfo("Information about New Setpoint:manager:OA reset: \n#{new_setpoint_sched}")
+								runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_sched.name} has replaced the existing scheduled setpoint manager object serving the hot water plant loop named #{pl.name}. The setpoint manager resets the hot water setpoint from 71.1 deg C to 82.2 deg C between outdoor air temps of 15.56 Deg C and -6.67 Deg C.")
 							end
-						end
-					end	
+						end # end setpoint scheduled array do loop
+					end	# end if statement for managertype =setpoint manager scheduled object
 					
 					# get count of OS:SetpointManagerScheduledDualSetpoint objects	& assign a new setpoint manager:OA reset to the same node the existing one was attached	
 					if managertype.to_SetpointManagerScheduledDualSetpoint.is_initialized
