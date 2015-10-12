@@ -99,7 +99,7 @@ class ChilledWaterSupplyTemperatureReset < OpenStudio::Ruleset::ModelUserScript
 							new_setpoint_sched.setOutdoorLowTemperature(15.556)
 							new_setpoint_sched.setSetpointatOutdoorHighTemperature(7.223)
 							new_setpoint_sched.setSetpointatOutdoorLowTemperature(12.778)
-							runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_OA_reset.name} has replaced the existing setpoint manager scheduled object serving the chilled water plant loop named #{pl.name}. The setpoint manager resets the chilled water setpoint from 7.23 deg C to 12.8 deg C between outdoor air temps of 37.77 Deg C and 15.56 Deg C.")
+							runner.registerInfo("An outdoor air reset setpoint manager object named #{new_setpoint_sched.name} has replaced the existing setpoint manager scheduled object serving the chilled water plant loop named #{pl.name}. The setpoint manager resets the chilled water setpoint from 7.23 deg C to 12.8 deg C between outdoor air temps of 37.77 Deg C and 15.56 Deg C.")
 						end # end if statement for setpointnode 
 					end # end loop through setpoint scheduled array 
 				end	# end if block for setpoint manager scheduled object	

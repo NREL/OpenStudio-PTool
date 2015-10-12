@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>widen_thermostat_setpoint</name>
   <uid>2b067fa3-cf9e-4a1c-8b30-7a51585d2a69</uid>
-  <version_id>19a44b92-c2e0-440e-b198-efbc49527860</version_id>
+  <version_id>430dc8d1-2bc7-4388-8bad-8e77602088fb</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>WidenThermostatSetpoint</class_name>
   <display_name>Widen Thermostat Setpoint</display_name>
@@ -72,7 +72,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8A9AD848</checksum>
+      <checksum>AC29932F</checksum>
     </file>
   </files>
 </measure>
