@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>hot_water_supply_temp_reset</name>
   <uid>3a0b7a6f-3e21-4fa4-8442-71f10720af7b</uid>
-  <version_id>ea9610fc-a516-40dd-9472-a08819fa7f27</version_id>
+  <version_id>035cfb1f-5f3a-4dbb-afc1-96d575003f35</version_id>
   <xml_checksum>356BE47F</xml_checksum>
   <class_name>HotWaterSupplyTempReset</class_name>
   <display_name>Hot Water Supply Temp Reset</display_name>
@@ -58,7 +58,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>21F0E016</checksum>
+      <checksum>59A4E1B6</checksum>
     </file>
   </files>
 </measure>
