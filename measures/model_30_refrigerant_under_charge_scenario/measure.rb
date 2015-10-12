@@ -43,9 +43,63 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 	number_of_coil_cooling_dx_two_speed_with_humidity_control = 0
 	number_of_coil_heating_dx_single_speed = 0
 	number_of_coil_cooling_dx_multi_speed = 0
+	number_of_water_to_air_heat_pump_cooling_coil = 0
+	number_of_water_to_air_heat_pump_heating_coil = 0
 	
 	# start the do loop for model objects
 	model.getModelObjects.each do |model_object|
+	
+	# if statement to get single speed Water to Air Heat Pump DX Cooling Coils 
+		if model_object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized
+		water_to_air_heat_pump_cooling_coil = model_object.to_CoilCoolingWaterToAirHeatPumpEquationFit.get
+			coil_name = water_to_air_heat_pump_cooling_coil.name
+			if water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance.is_initialized
+				# getting the COP
+				@initial_cop = water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance.get
+			end # end the if loop for COP
+
+			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
+			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
+			# http://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1848.pdf
+			# Spreadsheet analysis of the regression coefficiencts for modeling heating and cooling annual COP
+			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
+			
+			# modify the COPs
+			modified_cop = (@initial_cop * (1 - 0.1102)) 
+			# setting the new name
+			water_to_air_heat_pump_cooling_coil.setName("#{coil_name} +30 Percent undercharge")
+			# assign the new COP to single speed DX
+			water_to_air_heat_pump_cooling_coil.setRatedCoolingCoefficientofPerformance((OpenStudio::OptionalDouble.new(modified_cop)))
+			number_of_water_to_air_heat_pump_cooling_coil += 1
+			runner.registerInfo("Coil Cooling Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+		end # end the if loop for Water to Air Heat Pump Cooling Coils. 
+
+		
+		# if statement to get Single Speed Water to Air Heat Pump DX Heating Coils 
+		if model_object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized
+		water_to_air_heat_pump_heating_coil = model_object.to_CoilHeatingWaterToAirHeatPumpEquationFit.get
+			coil_name = water_to_air_heat_pump_heating_coil.name
+			if water_to_air_heat_pump_heating_coil.ratedCoolingCoefficientofPerformance.is_initialized
+				# getting the COP
+				@initial_cop = water_to_air_heat_pump_heating_coil.ratedCoolingCoefficientofPerformance.get
+			end # end the if loop for COP
+
+			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
+			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
+			# http://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1848.pdf
+			# Spreadsheet analysis of the regression coefficiencts for modeling heating and cooling annual COP
+			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
+			
+			# modify the COPs
+			modified_cop = (@initial_cop * (1 - 0.0824)) 
+			# setting the new name
+			water_to_air_heat_pump_heating_coil.setName("#{coil_name} +30 Percent undercharge")
+			# assign the new COP to single speed DX
+			water_to_air_heat_pump_heating_coil.setRatedCoolingCoefficientofPerformance((OpenStudio::OptionalDouble.new(modified_cop)))
+			number_of_water_to_air_heat_pump_heating += 1
+			runner.registerInfo("Coil Heating Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+		end # end the if loop for Water to Air Heat Pump Cooling Coils. 
+	
 		# if statement to get single speed DX coils
 		if model_object.to_CoilCoolingDXSingleSpeed.is_initialized
 			coil_cooling_dx_single_speed = model_object.to_CoilCoolingDXSingleSpeed.get
@@ -60,7 +114,6 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# http://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1848.pdf
 			# Spreadsheet analysis of the regression coefficiencts for modeling heating and cooling annual COP
 			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
-
 			
 			# modify the COPs
 			modified_cop = (@initial_cop * (1 - 0.1102)) 
@@ -186,7 +239,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 	end # end loop through all model objects
 	
 	# total number of coils in the model
-	total = number_of_coil_cooling_dx_single_speed + number_of_coil_cooling_dx_two_speed + number_of_coil_cooling_dx_two_speed_with_humidity_control + number_of_coil_heating_dx_single_speed + number_of_coil_cooling_dx_multi_speed = 0
+	total = number_of_water_to_air_heat_pump_heating_coil + number_of_water_to_air_heat_pump_cooling_coil + number_of_coil_cooling_dx_single_speed + number_of_coil_cooling_dx_two_speed + number_of_coil_cooling_dx_two_speed_with_humidity_control + number_of_coil_heating_dx_single_speed + number_of_coil_cooling_dx_multi_speed = 0
 	
 	# non applicable message
 	if total == 0 
@@ -194,7 +247,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 		return true
 	end
 	runner.registerInitialCondition("The measure began with #{total} objects which can be modified to represent a 30% refrigerant undercharge condition.")
-	runner.registerFinalCondition("The measure modified #{number_of_coil_cooling_dx_single_speed} Coil Cooling DX Single Speed Objects, #{number_of_coil_cooling_dx_two_speed} Coil Cooling DX Two Speed Objects, #{number_of_coil_cooling_dx_two_speed_with_humidity_control} Coil Cooling DX Two Speed with Humidity Control Objects, #{number_of_coil_heating_dx_single_speed} Coil Heating DX Single Speed Objects and #{number_of_coil_cooling_dx_multi_speed} Coil Cooling DX MultiSpeed objects.")
+	runner.registerFinalCondition("The measure modified #{number_of_coil_cooling_dx_single_speed} Coil Cooling DX Single Speed Objects, #{number_of_coil_cooling_dx_two_speed} Coil Cooling DX Two Speed Objects, #{number_of_coil_cooling_dx_two_speed_with_humidity_control} Coil Cooling DX Two Speed with Humidity Control Objects, #{number_of_coil_heating_dx_single_speed} Coil Heating DX Single Speed Objects, #{number_of_water_to_air_heat_pump_heating_coil} Water to Air Heat Puump DX heating coils, #{number_of_water_to_air_heat_pump_cooling_coil} Water to Air Heat Pump cooling coils and #{number_of_coil_cooling_dx_multi_speed} Coil Cooling DX MultiSpeed objects.")
 	return true
 
   end # end of run method
