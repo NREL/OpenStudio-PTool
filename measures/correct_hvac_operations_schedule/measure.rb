@@ -255,9 +255,9 @@ end # end set equip method
 			end #end if statement for changing demand side constant speed pump objects
 			
 			if dc.to_PumpVariableSpeed.is_initialized
-				vs_pump = dc.to_to_PumpVariableSpeed.get
+				vs_pump = dc.to_PumpVariableSpeed.get
 				if vs_pump.pumpControlType == ("Intermittent")
-					runner.registerInfo("Deamdn side Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
+					runner.registerInfo("Demand side Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
 				else 
 					cs_pump.setPumpControlType("Intermittent")
 					runner.registerInfo("Demand side Pump Control Type attribute of Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} was changed from continuous to intermittent.")

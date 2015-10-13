@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require_relative '../measure.rb'
 require 'fileutils'
 
-class WidenThermostatSetpointTest < MiniTest::Unit::TestCase
+class WidenThermostatSetpointTests < MiniTest::Unit::TestCase
 
   # def setup
   # end
@@ -21,102 +21,82 @@ class WidenThermostatSetpointTest < MiniTest::Unit::TestCase
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(1, arguments.size)
-    assert_equal("space_name", arguments[0].name)
+    assert_equal(0, arguments.size)
   end
 
-  def test_bad_argument_values
-    # create an instance of the measure
-    measure = WidenThermostatSetpoint.new
-
-    # create an instance of a runner
-    runner = OpenStudio::Ruleset::OSRunner.new
-
-    # make an empty model
-    model = OpenStudio::Model::Model.new
-
-    # get arguments
-    arguments = measure.arguments(model)
-    argument_map = OpenStudio::Ruleset.convertOSArgumentVectorToMap(arguments)
-
-    # create hash of argument values
-    args_hash = {}
-    args_hash["space_name"] = ""
-
-    # populate argument with specified hash value if specified
-    arguments.each do |arg|
-      temp_arg_var = arg.clone
-      if args_hash[arg.name]
-        assert(temp_arg_var.setValue(args_hash[arg.name]))
-      end
-      argument_map[arg.name] = temp_arg_var
-    end
-
-    # run the measure
-    measure.run(model, runner, argument_map)
-    result = runner.result
-
-    # show the output
-    show_output(result)
-
-    # assert that it ran correctly
-    assert_equal("Fail", result.value.valueName)
+  # This measure is applicable to all models
+  def test_is_applicable_to_test_models
+  
+	["LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm", "LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm", "SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm", "MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm", "PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm", "SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm", "SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm"].each do |m|
+		result,_ = applytotestmodel(m)
+		assert_equal("Success", result.value.valueName)
+	end
   end
-
-  def test_good_argument_values
-    # create an instance of the measure
-    measure = WidenThermostatSetpoint.new
+    
+  def test_large_hotel_info
+	result,_ = applytotestmodel("LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'HotelLarge CLGSETP_SCH' has been changed to HotelLarge CLGSETP_SCH+1.5F. Inspect the new schedule values using the OS App."})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing heating thermostat 'HotelLarge HTGSETP_SCH' has been changed to HotelLarge HTGSETP_SCH-1.5F. Inspect the new schedule values using the OS App."})
+  end
+    
+  def test_large_office_info
+	result,_ = applytotestmodel("LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'OfficeLarge CLGSETP_DC_SCH' has been changed to OfficeLarge CLGSETP_DC_SCH+1.5F. Inspect the new schedule values using the OS App."})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing heating thermostat 'OfficeLarge HTGSETP_DC_SCH' has been changed to OfficeLarge HTGSETP_DC_SCH-1.5F. Inspect the new schedule values using the OS App."})
+  end
+    
+  def test_medium_office_info
+	result,_ = applytotestmodel("MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'OfficeMedium CLGSETP_SCH_NO_OPTIMUM' has been changed to OfficeMedium CLGSETP_SCH_NO_OPTIMUM+1.5F. Inspect the new schedule values using the OS App."})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing heating thermostat 'OfficeMedium HTGSETP_SCH_NO_OPTIMUM' has been changed to OfficeMedium HTGSETP_SCH_NO_OPTIMUM-1.5F. Inspect the new schedule values using the OS App."})
+  end
+    
+  def test_primary_school_info
+	result,_ = applytotestmodel("PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'SchoolPrimary CLGSETP_SCH_NO_OPTIMUM' has been changed to SchoolPrimary CLGSETP_SCH_NO_OPTIMUM+1.5F. Inspect the new schedule values using the OS App."})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing heating thermostat 'SchoolPrimary HTGSETP_SCH_NO_OPTIMUM' has been changed to SchoolPrimary HTGSETP_SCH_NO_OPTIMUM-1.5F. Inspect the new schedule values using the OS App."})
+  end
+  
+  def test_secondary_school_info
+	result,_ = applytotestmodel("SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'SchoolSecondary CLGSETP_SCH_NO_SETBACK' has been changed to SchoolSecondary CLGSETP_SCH_NO_SETBACK+1.5F. Inspect the new schedule values using the OS App."})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing heating thermostat 'SchoolSecondary HTGSETP_SCH_YES_OPTIMUM' has been changed to SchoolSecondary HTGSETP_SCH_YES_OPTIMUM-1.5F. Inspect the new schedule values using the OS App."})
+  end
+    
+  def test_small_hotel_info
+	result,_ = applytotestmodel("SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'HotelSmall Adva_OccGuestRoom_ClgSP_Sch' has been changed to HotelSmall Adva_OccGuestRoom_ClgSP_Sch+1.5F. Inspect the new schedule values using the OS App."})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing heating thermostat 'HotelSmall Adva_OccGuestRoom_HtgSP_Sch' has been changed to HotelSmall Adva_OccGuestRoom_HtgSP_Sch-1.5F. Inspect the new schedule values using the OS App."})
+  end
+    
+  def test_small_office_info
+	result,_ = applytotestmodel("SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm")
+	refute_nil(result.info.find {|m| m.logMessage == "The dual setpoint thermostat object named 90.1-2010 - Office - Attic Thermostat serving thermal zone Attic ZN did not have a cooling setpoint temperature schedule associated with it. The measure will not alter this thermostat object"})
+	refute_nil(result.info.find {|m| m.logMessage == "The existing cooling thermostat 'OfficeSmall CLGSETP_SCH_NO_OPTIMUM' has been changed to OfficeSmall CLGSETP_SCH_NO_OPTIMUM+1.5F. Inspect the new schedule values using the OS App."})
+  end
+    
+  def applytotestmodel(model_file)
+  
+	measure = WidenThermostatSetpoint.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
 
     # load the test model
     translator = OpenStudio::OSVersion::VersionTranslator.new
-    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/example_model.osm")
+    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/../../../testing_models/#{model_file}")
     model = translator.loadModel(path)
     assert((not model.empty?))
     model = model.get
-
-    # store the number of spaces in the seed model
-    num_spaces_seed = model.getSpaces.size
 
     # get arguments
     arguments = measure.arguments(model)
     argument_map = OpenStudio::Ruleset.convertOSArgumentVectorToMap(arguments)
 
-    # create hash of argument values.
-    # If the argument has a default that you want to use, you don't need it in the hash
-    args_hash = {}
-    args_hash["space_name"] = "New Space"
-    # using defaults values from measure.rb for other arguments
-
-    # populate argument with specified hash value if specified
-    arguments.each do |arg|
-      temp_arg_var = arg.clone
-      if args_hash[arg.name]
-        assert(temp_arg_var.setValue(args_hash[arg.name]))
-      end
-      argument_map[arg.name] = temp_arg_var
-    end
-
     # run the measure
     measure.run(model, runner, argument_map)
     result = runner.result
-
-    # show the output
-    show_output(result)
-
-    # assert that it ran correctly
-    assert_equal("Success", result.value.valueName)
-    assert(result.info.size == 1)
-    assert(result.warnings.size == 0)
-
-    # check that there is now 1 space
-    assert_equal(1, model.getSpaces.size - num_spaces_seed)
-
-    # save the model to test output directory
-    output_file_path = OpenStudio::Path.new(File.dirname(__FILE__) + "/output/test_output.osm")
-    model.save(output_file_path,true)
-  end
-
+	return result, model
+  end  
+ 
 end

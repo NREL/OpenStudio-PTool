@@ -53,8 +53,9 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 		if model_object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized
 		water_to_air_heat_pump_cooling_coil = model_object.to_CoilCoolingWaterToAirHeatPumpEquationFit.get
 			coil_name = water_to_air_heat_pump_cooling_coil.name
-			@initial_cop = water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance
-	
+			# getting the COP
+			initial_cop = water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance
+
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
 			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
 			# http://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1848.pdf
@@ -62,13 +63,13 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
 			
 			# modify the COPs
-			modified_cop = (@initial_cop * (1 - 0.1102)) 
+			modified_cop = (initial_cop * (1 - 0.1102)) 
 			# setting the new name
 			water_to_air_heat_pump_cooling_coil.setName("#{coil_name} +30 Percent undercharge")
 			# assign the new COP to single speed DX
 			water_to_air_heat_pump_cooling_coil.setRatedCoolingCoefficientofPerformance(modified_cop)
 			number_of_water_to_air_heat_pump_cooling_coil += 1
-			runner.registerInfo("Coil Cooling Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+			runner.registerInfo("Coil Cooling Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end # end the if loop for Water to Air Heat Pump Cooling Coils. 
 
 		
@@ -76,8 +77,8 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 		if model_object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized
 		water_to_air_heat_pump_heating_coil = model_object.to_CoilHeatingWaterToAirHeatPumpEquationFit.get
 			coil_name = water_to_air_heat_pump_heating_coil.name
-			@initial_cop = water_to_air_heat_pump_heating_coil.ratedHeatingCoefficientofPerformance
-			
+			# getting the COP
+			initial_cop = water_to_air_heat_pump_heating_coil.ratedHeatingCoefficientofPerformance
 
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
 			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
@@ -86,13 +87,13 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
 			
 			# modify the COPs
-			modified_cop = (@initial_cop * (1 - 0.0824)) 
+			modified_cop = (initial_cop * (1 - 0.0824)) 
 			# setting the new name
 			water_to_air_heat_pump_heating_coil.setName("#{coil_name} +30 Percent undercharge")
 			# assign the new COP to single speed DX
 			water_to_air_heat_pump_heating_coil.setRatedHeatingCoefficientofPerformance(modified_cop)
 			number_of_water_to_air_heat_pump_heating_coil += 1
-			runner.registerInfo("Coil Heating Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+			runner.registerInfo("Coil Heating Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end # end the if loop for Water to Air Heat Pump Cooling Coils. 
 	
 		# if statement to get single speed DX coils
@@ -117,7 +118,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# assign the new COP to single speed DX
 			coil_cooling_dx_single_speed.setRatedCOP((OpenStudio::OptionalDouble.new(modified_cop)))
 			number_of_coil_cooling_dx_single_speed += 1
-			runner.registerInfo("Single Speed DX Cooling Coil object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+			runner.registerInfo("Single Speed DX Cooling Coil object renamed #{coil_name} +30 Percent undercharge had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end # end the if loop for DX single speed cooling coils
 		
 		# if statement to get 2 speed DX coils	
@@ -143,7 +144,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			coil_cooling_dx_two_speed.setRatedLowSpeedCOP(modified_low_speed_cop)
 			
 			number_of_coil_cooling_dx_two_speed += 1
-			runner.registerInfo("Two Speed DX Cooling Coil object renamed #{coil_name} +30 Percent undercharge has had initial high speed COP value of #{@initial_high_speed_cop} derated to a COP value of #{modified_high_speed_cop} and an initial lowspeed COP value of #{@initial_low_speed_cop} derated to a COP value of #{modified_low_speed_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+			runner.registerInfo("Two Speed DX Cooling Coil object renamed #{coil_name} +30 Percent undercharge had initial high speed COP value of #{@initial_high_speed_cop} derated to a COP value of #{modified_high_speed_cop} and an initial lowspeed COP value of #{@initial_low_speed_cop} derated to a COP value of #{modified_low_speed_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end  # end 2 speed cooling coil if statement
 
 		# if statement for heating coil single speed
@@ -151,7 +152,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			coil_heating_dx_single_speed = model_object.to_CoilHeatingDXSingleSpeed.get
 			coil_name = coil_heating_dx_single_speed.name
 			# get the initial COP 
-			@initial_cop = coil_heating_dx_single_speed.ratedCOP
+			initial_cop = coil_heating_dx_single_speed.ratedCOP
 
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
 			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
@@ -160,11 +161,11 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# degredation were performed. The result predict a degradation of 11.02% of annual COP (for cooling)
 
 			# modify the COP
-			modified_cop = (@initial_cop * (1 - 0.0824)) 
+			modified_cop = (initial_cop * (1 - 0.0824)) 
 			coil_heating_dx_single_speed.setName("#{coil_name} +30 Percent undercharge")
 			coil_heating_dx_single_speed.setRatedCOP(modified_cop)
 			number_of_coil_heating_dx_single_speed += 1
-			runner.registerInfo("Single Speed DX Heating Coil object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
+			runner.registerInfo("Single Speed DX Heating Coil object renamed #{coil_name} +30 Percent undercharge had initial COP value of #{initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end # end if statemen for heating coil single speed
 	
 		# if statement for cooling coil DX 2 stage with humidity control mode
@@ -226,7 +227,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 				initial_cop = dx_stage.grossRatedCoolingCOP
 				modified_cop = (initial_cop  * (1 - 0.1102)) # modify the COP
 				dx_stage.setGrossRatedCoolingCOP(modified_cop)
-				runner.registerInfo("Stage #{count} of Multispeed DX Cooling coil named #{coil_name} had the initial COP value of #{initial_cop} derated to a value of #{final_cop} to represent a 30 percent refrigerant underchange scenario.")
+				runner.registerInfo("Stage #{count} of Multispeed DX Cooling coil named #{coil_name} had the initial COP value of #{initial_cop} derated to a value of #{final_cop} to represent a 30 percent refrigerant undercharge scenario.")
 			end # end loop through dx stages
 			number_of_coil_cooling_dx_multi_speed +=1
 		end # end loop through to_CoilCoolingDXMultiSpeed objects  
@@ -238,7 +239,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 	
 	# non applicable message
 	if total == 0 
-		runner.registerAsNotApplicable("No qualifed DX cooling or heating objects are present in this model. The measure is not applicible.")
+		runner.registerAsNotApplicable("No qualified DX cooling or heating objects are present in this model. The measure is not applicable.")
 		return true
 	end
 	runner.registerInitialCondition("The measure began with #{total} objects which can be modified to represent a 30% refrigerant undercharge condition.")

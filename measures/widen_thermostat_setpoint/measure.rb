@@ -85,9 +85,11 @@ class WidenThermostatSetpoint < OpenStudio::Ruleset::ModelUserScript
 						end # end loop through each profile values
 					end # end loop through each profile
 					
-				runner.registerInfo("The existing cooling thermostat '#{clg_tstat_schedule.name}' has been changed to #{cloned_clg_tstat_schedule.name}. Inspect the new schedule values using the OS App.")
+					zone_thermostat.setCoolingSetpointTemperatureSchedule(cloned_clg_tstat_schedule.to_ScheduleRuleset.get)
+					runner.registerInfo("The existing cooling thermostat '#{clg_tstat_schedule.name}' has been changed to #{cloned_clg_tstat_schedule.name}. Inspect the new schedule values using the OS App.")
 				end # end if statement for cloning and modifying cooling tstat schedule object
-				
+			else
+				runner.registerInfo("The dual setpoint thermostat object named #{zone_thermostat.name} serving thermal zone #{thermal_zone.name} did not have a cooling setpoint temperature schedule associated with it. The measure will not alter this thermostat object")
 			end # end if statement for cooling Setpoint Temperature is initialized
 			
 			if zone_thermostat.heatingSetpointTemperatureSchedule.is_initialized
@@ -125,13 +127,12 @@ class WidenThermostatSetpoint < OpenStudio::Ruleset::ModelUserScript
 						end # end loop through each profile values
 					end # end loop through each profile_h
 					
-				runner.registerInfo("The existing heating thermostat '#{htg_tstat_schedule.name}' has been changed to #{cloned_htg_tstat_schedule.name}. Inspect the new schedule values using the OS App.")
+					zone_thermostat.setHeatingSetpointTemperatureSchedule(cloned_htg_tstat_schedule.to_ScheduleRuleset.get)
+					runner.registerInfo("The existing heating thermostat '#{htg_tstat_schedule.name}' has been changed to #{cloned_htg_tstat_schedule.name}. Inspect the new schedule values using the OS App.")
 				end # end if statement for cloning and modifying heating tstat schedule object	
-				
+			else
+				runner.registerInfo("The dual setpoint thermostat object named #{zone_thermostat.name} serving thermal zone #{thermal_zone.name} did not have a heating setpoint temperature schedule associated with it. The measure will not alter this thermostat object")
 			end # end if statement for heating Setpoint Temperature is initialized
-
-		else
-			runner.registerInfo("The dual setpoint thermostat object named #{@zone_thermostat.name} serving thermal zone #{thermal_zone.name} did not have a cooling setpoint temperature schedule associated with it. The measure will not alter this thermostat object")
 		end	# end if statement for zone_thermstat cooling schedule
 		
 	end # end loop through thermal zones			
