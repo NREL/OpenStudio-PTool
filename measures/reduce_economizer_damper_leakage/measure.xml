@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>reduce_economizer_damper_leakage</name>
   <uid>07954d64-49ba-4091-87ff-18013930571c</uid>
-  <version_id>ecfdd629-2d01-4af2-95d5-a99f99092776</version_id>
+  <version_id>03b50d4f-9daf-4538-bbc2-a215134b1e9e</version_id>
   <xml_checksum>3379E2F8</xml_checksum>
   <class_name>ReduceEconomizerDamperLeakage</class_name>
   <display_name>Reduce Economizer Damper Leakage</display_name>
@@ -84,7 +84,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C955AEC4</checksum>
+      <checksum>B136A895</checksum>
     </file>
   </files>
 </measure>

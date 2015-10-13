@@ -53,11 +53,8 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 		if model_object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized
 		water_to_air_heat_pump_cooling_coil = model_object.to_CoilCoolingWaterToAirHeatPumpEquationFit.get
 			coil_name = water_to_air_heat_pump_cooling_coil.name
-			if water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance.is_initialized
-				# getting the COP
-				@initial_cop = water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance.get
-			end # end the if loop for COP
-
+			@initial_cop = water_to_air_heat_pump_cooling_coil.ratedCoolingCoefficientofPerformance
+	
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
 			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
 			# http://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1848.pdf
@@ -69,7 +66,7 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# setting the new name
 			water_to_air_heat_pump_cooling_coil.setName("#{coil_name} +30 Percent undercharge")
 			# assign the new COP to single speed DX
-			water_to_air_heat_pump_cooling_coil.setRatedCoolingCoefficientofPerformance((OpenStudio::OptionalDouble.new(modified_cop)))
+			water_to_air_heat_pump_cooling_coil.setRatedCoolingCoefficientofPerformance(modified_cop)
 			number_of_water_to_air_heat_pump_cooling_coil += 1
 			runner.registerInfo("Coil Cooling Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end # end the if loop for Water to Air Heat Pump Cooling Coils. 
@@ -79,10 +76,8 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 		if model_object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized
 		water_to_air_heat_pump_heating_coil = model_object.to_CoilHeatingWaterToAirHeatPumpEquationFit.get
 			coil_name = water_to_air_heat_pump_heating_coil.name
-			if water_to_air_heat_pump_heating_coil.ratedCoolingCoefficientofPerformance.is_initialized
-				# getting the COP
-				@initial_cop = water_to_air_heat_pump_heating_coil.ratedCoolingCoefficientofPerformance.get
-			end # end the if loop for COP
+			@initial_cop = water_to_air_heat_pump_heating_coil.ratedHeatingCoefficientofPerformance
+			
 
 			# Modified COP values are determined from recent NIST published report for quantifying the effect of refrigerant 
 			# undercharging - Sensitivity Analysis of Installation Faults on Heat Pump Performance 
@@ -95,8 +90,8 @@ class Model30RefrigerantUnderChargeScenario < OpenStudio::Ruleset::ModelUserScri
 			# setting the new name
 			water_to_air_heat_pump_heating_coil.setName("#{coil_name} +30 Percent undercharge")
 			# assign the new COP to single speed DX
-			water_to_air_heat_pump_heating_coil.setRatedCoolingCoefficientofPerformance((OpenStudio::OptionalDouble.new(modified_cop)))
-			number_of_water_to_air_heat_pump_heating += 1
+			water_to_air_heat_pump_heating_coil.setRatedHeatingCoefficientofPerformance(modified_cop)
+			number_of_water_to_air_heat_pump_heating_coil += 1
 			runner.registerInfo("Coil Heating Water To Air Heat Pump Equation Fit object renamed #{coil_name} +30 Percent undercharge has had initial COP value of #{@initial_cop} derated to a COP value of #{modified_cop} representing a 30 percent by volume refrigerant undercharge scenario.")
 		end # end the if loop for Water to Air Heat Pump Cooling Coils. 
 	

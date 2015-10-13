@@ -130,21 +130,20 @@ class ReduceEconomizerDamperLeakage < OpenStudio::Ruleset::ModelUserScript
 			else
 				economizer_array_false << @initial_oa_controller
 			end # end if @econ_control_type_initial != "NoEconomizer"
-			
-			
+				
 		end # end the do loop through all airloops
 		
 		# report N/A condition of model
 		if economizer_settings_changed_count == 0
-			runner.registerAsNotApplicable("The model contains no OA controllers which are currebntly configured for operable economizer controls. This measure is not applicable.")
+			runner.registerAsNotApplicable("The model contains no OA controllers which are currently configured for operable economizer controls. This measure is not applicable.")
 			return true
 		end
 		
 		# report initial condition of model
-		runner.registerInitialCondition("The initial model contained '#{all_airloops.length}' airloops with '#{initial_oa_controller_array.length}' Outdoor Air Controller objects. The measure is applicable for '#{economizer_array_true.length}' objects with some kind of economizer as control type.")
+		runner.registerInitialCondition("The initial model contained #{all_airloops.length} airloops with #{initial_oa_controller_array.length} Outdoor Air Controller objects. The measure is applicable for #{economizer_array_true.length} objects with functioning economizer controls.")
 		
 		# report final condition of model
-		runner.registerFinalCondition("A continuous outdoor air damper leakage condition representing poor damper/actuator control has been applied to '#{economizer_array_true.length}' Outdoor Air Controllers. There are '#{economizer_array_false.length}' objects with control type = 'no economizer'.")
+		runner.registerFinalCondition("A continuous outdoor air damper leakage condition representing poor damper/actuator control has been applied to #{economizer_array_true.length} Outdoor Air Controllers. There are #{economizer_array_false.length} objects with control type = 'no economizer'.")
 		
 	end # end the run method	
 end # end the class	
