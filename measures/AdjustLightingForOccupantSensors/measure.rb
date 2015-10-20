@@ -63,16 +63,7 @@ class AdjustLightingForOccupantSensors < OpenStudio::Ruleset::ModelUserScript
 
           lpd_area_new = power_new / area
           lpd_people_new = power_new / people
-'
-          runner.registerInfo("area = #{area}")
-          runner.registerInfo("people = #{people}")
-          runner.registerInfo("power = #{power}")
-          runner.registerInfo("power per area = #{lpd_area}")
-          runner.registerInfo("power per person = #{lpd_people}")
-          runner.registerInfo("new power = #{power_new}")
-          runner.registerInfo("new power per area = #{lpd_area_new}")
-          runner.registerInfo("new power per person = #{lpd_people_new}")
-'
+
           #set new power
           if st.lightingPowerPerFloorArea.is_initialized
 
@@ -81,18 +72,24 @@ class AdjustLightingForOccupantSensors < OpenStudio::Ruleset::ModelUserScript
 
             lpd_area_ip = OpenStudio.convert(lpd_area,"ft^2","m^2").get
             lpd_area_new_ip = OpenStudio.convert(lpd_area_new,"ft^2","m^2").get
-            runner.registerInfo("Initial interior lighting power = #{lpd_area_ip.round(2)} W/ft2")
-            runner.registerInfo("Final interior lighting power = #{lpd_area_new_ip.round(2)} W/ft2")
+            lpd_area_change = (1 - (lpd_area_new / lpd_area)) * 100
+
+            runner.registerInfo("=> Initial interior lighting power = #{lpd_area_ip.round(2)} W/ft2")
+            runner.registerInfo("=> Final interior lighting power = #{lpd_area_new_ip.round(2)} W/ft2")
+            runner.registerInfo("=> Interior lighting power reduction = #{lpd_area_change.round(0)}%")
 
           elsif st.lightingPowerPerPerson.is_initialized
 
             runner.registerInfo("Adjusting interior lighting power for space type: #{st.name}")
             st.setLightingPowerPerPerson(lpd_people_new)
-            
-            runner.registerInfo("Initial interior lighting power = #{lpd_people} W/person")
-            runner.registerInfo("Final interior lighting power = #{lpd_people_new} W/person")
 
-          else #TODO
+            lpd_people_change = (1 - (lpd_people_new / lpd_people)) * 100
+
+            runner.registerInfo("=> Initial interior lighting power = #{lpd_people} W/person")
+            runner.registerInfo("=> Final interior lighting power = #{lpd_people_new} W/person")
+            runner.registerInfo("=> Interior lighting power reduction = #{lpd_people_change.round(0)}%")
+
+          else
 
             runner.registerWarning("Lighting power is specified using Lighting Level (W) for affected space type: #{st.name}")
 
@@ -111,9 +108,8 @@ class AdjustLightingForOccupantSensors < OpenStudio::Ruleset::ModelUserScript
     end #space types
 
     # report not applicable
-    if affected_flag = false
+    if affected_flag == false
       runner.registerAsNotApplicable("No affected space types found")
-      return true
     end
 
     # report initial condition

@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>adjust_lighting_for_occupant_sensors</name>
   <uid>2cb48338-a95f-4a81-85b2-81bfd4e17b7d</uid>
-  <version_id>064e32eb-45de-4351-aea3-af742338456b</version_id>
+  <version_id>d4865313-a98d-4a00-aae5-77351542cba0</version_id>
   <xml_checksum>9B7BB4D8</xml_checksum>
   <class_name>AdjustLightingForOccupantSensors</class_name>
   <display_name>Adjust Lighting For Occupant Sensors</display_name>
-  <description>Replace this text with an explanation of what the measure does in terms that can be understood by a general building professional audience (building owners, architects, engineers, contractors, etc.).  This description will be used to create reports aimed at convincing the owner and/or design team to implement the measure in the actual building design.  For this reason, the description may include details about how the measure would be implemented, along with explanations of qualitative benefits associated with the measure.  It is good practice to include citations in the measure if the description is taken from a known source or if specific benefits are listed.</description>
-  <modeler_description>Replace this text with an explanation for the energy modeler specifically.  It should explain how the measure is modeled, including any requirements about how the baseline model must be set up, major assumptions, citations of references to applicable modeling resources, etc.  The energy modeler should be able to read this description and understand what changes the measure is making to the model and why these changes are being made.  Because the Modeler Description is written for an expert audience, using common abbreviations for brevity is good practice.</modeler_description>
+  <description>This energy efficiency measure (EEM) adjusts the interior lighting power per for affected space types to account for occupant sensors according to Standard 90.1-2010 Table 9.6.2 and Addendum cg Table G3.1(g). Lighting power for affected space types is adjusted by a fixed control factor of 0.05 for multi-level occupancy sensors in breakrooms, conference rooms, offices, restrooms, and stairs. The measure does not change the model unless Space Types use Measure Tags for Standards Space Type and Lights Definitions use either W/area or W/person inputs (an absolute W input is not supported).</description>
+  <modeler_description>This measure loops through space types in the model and adjusts the lighting power per area (W/ft2) or lighting power per person (W/person) for affected space types. The measure is not currently able to change the lighting power is specified using the Lighting Level (W) input option. </modeler_description>
   <arguments/>
   <provenances/>
   <tags>
@@ -27,10 +27,28 @@
   </attributes>
   <files>
     <file>
+      <filename>SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B_NA-NoSpaceTypes.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E82C2BE9</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B_NA-Watts.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FD98667F</checksum>
+    </file>
+    <file>
       <filename>AdjustLightingForOccupantSensors_Test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>E21C7CF3</checksum>
+      <checksum>0794FA2E</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>A1B90D32</checksum>
     </file>
     <file>
       <version>
@@ -41,7 +59,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>272AD6EB</checksum>
+      <checksum>17458353</checksum>
     </file>
   </files>
 </measure>
