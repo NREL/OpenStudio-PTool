@@ -1,0 +1,73 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>exterior_lighting_control</name>
+  <uid>6d3fcb63-b3dd-4892-a77e-965c4737483f</uid>
+  <version_id>3cccb271-aaaa-45d2-a0fd-b36a4808a44d</version_id>
+  <xml_checksum>D2211B31</xml_checksum>
+  <class_name>ExteriorLightingControl</class_name>
+  <display_name>Exterior Lighting Control</display_name>
+  <description>TODO</description>
+  <modeler_description>TODO</modeler_description>
+  <arguments/>
+  <provenances/>
+  <tags>
+    <tag>Electric Lighting.Electric Lighting Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>exterior_lighting_controls_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>13D135DD</checksum>
+    </file>
+    <file>
+      <filename>Helpers.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>CEFB1F89</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>69F3F141</checksum>
+    </file>
+  </files>
+</measure>
