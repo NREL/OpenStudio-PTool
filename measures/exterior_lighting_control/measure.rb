@@ -1,5 +1,3 @@
-# Developed by Ambient Energy for NREL
-
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
@@ -19,7 +17,7 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return "TODO"
+    return "This energy efficiency measure (EEM) reduces all exterior lighting to 30% of its peak power between midnight or within 1 hour of business closing, whichever is later, and until 6 am or business opening, whichever is earlier, and during any period activity is not detected for a time longer than 15 minutes."
   end
 
   # human readable description of modeling approach
@@ -48,21 +46,19 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
   	min_off = 0
   	max_hrs = []
     min_hrs = []
+    ext_lights_sch_name = "Exterior Lights Schedule"
+    ext_lights_count = 0
+    ext_lights_changed = 0
 
     # get model objects from model classes
 	  ext_lights = model.getExteriorLightss #my precious
-	  ext_lights_defs = model.getExteriorLightsDefinitions
-	  sch_rulesets = model.getScheduleRulesets
-    spaces = model.getSpaces
-    space_types = model.getSpaceTypes
-    space_types_used = []
 
 		# DO STUFF
 
 		# determine building open and close times
 		# https://github.com/NREL/OpenStudio-PTool/blob/master/measures/predictive_thermostats/measure.rb
 		model.getThermalZones.each do |zone|
-      
+
       # Skip zones that have no occupants
       # or have occupants with no schedule
       people = []
@@ -83,36 +79,26 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
       end
       occ_sch = occ.numberofPeopleSchedule.get
 
-			max_hrs << Helpers.get_min_max_time(occ_sch)["max"]
-	    min_hrs << Helpers.get_min_max_time(occ_sch)["min"]
+			max_hrs << Helpers.get_min_max_time(occ_sch)["max_time"]
+	    min_hrs << Helpers.get_min_max_time(occ_sch)["min_time"]
 
     end #thermal zones
 
-    # get min and max times for occupancy schedules 
-    sch_rulesets.each do|sch_ruleset|
-
-    	if sch_ruleset.name.to_s.include? "Occ" #TODO
-    		max_hrs << Helpers.get_min_max_time(sch_ruleset)["max"]
-    		min_hrs << Helpers.get_min_max_time(sch_ruleset)["min"]
-  		end
-
-		end
-
-		# earliest and latest times
+		# determine absolute earliest and latest occupied times
 		max_hr = max_hrs.max
 		min_hr = min_hrs.min
-#		puts "MAX HR = #{max_hr}"
-#		puts "MIN HR = #{min_hr}"
 
-		# determine open and close times
+		# compare occupancy min/max and adjust from fixed 0000-0600 if necessary
+    #TODO
 
-		# create schedule (could use OsLib_Schedules.rb functions)
+		# create schedule, could use OsLib_Schedules.rb functions
+    runner.registerInfo("Adding new schedule to model: #{ext_lights_sch_name}")
     ext_lights_sch = OpenStudio::Model::ScheduleRuleset.new(model)
-    ext_lights_sch.setName("Exterior Lights Schedule")
+    ext_lights_sch.setName(ext_lights_sch_name)
 		default_day = ext_lights_sch.defaultDaySchedule
 		default_day.addValue(OpenStudio::Time.new(hr_on, hr_off, min_on, min_off), (1-ext_ltg_pwr_reduction))
 
-		# set schedule	  
+    # set controls, could be more DRY
 		if ext_lights.empty?
 
 			runner.registerAsNotApplicable("No exterior lights objects found in model.")
@@ -122,18 +108,46 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
 
 			ext_lights.each do |el|
 
-				if el.controlOption == "AstronomicalClock"
-					runner.registerInfo("Changing control option for exterior lights object: #{el.name}")
-					el.setControlOption("ScheduleNameOnly")
-				end
+        ext_lights_count += 1
+        runner.registerInfo("Applying exterior lighting controls to: #{el.name}")
 
-				runner.registerInfo("Changing schedule for exterior lights object: #{el.name}")
-				el.setSchedule(ext_lights_sch)
+        if el.controlOption == "AstronomicalClock"
+
+          runner.registerInfo("=> control option set to: AstronomicalClock")
+          runner.registerInfo("=> setting control option to: ScheduleNameOnly")
+          el.setControlOption("ScheduleNameOnly")
+          runner.registerInfo("=> setting schedule to: #{ext_lights_sch.name}")
+          el.setSchedule(ext_lights_sch)
+          ext_lights_changed += 1
+
+        elsif el.controlOption == "ScheduleNameOnly"
+
+          runner.registerInfo("=> control option set to: ScheduleNameOnly")
+          runner.registerInfo("=> setting schedule to: #{ext_lights_sch.name}")
+          el.setSchedule(ext_lights_sch)
+          ext_lights_changed += 1
+
+        else
+
+          runner.registerInfo("=> control option set to: blank")
+          runner.registerInfo("=> setting control option to: ScheduleNameOnly")
+          el.setControlOption("ScheduleNameOnly")
+          runner.registerInfo("=> setting schedule to: #{ext_lights_sch.name}")
+          el.setSchedule(ext_lights_sch)
+          ext_lights_changed += 1
+
+        end
 
 			end
 
 		end
+'TODO: causes run time error in 1.9.0
+    # report initial condition
+    runner.registerInitialCondition("Number of exterior lights objects in model = #{ext_lights_count}")
 
+    # report final condition
+    runner.registerFinalCondition("Number of exterior lights objects changed = #{ext_lights_changed}")
+'
   end #run method
 
 end #class
