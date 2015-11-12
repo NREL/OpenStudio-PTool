@@ -1,0 +1,63 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>elevator_cab_lighting_controls</name>
+  <uid>46280f71-7c4a-4d81-a580-a8843312dffd</uid>
+  <version_id>f9a95cfe-8378-4044-931d-5aad566ee041</version_id>
+  <xml_checksum>9A585DCE</xml_checksum>
+  <class_name>ElevatorCabLightingControls</class_name>
+  <display_name>Elevator Cab Lighting Controls</display_name>
+  <description></description>
+  <modeler_description>This EEM replaces the elevator lighting definition from the baseline value (assumed to coincide with 88 W/elevator cab, or 3.14 W/ft^2) to one representing 100% high-efficacy fixtures, with an effective lighting power of 32 W/elevator cab. The measure identifies the electric equipment load definition whose name includes the words ?elevator lights? and replaces that definition with a new one meeting the high efficacy lighting power. Instance multipliers are applied as per the original load. </modeler_description>
+  <arguments/>
+  <provenances/>
+  <tags>
+    <tag>Electric Lighting.Lighting Equipment</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>elevator_cab_lighting_controls_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>BAB27050</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>CC74BDC7</checksum>
+    </file>
+  </files>
+</measure>
