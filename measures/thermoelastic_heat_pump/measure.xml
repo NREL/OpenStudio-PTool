@@ -1,0 +1,66 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>thermoelastic_heat_pump</name>
+  <uid>95e83d5c-4ae9-4072-9885-cd51ee01f7e1</uid>
+  <version_id>fcf645eb-f813-4cf7-a9c7-ccff879581ae</version_id>
+  <xml_checksum>48FEEDDD</xml_checksum>
+  <class_name>ThermoelasticHeatPump</class_name>
+  <display_name>ThermoelasticHeatPump</display_name>
+  <description>When a shape-memory alloy is mechanically stressed it undergoes a solid-to-solid phase transformation and rejects heat to the surroundings.  When exposed to the surroundings, it absorbs heat and returns to the original shape.  Researchers have prototyped air conditioning equipment based on this concept.  It is estimated that cooling equipment based on this technology can realistically achieve a COP of around 6, which is roughly twice as good as existing vapor compression technologies.</description>
+  <modeler_description>For each model, find every DX cooling and heating coil and increase the COP to 6.  Since very little information about this technology is available, do not change performance curves or upper/lower operating temperature limits..</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.2</identifier>
+        <min_compatible>1.7.2</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>EF3A5042</checksum>
+    </file>
+  </files>
+</measure>
