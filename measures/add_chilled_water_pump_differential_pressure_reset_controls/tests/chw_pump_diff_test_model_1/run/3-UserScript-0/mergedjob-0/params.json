@@ -1,0 +1,187 @@
+{
+    "job_params": [
+        {
+            "param": {
+                "value": "ruby_scriptparameters"
+            },
+            "param_index": 0
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "children": [
+                                {
+                                    "param": {
+                                        "children": [
+                                            {
+                                                "param": {
+                                                    "children": [
+                                                        {
+                                                            "param": {
+                                                                "value": "in.idf"
+                                                            },
+                                                            "param_index": 0
+                                                        }
+                                                    ],
+                                                    "value": ".*\\.idf"
+                                                },
+                                                "param_index": 0
+                                            }
+                                        ],
+                                        "value": "All"
+                                    },
+                                    "param_index": 0
+                                }
+                            ],
+                            "value": "Last"
+                        },
+                        "param_index": 0
+                    }
+                ],
+                "value": "ruby_inputfiles"
+            },
+            "param_index": 1
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "value": "-I"
+                        },
+                        "param_index": 0
+                    },
+                    {
+                        "param": {
+                            "value": "C:/Program Files/OpenStudio 1.8.5/Ruby"
+                        },
+                        "param_index": 1
+                    }
+                ],
+                "value": "ruby_toolparameters"
+            },
+            "param_index": 2
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "children": [
+                                {
+                                    "param": {
+                                        "children": [
+                                            {
+                                                "param": {
+                                                    "value": ""
+                                                },
+                                                "param_index": 0
+                                            }
+                                        ],
+                                        "value": "idf"
+                                    },
+                                    "param_index": 0
+                                }
+                            ],
+                            "value": "idf"
+                        },
+                        "param_index": 0
+                    }
+                ],
+                "value": "ruby_copyrequired"
+            },
+            "param_index": 3
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "children": [
+                                {
+                                    "param": {
+                                        "value": "user_script.rb"
+                                    },
+                                    "param_index": 0
+                                }
+                            ],
+                            "value": "C:/Users/cbalbach/AppData/Local/Temp/OpenStudio.o17368/resources/scripts/add_sensor_calibration_faults/measure.rb"
+                        },
+                        "param_index": 0
+                    },
+                    {
+                        "param": {
+                            "children": [
+                                {
+                                    "param": {
+                                        "value": "measure.rb"
+                                    },
+                                    "param_index": 0
+                                }
+                            ],
+                            "value": "C:/Users/cbalbach/AppData/Local/Temp/OpenStudio.o17368/resources/scripts/add_sensor_calibration_faults/measure.rb"
+                        },
+                        "param_index": 1
+                    }
+                ],
+                "value": "ruby_requiredfiles"
+            },
+            "param_index": 4
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "value": "true"
+                        },
+                        "param_index": 0
+                    }
+                ],
+                "value": "ruby_isuserscriptjob"
+            },
+            "param_index": 5
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "value": "C:/Program Files/OpenStudio 1.8.5/Ruby/openstudio/runmanager/rubyscripts/UserScriptAdapter.rb"
+                        },
+                        "param_index": 0
+                    }
+                ],
+                "value": "ruby_scriptfile"
+            },
+            "param_index": 6
+        },
+        {
+            "param": {
+                "children": [
+                    {
+                        "param": {
+                            "children": [
+                                {
+                                    "param": {
+                                        "value": "{c2a21cf1-c9e3-4432-8111-5d28ab9281eb}"
+                                    },
+                                    "param_index": 0
+                                }
+                            ],
+                            "value": "bcl_measure_uuid"
+                        },
+                        "param_index": 0
+                    }
+                ],
+                "value": "ruby_bclmeasureparameters"
+            },
+            "param_index": 7
+        }
+    ],
+    "metadata": {
+        "openstudio_version": "1.8.5"
+    }
+}

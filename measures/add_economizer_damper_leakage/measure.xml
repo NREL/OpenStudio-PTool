@@ -1,0 +1,97 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>add_economizer_damper_leakage</name>
+  <uid>a7540fef-a3e4-43b3-9f8a-700b8095a2e5</uid>
+  <version_id>e67b1a33-147d-47ad-bac9-4956f0982873</version_id>
+  <xml_checksum>A2A0831F</xml_checksum>
+  <class_name>AddEconomizerDamperLeakage</class_name>
+  <display_name>Add Economizer Damper Leakage</display_name>
+  <description>This energy efficiency measure (EEM) changes the minimum outdoor air flow requirement of all Controller:OutdoorAir objects attached to all AirLoops present in a model to represent a value equal to a continuous 10% of outdoor air flow damper leakage condition . For cases where the outdoor air controller is not configured for airside economizer operation, the measure calculates and assigns a minimum outdoor airflow rate value equal to 10% of the calculated system minimum outdoor air flow rate.  For cases of controllers capable of airside economizer operation,  the measure calculates and assigns a minimum outdoor airflow rate value equal to 10% of the calculated system maximum outdoor air flow rate.  For both cases, outdoor air damper leakage is set to occur for all hours of the simulation. </description>
+  <modeler_description>This measure loops through all Controller:OutdoorAir objects present on all air loops in the model. If the Controller Economizer Control Type attribute is set to ?No Economizer?, the measure will examine the value for the ?Minimum Outdoor Air Flow Rate? attribute. If it equals = ?Autosize?, nothing is changed, If the value for the Minimum Outdoor Flow Rate = 0 then the attribute value is replaced with ?AutoSize?.  An OpenStudio sizing run is executed, and the Autosized value for the Minimum Outdoor Air Flow Rate is retrieved from results. If the Controller Economizer Control Type attribute does not equal 'No Economizer?,  the measure will determine whether the MaximumOutdoorAirflowRate is autosized or not. If it is autosized, a sizing run is launched, and the autosized value retrieved. For both cases, a new value for the Minimum Outdoor Air Flow Rate value equal to 10% of the retrieved autosized or hard sized value is set. A schedule maintaining this minimum value for all hours of the year is created and assigned to the airflow is assigned to the field ?Minimum Outdoor Schedule Name?. </modeler_description>
+  <arguments>
+    <argument>
+      <name>space_name</name>
+      <display_name>New space name</display_name>
+      <description>This name will be used as the name of the new space.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.Cooling</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Sensitivity Analysis</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>2EB35BAC</checksum>
+    </file>
+    <file>
+      <filename>add_economizer_damper_leakage_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>78A47685</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+  </files>
+</measure>
