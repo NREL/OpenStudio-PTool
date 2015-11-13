@@ -1,0 +1,1 @@
+runner.registerInfo("YYYY = #{sc.iddObjectType.valueDescription}") # it lists the type of objects in the loop (or parent object). eg, nodes are listed as OS:Node; Pipe are listed as OS:Pipe

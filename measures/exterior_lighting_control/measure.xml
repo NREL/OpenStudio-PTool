@@ -1,0 +1,79 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>exterior_lighting_control</name>
+  <uid>6d3fcb63-b3dd-4892-a77e-965c4737483f</uid>
+  <version_id>dfe04026-32e2-4784-8194-cffc8e7ddd21</version_id>
+  <xml_checksum>D2211B31</xml_checksum>
+  <class_name>ExteriorLightingControl</class_name>
+  <display_name>Exterior Lighting Control</display_name>
+  <description>This energy efficiency measure (EEM) reduces all exterior lighting to 30% of its peak power between midnight or within 1 hour of business closing, whichever is later, and until 6 am or business opening, whichever is earlier, and during any period activity is not detected for a time longer than 15 minutes.</description>
+  <modeler_description>TODO</modeler_description>
+  <arguments/>
+  <provenances/>
+  <tags>
+    <tag>Electric Lighting.Electric Lighting Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AA199C31</checksum>
+    </file>
+    <file>
+      <filename>exterior_lighting_control_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>7A55AE56</checksum>
+    </file>
+    <file>
+      <filename>Helpers.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>6C783B13</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>D2EFA10F</checksum>
+    </file>
+  </files>
+</measure>

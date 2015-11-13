@@ -1,0 +1,125 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>lower_minimum_airflow_rates_for_vav_terminal</name>
+  <uid>612cc2dc-5673-406d-88c9-5b08bb0b8b77</uid>
+  <version_id>76877667-16a7-4d6f-b3e6-0661e32e181e</version_id>
+  <xml_checksum>1D1E4CE3</xml_checksum>
+  <class_name>LowerMinimumAirflowRatesForVAVTerminal</class_name>
+  <display_name>Lower minimum airflow rates for VAV terminal</display_name>
+  <description>This energy efficiency measure (EEM) changes the VAV box minimum flow setting to 0.4 cfm/sf for all AirLoops in the model.</description>
+  <modeler_description>This measure loops through the thermal zones in all air loops. It then selects the thermal zone area and then calculates the minimum flow rate of 0.4 cfm/sf. If the zone has an AirTerminalSingleDuct VAVReheat &amp; AirTerminalSingleDuctVAVNoReheat terminal unit the measure changes the zone minimum air flow method to fixed flow rate and applies the calculated minimum flow rate.</modeler_description>
+  <arguments/>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F9663EDD</checksum>
+    </file>
+    <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FEF48F6F</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>56708A27</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3D921039</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EF42DC2D</checksum>
+    </file>
+    <file>
+      <filename>lower_minimum_airflow_rates_for_vav_terminal_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>B539F8D3</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.0</identifier>
+        <min_compatible>1.8.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>C5CCC24C</checksum>
+    </file>
+  </files>
+</measure>

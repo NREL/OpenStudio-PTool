@@ -1,0 +1,78 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>chilled_water_supply_temperature_reset</name>
+  <uid>ece0e213-408a-4f6a-a2ac-6d15f9bacff3</uid>
+  <version_id>d8649273-0c69-41a3-bb14-4eae2b2d1625</version_id>
+  <xml_checksum>710CDA7C</xml_checksum>
+  <class_name>ChilledWaterSupplyTemperatureReset</class_name>
+  <display_name>Chilled Water Supply Temperature Reset</display_name>
+  <description>This energy efficiency measure (EEM) adds a set point reset to all chilled water loops present in the OpenStudio model. The chilled water supply temperature reset will be based on outdoor-air temperature (OAT). The specific sequence is that as outdoor-air temperature (OAT) rises from 60F (15.6C) up to 100F (37.8C), the chilled water supply temperature set point will decrease from 55F (12.8C) down to 45F (7.22C).  This sequence provides a 10F (15.6C) change in the Chilled Water Set Point, over a 40F (22.2C) temperature change in the OAT. </description>
+  <modeler_description>This EEM applies an OS:SetpointManager:OutdoorAirReset controller to the supply outlet node of all PlantLoop objects where OS:Sizing:Plant.LoopType = 'Cooling'.</modeler_description>
+  <arguments/>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>chilled_water_supply_temperature_reset_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2A5A0D59</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>155CED09</checksum>
+    </file>
+  </files>
+</measure>
