@@ -1,0 +1,50 @@
+load("ptool_static_pressure_reset_results.RData")
+load("ptool_static_pressure_reset_metadata.RData")
+
+building_type <- unique(results$create_doe_prototype_building.building_type)
+climate_zone <- unique(results$create_doe_prototype_building.climate_zone)
+building_vintage <- unique(results$create_doe_prototype_building.template)
+
+variables <- metadata$name[which(metadata$type_of_variable == "variable")]
+variables_display <- metadata$display_name_short[which(metadata$type_of_variable == "variable")]
+outputs <- metadata$name[which( metadata$type_of_variable=="output")]
+outputs_display <- metadata$display_name_short[which( metadata$type_of_variable=="output")]
+
+
+
+for (p in 1:length(variables)){
+  png(paste(gsub(" ","_",variables_display[p]),".png",sep=""), width=10.0, height=10.0, units="in", pointsize=10, res=200)
+  par(mfrow=c(4,5))
+  for (m in 1:length(outputs)){
+    output <- results[,outputs[m]]
+    n <- 1
+    percent_diff <- c(0)
+    for (i in 1:length(building_type)){
+      for (j in 1:length(climate_zone)){
+        for (k in 1:length(building_vintage)){
+          applied <- NA
+          baseline <- NA
+          applied <- output[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 1))]
+          baseline <- output[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 0))]
+          if((length(applied) > 0 ) && (length(baseline) > 0)){
+            if(!is.na(baseline) && !is.na(applied)){
+              diff <- (applied - baseline)/baseline * 100
+              if(!is.nan(diff)){
+                percent_diff[n] <- diff
+              } else {
+                percent_diff[n] <- 0
+              } 
+              print(percent_diff[n])
+              n <- n+1
+            }
+          }  
+        }
+      }
+    }
+    print(outputs[m])
+    #png(paste(gsub(" ","_",variables_display[p]),"_",outputs_display[m],".png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+    hist(percent_diff, breaks=c(-5,-2,-1,1,2,5), freq=F, main=outputs_display[m], xlab="% Difference")    
+    #hist(percent_diff, breaks=20, freq=F, main=outputs_display[m], xlab="% Difference")
+  }
+  dev.off()
+}
