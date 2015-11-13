@@ -2,13 +2,23 @@
   <schema_version>3.0</schema_version>
   <name>close_outdoor_air_damper_during_unoccupied_periods</name>
   <uid>f4e23550-96ff-457b-aed7-2a250a2d035a</uid>
-  <version_id>2f33e5d3-6807-4bef-8a06-8a2b6794dd6a</version_id>
+  <version_id>e65cd836-234b-41a1-8920-f35ca5c9452f</version_id>
   <xml_checksum>4EED0D08</xml_checksum>
   <class_name>CloseOutdoorAirDamperDuringUnoccupiedPeriods</class_name>
   <display_name>Close Outdoor Air Damper During Unoccupied Periods</display_name>
   <description>This energy efficiency measure (EEM) changes the minimum outdoor air flow requirement of all Controller:OutdoorAir objects associated with airloops and present in a model to represent a value equal to 0 cfm during unoccupied periods. For single zone air systems, unoccupied periods are defined as periods when the any connected thermal zone has less than 5% of the peak specified occupancy.  For multi zone air systems, unoccupied periods are defined as periods when the average occupancy of all connected thermal zones is less than 5% of the peak specified occupancy.  In addition to outdoor air controller objects attached to airloops, the measure also limits the outdoor air of Four Pipe Fan Coil Units and Unit Ventilator objects if they are present as Zone HVAC equipment objects. </description>
   <modeler_description>This measure loops through all Thermal zones connected to Airloops having an Outdoor Air Controller object, and determines a space-weighted occupancy schedule for each attached thermal zone. The resulting occupancy schedules for each thermal zone are stepped through from hour 0 to hour 24. An airloop is considered occupied during a time period if all thermal zones representing occupancy associated with an air loop have a current occupancy value that is greater than 5% of the annual peak occupancy value.  The measure generates a new minimum outdoor air schedule having values of 0 where the all connected thermal zones have less than 5% occupancy and values of 1.0 for all other hours. Finally, the measure examines all Zone HVAC Equipment objects associated with an airloop. If Zone HVAC equipment object of type Four Pipe Fan Coil Unit or Unit Ventilator are found, the occupancy patterns associated with the thermal zone are analyzed and outside air schedules are assigned to allow design outside air levels when the thermal zone is occupied by more than 5 percent of thermal zone peak occupancy, otherwise shit the outside air damper of the Zone HVAC Equipment object completely.</modeler_description>
-  <arguments/>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
   <provenances/>
   <tags>
     <tag>HVAC.Ventilation</tag>
@@ -62,12 +72,6 @@
   </attributes>
   <files>
     <file>
-      <filename>close_outdoor_air_damper_during_unoccupied_periods_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4965B506</checksum>
-    </file>
-    <file>
       <filename>example_model.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -86,6 +90,12 @@
       <checksum>E7C2DCB8</checksum>
     </file>
     <file>
+      <filename>close_outdoor_air_damper_during_unoccupied_periods_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>78F3AB70</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.9.0</identifier>
@@ -94,7 +104,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>BD960F4B</checksum>
+      <checksum>C401E74D</checksum>
     </file>
   </files>
 </measure>

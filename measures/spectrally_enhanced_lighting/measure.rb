@@ -20,14 +20,12 @@ class SpectrallyEnhancedLighting < OpenStudio::Ruleset::ModelUserScript
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
-    # Make an argument to apply/not apply this measure
-    chs = OpenStudio::StringVector.new
-    chs << "TRUE"
-    chs << "FALSE"
-    apply_measure = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('apply_measure', chs, true)
-    apply_measure.setDisplayName("Apply Measure?")
-    apply_measure.setDefaultValue("TRUE")
-    args << apply_measure 
+    # Make integer arg to run measure [1 is run, 0 is no run]
+    run_measure = OpenStudio::Ruleset::OSArgument::makeIntegerArgument("run_measure",true)
+    run_measure.setDisplayName("Run Measure")
+    run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
+    run_measure.setDefaultValue(1)
+    args << run_measure 
 
     # Make an argument for reduction percentage
     lighting_power_reduction_percent = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("lighting_power_reduction_percent",true)
@@ -48,15 +46,17 @@ class SpectrallyEnhancedLighting < OpenStudio::Ruleset::ModelUserScript
       return false
     end
 
-    # Assign the user inputs to variables
-    apply_measure = runner.getStringArgumentValue("apply_measure",user_arguments)
+    # Return N/A if not selected to run
+    run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
+    if run_measure == 0
+      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
+      return true     
+    end    
+    
+
     lighting_power_reduction_percent = runner.getDoubleArgumentValue("lighting_power_reduction_percent",user_arguments)
 
-    # This measure is not applicable if apply_measure is false
-    if apply_measure == "FALSE"
-      runner.registerAsNotApplicable("Not Applicable - User chose not to apply this measure via the apply_measure argument.")
-      return true
-    end     
+     
     
     # Check the lighting_power_reduction_percent and for reasonableness
     if lighting_power_reduction_percent > 100 || lighting_power_reduction_percent < 0

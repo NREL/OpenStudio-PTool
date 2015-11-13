@@ -2,13 +2,23 @@
   <schema_version>3.0</schema_version>
   <name>add_daylight_sensors</name>
   <uid>9cb0fb2d-d95d-400c-9833-3be2db6a75ec</uid>
-  <version_id>3ceb3ad0-f76c-4336-97d2-0338bfcec695</version_id>
+  <version_id>4b24aae5-e4de-4213-bd20-25400ea6cee2</version_id>
   <xml_checksum>9B7BB4D8</xml_checksum>
   <class_name>AddDaylightSensors</class_name>
   <display_name>Add Daylight Sensors</display_name>
   <description>This measure involves the installation of photocells to sense the space lighting level and control the overhead lighting in the perimeter zones to maintain a constant light level in the space. This measure also includes replacing the overhead lighting with dimmable ballasts, since dimmable ballasts are necessary to realize energy savings. The lighting next to the exterior windows needs to be on a separate circuit from the other lighting, so that these lights can be controlled separate from the interior zone lights. The design of a daylight harvesting system should account for sensor location, sensor orientation, and number of sensors. During installation, the light sensitivity settings need to be adjusted so that the desired lighting level is maintained in the space. Also, the system should be periodically tested for proper functionality.</description>
   <modeler_description>Loops through all spaces in the model, calculates the daylighting area for each windows (defined as height of window head * width of window + 2ft on each side), and adds up the daylighting area for the whole space.  Then, if daylighting area > 250sf, installs a daylight sensor in the center of the window, at the head height of the window into the space, 3ft off the floor.  This sensor controls a fraction of the lighting equal to half of the daylighted area/space floor area.</modeler_description>
-  <arguments/>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
   <provenances/>
   <tags>
     <tag>Electric Lighting.Electric Lighting Controls</tag>
@@ -101,7 +111,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>A93E22EB</checksum>
+      <checksum>8127CDCF</checksum>
     </file>
   </files>
 </measure>

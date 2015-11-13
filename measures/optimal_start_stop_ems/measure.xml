@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>optimal_start_stop_ems</name>
   <uid>ab9809c2-b99c-4e4c-b119-c034edb87381</uid>
-  <version_id>3f79307e-5269-461a-aeed-dcb874aa8a2b</version_id>
+  <version_id>c4aefe9e-f8d2-4922-973f-7fb508f94104</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>OptimalStartStopEms</class_name>
   <display_name>OptimalStartStopEms</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>208FCF0F</checksum>
+      <checksum>7CBA4E5A</checksum>
     </file>
   </files>
 </measure>

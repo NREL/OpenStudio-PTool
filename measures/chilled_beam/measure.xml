@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_chilled_beam</name>
   <uid>574932ab-ed6e-41c7-bb62-e0d55274c0bc</uid>
-  <version_id>408092d3-cfcc-408d-a3f5-476a2ead846f</version_id>
+  <version_id>c087a95d-8ace-49aa-b460-0c85c2f3d454</version_id>
   <xml_checksum>E2AF1FD0</xml_checksum>
   <class_name>AddChilledBeam</class_name>
   <display_name>Add Chilled Beam</display_name>
@@ -297,6 +297,12 @@
       <checksum>20900352</checksum>
     </file>
     <file>
+      <filename>RemoveHVAC.Model.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>868AC284</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -305,13 +311,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C979F857</checksum>
-    </file>
-    <file>
-      <filename>RemoveHVAC.Model.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>868AC284</checksum>
+      <checksum>0F98DCE9</checksum>
     </file>
   </files>
 </measure>

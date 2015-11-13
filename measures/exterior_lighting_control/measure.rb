@@ -29,7 +29,12 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
-    #none per DOE
+    # Make integer arg to run measure [1 is run, 0 is no run]
+    run_measure = OpenStudio::Ruleset::OSArgument::makeIntegerArgument("run_measure",true)
+    run_measure.setDisplayName("Run Measure")
+    run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
+    run_measure.setDefaultValue(1)
+    args << run_measure
 
     return args
   end
@@ -38,6 +43,13 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
 
+    # Return N/A if not selected to run
+    run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
+    if run_measure == 0
+      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
+      return true     
+    end    
+    
   	# initialize variables
   	ext_ltg_pwr_reduction = 0.3
   	hr_on = 0

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>membrane_heat_pump_cooling_only_ems</name>
   <uid>fad4dd96-f6a9-4a15-a6fc-135adc77b808</uid>
-  <version_id>1a332bf7-9167-4e41-8789-8bc54363a859</version_id>
+  <version_id>a9c717fa-58b6-4595-970a-5db1322cb426</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>MembraneHeatPumpCoolingOnlyEms</class_name>
   <display_name>MembraneHeatPumpCoolingOnlyEms</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8DF59736</checksum>
+      <checksum>1C0CE2B0</checksum>
     </file>
   </files>
 </measure>

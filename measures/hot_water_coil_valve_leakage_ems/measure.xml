@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>hot_water_coil_valve_leakage_ems</name>
   <uid>fad4dd96-f6a9-4a15-a6fc-046adc66b707</uid>
-  <version_id>1a332bf7-9167-4e41-8789-8bc54363a859</version_id>
+  <version_id>4b6e9d79-0589-44ed-a3e4-9c022c853cd1</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>HotWaterCoilValveLeakageEms</class_name>
   <display_name>HotWaterCoilValveLeakageEms</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8DF59736</checksum>
+      <checksum>60994D63</checksum>
     </file>
   </files>
 </measure>

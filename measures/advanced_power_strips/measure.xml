@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>advanced_power_strips</name>
   <uid>3517b0f3-db26-4d30-896c-c4908ecac8cc</uid>
-  <version_id>266df2d0-987c-405f-8109-34eee9635e85</version_id>
+  <version_id>4de4e916-b09f-4ef3-ab55-d491c0fafd88</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>AdvancedPowerStrips</class_name>
   <display_name>Advanced Power Strips</display_name>
@@ -10,22 +10,13 @@
   <modeler_description>Looks through</modeler_description>
   <arguments>
     <argument>
-      <name>apply_measure</name>
-      <display_name>Apply Measure?</display_name>
-      <type>Choice</type>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>TRUE</default_value>
-      <choices>
-        <choice>
-          <value>TRUE</value>
-          <display_name>TRUE</display_name>
-        </choice>
-        <choice>
-          <value>FALSE</value>
-          <display_name>FALSE</display_name>
-        </choice>
-      </choices>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>fraction_value</name>
@@ -184,6 +175,12 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
+      <filename>advanced_power_strips_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8466EA2B</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -192,13 +189,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>0E52CF50</checksum>
-    </file>
-    <file>
-      <filename>advanced_power_strips_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>8466EA2B</checksum>
+      <checksum>D4806038</checksum>
     </file>
   </files>
 </measure>

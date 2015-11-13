@@ -26,6 +26,12 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriods < OpenStudio::Ruleset::ModelU
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
+    # Make integer arg to run measure [1 is run, 0 is no run]
+    run_measure = OpenStudio::Ruleset::OSArgument::makeIntegerArgument("run_measure",true)
+    run_measure.setDisplayName("Run Measure")
+    run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
+    run_measure.setDefaultValue(1)
+    args << run_measure
 
     return args
   end
@@ -39,6 +45,13 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriods < OpenStudio::Ruleset::ModelU
       return false
     end
 	
+    # Return N/A if not selected to run
+    run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
+    if run_measure == 0
+      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
+      return true     
+    end  
+  
 	#initialize variables
 	airloop_count = 0
 	thermal_zone_equipment_count = 0

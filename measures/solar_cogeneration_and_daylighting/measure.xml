@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>solar_cogeneration_and_daylighting</name>
   <uid>1bdb24ed-c7b5-46a6-a0c4-467f00a2cb91</uid>
-  <version_id>706c8b23-2ca0-46db-a33e-07b218f32316</version_id>
+  <version_id>9429c5db-415d-49e7-85ea-36b649b366e8</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>SolarCogenerationAndDaylighting</class_name>
   <display_name>Solar Cogeneration And Daylighting</display_name>
@@ -10,22 +10,13 @@
   <modeler_description>Reduces runtime fraction of lights by user-specified amount during the user-specified time period (typically daytime).  This is an attempt to represent the impact of using the light collected on the roof instead of electric lighting.  This modeling approach does not capture the impact of using a PV cell to turn the IR spectrum of the captured light into electricity.</modeler_description>
   <arguments>
     <argument>
-      <name>apply_measure</name>
-      <display_name>Apply Measure?</display_name>
-      <type>Choice</type>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>TRUE</default_value>
-      <choices>
-        <choice>
-          <value>TRUE</value>
-          <display_name>TRUE</display_name>
-        </choice>
-        <choice>
-          <value>FALSE</value>
-          <display_name>FALSE</display_name>
-        </choice>
-      </choices>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>pct_red</name>
@@ -94,6 +85,12 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
+      <filename>solar_cogeneration_and_daylighting_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8A4616D8</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -102,13 +99,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>46067404</checksum>
-    </file>
-    <file>
-      <filename>solar_cogeneration_and_daylighting_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>8A4616D8</checksum>
+      <checksum>91A8EB86</checksum>
     </file>
   </files>
 </measure>

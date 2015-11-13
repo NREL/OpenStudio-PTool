@@ -2,13 +2,23 @@
   <schema_version>3.0</schema_version>
   <name>exhaust_fan_interlock</name>
   <uid>4e7528ac-4926-400f-8932-a18d924bb1a7</uid>
-  <version_id>87a9015d-990b-41e0-a1ea-098429b3ec61</version_id>
+  <version_id>e3b6b776-8029-4fc7-bad7-88a47c40cb59</version_id>
   <xml_checksum>3379E2F8</xml_checksum>
   <class_name>ExhaustFanInterlock</class_name>
   <display_name>Exhaust Fan Interlock</display_name>
   <description>Exhaust fans that are not aligned with schedule of operations of the companion supply fan can impact the airflows of central air handlers by decreasing the flow of return air and sometimes increasing the outdoor air flow rate. A common operational practice is to interlock (or align) the operations of any exhaust fans with the companion system used to condition and pressurize a space. This measure examines all Fan:ZoneExhaust objects present in a model and coordinates the availability of the exhaust fan with the system supply fan. </description>
   <modeler_description>For any thermal zones having zone equipment objects of type Fan:ZoneExhaust, this energy efficiency measure (EEM) maps the schedule used to define the availability of the associated Air Loop to the Availability Schedule attribute of the zone exhaust fan object. </modeler_description>
-  <arguments/>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
   <provenances/>
   <tags>
     <tag>HVAC.Ventilation</tag>
@@ -114,7 +124,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>59239C14</checksum>
+      <checksum>21078E06</checksum>
     </file>
   </files>
 </measure>

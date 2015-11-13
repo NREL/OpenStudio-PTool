@@ -23,6 +23,13 @@ class CommercialLightingWithET2020LEDs < OpenStudio::Ruleset::ModelUserScript
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new  
     
+    # Make integer arg to run measure [1 is run, 0 is no run]
+    run_measure = OpenStudio::Ruleset::OSArgument::makeIntegerArgument("run_measure",true)
+    run_measure.setDisplayName("Run Measure")
+    run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
+    run_measure.setDefaultValue(1)
+    args << run_measure    
+    
     return args
   end
 
@@ -34,6 +41,13 @@ class CommercialLightingWithET2020LEDs < OpenStudio::Ruleset::ModelUserScript
     if !runner.validateUserArguments(arguments(model), user_arguments)
       return false
     end   
+ 
+    # Return N/A if not selected to run
+    run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
+    if run_measure == 0
+      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
+      return true     
+    end 
  
     initial_efficacy = 90.0 # 90 lm/W assuming 90.1-2013 T8 lighting
     target_efficacy = 193.0 # 193 lm/W, from http://apps1.eere.energy.gov/buildings/publications/pdfs/ssl/ssl_energy-savings-report_jan-2012.pdf

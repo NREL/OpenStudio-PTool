@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>low_pressure_drop_air_filters</name>
   <uid>8a17789a-5ac1-4292-9f8d-d5721922674d</uid>
-  <version_id>d2eefc0a-acec-4c5f-90e4-9a744dc08408</version_id>
+  <version_id>7f56082d-fee1-4580-966d-d2e2a5b67dc5</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>LowPressureDropAirFilters</class_name>
   <display_name>Low Pressure Drop Air Filters</display_name>
@@ -10,22 +10,13 @@
   <modeler_description></modeler_description>
   <arguments>
     <argument>
-      <name>apply_measure</name>
-      <display_name>Apply Measure?</display_name>
-      <type>Choice</type>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>TRUE</default_value>
-      <choices>
-        <choice>
-          <value></value>
-          <display_name>TRUE</display_name>
-        </choice>
-        <choice>
-          <value></value>
-          <display_name>FALSE</display_name>
-        </choice>
-      </choices>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>pressure_drop_reduction_inh2o</name>
@@ -91,7 +82,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EEA1EEEA</checksum>
+      <checksum>D876F037</checksum>
     </file>
   </files>
 </measure>
