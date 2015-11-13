@@ -43,6 +43,7 @@ class AdvancedRTUControlsEms < OpenStudio::Ruleset::WorkspaceUserScript
       return false
     end
     
+    # Return N/A if not selected to run
     run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
     if run_measure == 0
       runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")

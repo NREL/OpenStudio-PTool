@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>wireless_lighting_occupancy_sensors</name>
   <uid>ce22143c-46aa-4727-a08c-ef32dbc5e774</uid>
-  <version_id>79e16429-a68d-492d-86d9-85c131feda94</version_id>
+  <version_id>2bfc6be2-3624-4d6b-ae72-487d9457f057</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>WirelessLightingOccupancySensors</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
@@ -10,22 +10,13 @@
   <modeler_description></modeler_description>
   <arguments>
     <argument>
-      <name>apply_measure</name>
-      <display_name>Apply Measure?</display_name>
-      <type>Choice</type>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>TRUE</default_value>
-      <choices>
-        <choice>
-          <value></value>
-          <display_name>TRUE</display_name>
-        </choice>
-        <choice>
-          <value></value>
-          <display_name>FALSE</display_name>
-        </choice>
-      </choices>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>percent_runtime_reduction</name>
@@ -91,7 +82,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>7B83166F</checksum>
+      <checksum>C042EC13</checksum>
     </file>
   </files>
 </measure>

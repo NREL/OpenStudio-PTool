@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_energy_recovery_ventilator</name>
   <uid>6e07a8b4-0610-4f87-9031-f78179f6107d</uid>
-  <version_id>e4f15fa3-2f84-436c-903a-eaa30aac6f3a</version_id>
+  <version_id>318e20c7-ca06-43e3-a9c7-c77d424087af</version_id>
   <xml_checksum>7BBDE1A2</xml_checksum>
   <class_name>AddEnergyRecoveryVentilator</class_name>
   <display_name>Add Energy Recovery Ventilator</display_name>
@@ -10,22 +10,13 @@
   <modeler_description></modeler_description>
   <arguments>
     <argument>
-      <name>apply_measure</name>
-      <display_name>Apply Measure?</display_name>
-      <type>Choice</type>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>TRUE</default_value>
-      <choices>
-        <choice>
-          <value>TRUE</value>
-          <display_name>TRUE</display_name>
-        </choice>
-        <choice>
-          <value>FALSE</value>
-          <display_name>FALSE</display_name>
-        </choice>
-      </choices>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>fan_pressure_increase_inH2O</name>
@@ -155,7 +146,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9496E68D</checksum>
+      <checksum>EE2E6CD4</checksum>
     </file>
   </files>
 </measure>

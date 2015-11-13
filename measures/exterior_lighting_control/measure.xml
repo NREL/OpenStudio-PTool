@@ -2,13 +2,23 @@
   <schema_version>3.0</schema_version>
   <name>exterior_lighting_control</name>
   <uid>6d3fcb63-b3dd-4892-a77e-965c4737483f</uid>
-  <version_id>dfe04026-32e2-4784-8194-cffc8e7ddd21</version_id>
+  <version_id>b7a2df49-6354-49ce-8492-8cca99ff909d</version_id>
   <xml_checksum>D2211B31</xml_checksum>
   <class_name>ExteriorLightingControl</class_name>
   <display_name>Exterior Lighting Control</display_name>
   <description>This energy efficiency measure (EEM) reduces all exterior lighting to 30% of its peak power between midnight or within 1 hour of business closing, whichever is later, and until 6 am or business opening, whichever is earlier, and during any period activity is not detected for a time longer than 15 minutes.</description>
   <modeler_description>TODO</modeler_description>
-  <arguments/>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
   <provenances/>
   <tags>
     <tag>Electric Lighting.Electric Lighting Controls</tag>
@@ -73,7 +83,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D2EFA10F</checksum>
+      <checksum>D9C0FA09</checksum>
     </file>
   </files>
 </measure>

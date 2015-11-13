@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>cold_climate_heat_pumps</name>
   <uid>764b1a22-2592-4087-89ce-ea796de57b81</uid>
-  <version_id>afc7b081-c27f-4799-900f-a249b1a8a8e1</version_id>
+  <version_id>c6dc9c1b-c95f-4599-86ec-dd8f08ca7f4d</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>ColdClimateHeatPumps</class_name>
   <display_name>Cold Climate Heat Pumps</display_name>
@@ -16,7 +16,17 @@
 In addition, the setting for the MinimumOutdoorDryBulbTemperatureforCompressorOperation will be changed to -4?F.
 The replacement curves have been developed by using the 3rd stage of a 4 stage heat pump description of performance curve data used in BeOpt v2.4 for low temperature dx heat pump heating coils. 
 </modeler_description>
-  <arguments/>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
   <provenances/>
   <tags>
     <tag>HVAC.HVAC Controls</tag>
@@ -60,16 +70,16 @@ The replacement curves have been developed by using the 3rd stage of a 4 stage h
   </attributes>
   <files>
     <file>
-      <filename>cold_climate_heat_pumps_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>050F2F1A</checksum>
-    </file>
-    <file>
       <filename>example_model.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <filename>cold_climate_heat_pumps_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>21B431DB</checksum>
     </file>
     <file>
       <version>
@@ -80,7 +90,7 @@ The replacement curves have been developed by using the 3rd stage of a 4 stage h
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EC62611D</checksum>
+      <checksum>D1374689</checksum>
     </file>
   </files>
 </measure>

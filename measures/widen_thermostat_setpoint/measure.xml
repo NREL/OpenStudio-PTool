@@ -2,13 +2,23 @@
   <schema_version>3.0</schema_version>
   <name>widen_thermostat_setpoint</name>
   <uid>2b067fa3-cf9e-4a1c-8b30-7a51585d2a69</uid>
-  <version_id>430dc8d1-2bc7-4388-8bad-8e77602088fb</version_id>
+  <version_id>5e56c669-0015-43d1-a5a9-ca0c7045b116</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>WidenThermostatSetpoint</class_name>
   <display_name>Widen Thermostat Setpoint</display_name>
   <description>It is well understood that for many HVAC systems, significant energy can be saved by increasing the thermostat deadband-the range of zone temperatures at which neither heating nor cooling systems are needed. While saving energy, it is important to acknowledge that large or aggressive deadbands can result in occupant comfort issues and complaints. ASHRAE Standard 55 defines an envelope for thermal comfort, and predictions of thermal comfort should be analyzed to determine an appropriate balance between energy conservation and occupant comfort/productivity. This measure analyzes the heating and cooling setpoint schedules associated with each thermal zone in the model, and widens the temperature deadband of all schedule run period profiles from their existing value by 1.5 degrees F.</description>
   <modeler_description>The measure loops through the heating and cooling thermostat schedules associated each thermal zone. The existing heating and cooling schedules are cloned, and the all run period profiles are then modified by adding a +1.5 deg F shift to the all values of the cooling thermostat schedule and a -1.5 degree F shift to all values of the heating thermostat schedule.  Design Day profiles are not modified. The modified thermostat schedules are then assigned to the thermal zone.  For each Thermal Zone, ASHRAE 55 Thermal Comfort Warnings is also enabled. Zone Thermal Comfort ASHRAE 55 Adaptive Model 90% Acceptability Status output variables is also added to the model.</modeler_description>
-  <arguments/>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
   <provenances/>
   <tags>
     <tag>HVAC.HVAC Controls</tag>
@@ -52,16 +62,16 @@
   </attributes>
   <files>
     <file>
-      <filename>widen_thermostat_setpoint_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>67DFD8D7</checksum>
-    </file>
-    <file>
       <filename>example_model.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>C4F35230</checksum>
+    </file>
+    <file>
+      <filename>widen_thermostat_setpoint_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AEEB894E</checksum>
     </file>
     <file>
       <version>
@@ -72,7 +82,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AC29932F</checksum>
+      <checksum>96B34789</checksum>
     </file>
   </files>
 </measure>

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>thermoelastic_heat_pump</name>
   <uid>95e83d5c-4ae9-4072-9885-cd51ee01f7e1</uid>
-  <version_id>fcf645eb-f813-4cf7-a9c7-ccff879581ae</version_id>
+  <version_id>853dad45-ca71-43d4-93ff-2268e54c81dc</version_id>
   <xml_checksum>48FEEDDD</xml_checksum>
   <class_name>ThermoelasticHeatPump</class_name>
   <display_name>ThermoelasticHeatPump</display_name>
@@ -60,7 +60,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EF3A5042</checksum>
+      <checksum>50C592E3</checksum>
     </file>
   </files>
 </measure>

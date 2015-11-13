@@ -177,11 +177,7 @@ class AddChilledBeam < OpenStudio::Ruleset::ModelUserScript
    # Parse user arguments into variables
   def parse_user_arguments(runner, user_arguments)
     apply_measure = runner.getStringArgumentValue("apply_measure",user_arguments)
-    # This measure is not applicable if apply_measure is false
-    if apply_measure == "FALSE"
-      runner.registerAsNotApplicable("Not Applicable - User chose not to apply this measure via the apply_measure argument.")
-      return true
-    end
+
     
     @cooled_beam_type = runner.getStringArgumentValue("cooled_beam_type", user_arguments)
     @existing_plant_loop_name = runner.getStringArgumentValue("existing_plant_loop_name", user_arguments)

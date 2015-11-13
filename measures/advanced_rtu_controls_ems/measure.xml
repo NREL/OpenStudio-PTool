@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>advanced_rtu_controls_ems</name>
   <uid>fad4dd96-f6a9-4a15-a6fc-046adc77b808</uid>
-  <version_id>1a332bf7-9167-4e41-8789-8bc54363a859</version_id>
+  <version_id>ae647a4a-6c73-40c9-84d5-6f900c77ba6b</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>AdvancedRTUControlsEms</class_name>
   <display_name>AdvancedRTUControlsEms</display_name>
@@ -55,7 +55,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8DF59736</checksum>
+      <checksum>4C0BBB71</checksum>
     </file>
   </files>
 </measure>

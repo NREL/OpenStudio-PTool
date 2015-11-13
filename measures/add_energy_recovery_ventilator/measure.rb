@@ -23,14 +23,12 @@ class AddEnergyRecoveryVentilator < OpenStudio::Ruleset::ModelUserScript
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
-    # Make an argument to apply/not apply this measure
-    chs = OpenStudio::StringVector.new
-    chs << "TRUE"
-    chs << "FALSE"
-    apply_measure = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('apply_measure', chs, true)
-    apply_measure.setDisplayName("Apply Measure?")
-    apply_measure.setDefaultValue("TRUE")
-    args << apply_measure 
+    # Make integer arg to run measure [1 is run, 0 is no run]
+    run_measure = OpenStudio::Ruleset::OSArgument::makeIntegerArgument("run_measure",true)
+    run_measure.setDisplayName("Run Measure")
+    run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
+    run_measure.setDefaultValue(1)
+    args << run_measure
     
     # Increased fan pressure drop from ERV
     fan_pressure_increase_inH2O = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("fan_pressure_increase_inH2O", false)
@@ -99,8 +97,14 @@ class AddEnergyRecoveryVentilator < OpenStudio::Ruleset::ModelUserScript
       return false
     end
 
-    # Assign the user inputs to variables
-    apply_measure = runner.getStringArgumentValue("apply_measure",user_arguments)
+    # Return N/A if not selected to run
+    run_measure = runner.getIntegerArgumentValue("run_measure",user_arguments)
+    if run_measure == 0
+      runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
+      return true     
+    end    
+    
+
     fan_pressure_increase_inH2O = runner.getDoubleArgumentValue("fan_pressure_increase_inH2O",user_arguments)
     
     sensible_eff_at_100_heating = runner.getDoubleArgumentValue("sensible_eff_at_100_heating",user_arguments)		
@@ -113,11 +117,7 @@ class AddEnergyRecoveryVentilator < OpenStudio::Ruleset::ModelUserScript
     sensible_eff_at_75_cooling = runner.getDoubleArgumentValue("sensible_eff_at_75_cooling",user_arguments)	
     latent_eff_at_75_cooling = runner.getDoubleArgumentValue("latent_eff_at_75_cooling",user_arguments)	
     
-    # This measure is not applicable if apply_measure is false
-    if apply_measure == "FALSE"
-      runner.registerAsNotApplicable("Not Applicable - User chose not to apply this measure via the apply_measure argument.")
-      return true
-    end    
+    
     
     # Convert fan pressure rise to SI units
     fan_pressure_increase_Pa = OpenStudio.convert(fan_pressure_increase_inH2O,"inH_{2}O","Pa").get

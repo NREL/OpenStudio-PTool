@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>one_watt_standby</name>
   <uid>d40a3d72-1161-49fe-a1fb-9efd1e25fe78</uid>
-  <version_id>a0130d84-a66b-40db-9ccc-fa06ab9531b4</version_id>
+  <version_id>b17f333d-9a46-478e-9e64-6319fc6b8852</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>OneWattStandby</class_name>
   <display_name>One Watt Standby</display_name>
@@ -10,22 +10,13 @@
   <modeler_description>Looks through</modeler_description>
   <arguments>
     <argument>
-      <name>apply_measure</name>
-      <display_name>Apply Measure?</display_name>
-      <type>Choice</type>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>TRUE</default_value>
-      <choices>
-        <choice>
-          <value>TRUE</value>
-          <display_name>TRUE</display_name>
-        </choice>
-        <choice>
-          <value>FALSE</value>
-          <display_name>FALSE</display_name>
-        </choice>
-      </choices>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>fraction_value</name>
@@ -184,6 +175,12 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
+      <filename>one_watt_standby_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FA368572</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -192,13 +189,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>26F9925A</checksum>
-    </file>
-    <file>
-      <filename>one_watt_standby_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FA368572</checksum>
+      <checksum>D539E2CA</checksum>
     </file>
   </files>
 </measure>
