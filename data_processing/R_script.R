@@ -8,8 +8,10 @@ building_vintage <- unique(results$create_doe_prototype_building.template)
 variables <- metadata$name[which(metadata$type_of_variable == "variable")]
 variables_display <- metadata$display_name_short[which(metadata$type_of_variable == "variable")]
 outputs <- metadata$name[which( metadata$type_of_variable=="output")]
+applicable <- outputs[which(grepl("applicable",outputs))]
+outputs <- outputs[which(!grepl("applicable",outputs))]
+applicable <- applicable[applicable != "create_doe_prototype_building.applicable"]
 outputs_display <- metadata$display_name_short[which( metadata$type_of_variable=="output")]
-
 
 
 for (p in 1:length(variables)){
@@ -43,8 +45,13 @@ for (p in 1:length(variables)){
     }
     print(outputs[m])
     #png(paste(gsub(" ","_",variables_display[p]),"_",outputs_display[m],".png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
-    hist(percent_diff, breaks=c(-5,-2,-1,1,2,5), freq=F, main=outputs_display[m], xlab="% Difference")    
+    hist(percent_diff, breaks=c(-11,-2,-1,1,2,11), freq=F, main=outputs_display[m], xlab="% Difference")    
     #hist(percent_diff, breaks=20, freq=F, main=outputs_display[m], xlab="% Difference")
   }
+  applicable_display <- metadata$display_name_short[which( metadata$name==variables[p])]
+  hist(output_applicable*1, breaks=c(0,0.25,0.75,1), freq=T, main=applicable_display, xlab="Is Measure Applicable",xaxt="n")
+  axis(side=1,at=c(0,1),labels=c("False","True"))
   dev.off()
 }
+
+ 
