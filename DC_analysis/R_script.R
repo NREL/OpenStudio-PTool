@@ -1,7 +1,7 @@
 #source file after changing the directory to run in below (variable = dirs)
 #make sure there are only 1 results.RData and 1 metadata.RData in the directory
 
-dirs = "4_5"  #directory name to run in
+dirs = "test"  #directory name to run in
 a <- list.files(path=dirs)
 #find RData files in the directory
 for(i in 1:length(a)){
@@ -15,6 +15,7 @@ building_type <- unique(results$create_doe_prototype_building.building_type)
 climate_zone <- unique(results$create_doe_prototype_building.climate_zone)
 building_vintage <- unique(results$create_doe_prototype_building.template)
 
+#Look in the metadata dataframe to find variable/output names
 #Find all the variables to loop over
 variables <- metadata$name[which(metadata$type_of_variable == "variable")]
 #Get the displayname for the variables
@@ -83,6 +84,10 @@ for (p in 1:length(variables)){
           baseline <- NA
           #get the output value for the applied measure value for the specific building type, climate zone and vintage
           applied <- output[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 1))]
+          if(length(applied) > 1){
+            print(paste("too many applied found:",building_type[i],"climate_zone:",climate_zone[j],"building_vintage:",building_vintage[k]))
+            stop
+          }
           #setup temp copy of the results dataframe
           temp <- results
           #Loop over all the variables and reduce dataframe to just those where all the measures were not applied to find baselines
@@ -92,7 +97,7 @@ for (p in 1:length(variables)){
           #find the specific building type, climate zone and vintage in the baseline models dataframe (temp)
           baseline <- output[intersect(intersect(which(temp$create_doe_prototype_building.building_type == building_type[i]),which(temp$create_doe_prototype_building.climate_zone == climate_zone[j])),which(temp$create_doe_prototype_building.template == building_vintage[k]))]
           #there should only be one value for the baseline.  If not, then error out
-          if(length(baseline) != 1){
+          if(length(baseline) > 1){
             print(paste("too many baselines found:",building_type[i],"climate_zone:",climate_zone[j],"building_vintage:",building_vintage[k]))
             stop
           }
