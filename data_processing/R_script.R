@@ -1,5 +1,5 @@
-load("ptool_static_pressure_reset_and_leds_results.RData")
-load("ptool_static_pressure_reset_and_leds_metadata.RData")
+load("ptool_leds_results.RData")
+load("ptool_leds_metadata.RData")
 
 building_type <- unique(results$create_doe_prototype_building.building_type)
 climate_zone <- unique(results$create_doe_prototype_building.climate_zone)
@@ -47,7 +47,15 @@ for (p in 1:length(variables)){
           applied <- NA
           baseline <- NA
           applied <- output[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 1))]
-          baseline <- output[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 0))]
+          temp <- results
+          for(x in 1:length(variables)){
+            temp <- subset(temp, temp[,variables[x]]==0)
+          }
+          baseline <- output[intersect(intersect(which(temp$create_doe_prototype_building.building_type == building_type[i]),which(temp$create_doe_prototype_building.climate_zone == climate_zone[j])),which(temp$create_doe_prototype_building.template == building_vintage[k]))]
+          if(length(baseline) != 1){
+            print(paste("too many baselines found:",building_type[i],"climate_zone:",climate_zone[j],"building_vintage:",building_vintage[k]))
+            stop
+          }
           if((length(applied) > 0 ) && (length(baseline) > 0)){
             if(!is.na(baseline) && !is.na(applied)){
               diff <- (applied - baseline)/ (baseline) * 100
