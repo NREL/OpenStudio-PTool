@@ -3,7 +3,7 @@
 #clear workspace
 rm(list = ls())
 
-dirs = "test"  #directory name to run in
+dirs = "5_5"  #directory name to run in
 a <- list.files(path=dirs)
 #find RData files in the directory
 for(i in 1:length(a)){
@@ -122,12 +122,14 @@ for (p in 1:length(variables)){
               if (baseline != 0){
                 diff <- (applied - baseline)/ (baseline) * 100
               } else {
+                #next
                 diff <- (applied - baseline)
               }              
               #if diff is not a number, then set to zero
               if(!is.nan(diff) && is.finite(diff)){
                 percent_diff[n] <- diff
               } else {
+                #next
                 percent_diff[n] <- 0
               } 
               #increment the index on percent difference
