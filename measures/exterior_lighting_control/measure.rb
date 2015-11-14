@@ -81,21 +81,29 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
         end
       end
       if people.size == 0
-#        runner.registerInfo("Zone #{zone.name} has no people, predictive thermostat not applicable.")
         next
       end
       occ = people[0]
       if occ.numberofPeopleSchedule.empty?
-#        runner.registerInfo("Zone #{zone.name} has people but no occupancy schedule, predictive thermostat not applicable.")
+
         next
       end
       occ_sch = occ.numberofPeopleSchedule.get
 
-			max_hrs << Helpers.get_min_max_time(occ_sch)["max_time"]
-	    min_hrs << Helpers.get_min_max_time(occ_sch)["min_time"]
-
+      max_time = Helpers.get_min_max_time(occ_sch)["max_time"]
+      min_time = Helpers.get_min_max_time(occ_sch)["min_time"]
+      
+      # Don't add nil values (from flat schedules)
+      if !max_time.nil?
+        max_hrs << max_time
+      end
+     
+      if !min_time.nil?
+        min_hrs << min_time
+      end
+      
     end #thermal zones
-
+    
 		# determine absolute earliest and latest occupied times
 		max_hr = max_hrs.max
 		min_hr = min_hrs.min
