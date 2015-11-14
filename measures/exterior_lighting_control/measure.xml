@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>exterior_lighting_control</name>
   <uid>6d3fcb63-b3dd-4892-a77e-965c4737483f</uid>
-  <version_id>b7a2df49-6354-49ce-8492-8cca99ff909d</version_id>
+  <version_id>93763a34-2bc6-4e23-baaf-84cc99705816</version_id>
   <xml_checksum>D2211B31</xml_checksum>
   <class_name>ExteriorLightingControl</class_name>
   <display_name>Exterior Lighting Control</display_name>
@@ -63,16 +63,16 @@
       <checksum>AA199C31</checksum>
     </file>
     <file>
-      <filename>exterior_lighting_control_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>7A55AE56</checksum>
-    </file>
-    <file>
       <filename>Helpers.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
       <checksum>6C783B13</checksum>
+    </file>
+    <file>
+      <filename>exterior_lighting_control_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C977ADFB</checksum>
     </file>
     <file>
       <version>
@@ -83,7 +83,31 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D9C0FA09</checksum>
+      <checksum>14F25B9A</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>815522F5</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>14713539</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>0BC18C2D</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3499F9CF</checksum>
     </file>
   </files>
 </measure>
