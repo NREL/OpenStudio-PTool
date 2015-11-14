@@ -3,7 +3,7 @@
 #clear workspace
 rm(list = ls())
 
-dirs = "test"  #directory name to run in
+dirs = "4_5"  #directory name to run in
 a <- list.files(path=dirs)
 #find RData files in the directory
 for(i in 1:length(a)){
@@ -52,12 +52,24 @@ for (p in 1:length(variables)){
   png(paste(dirs,"/",gsub(" ","_",variables_display[p]),".png",sep=""), width=10.0, height=10.0, units="in", pointsize=10, res=200)
   #4 rows and 5 columns
   par(mfrow=c(4,5))
+  
+  result <- results
+  #if more than one variable, Loop over all the variables and reduce dataframe to just those where all the measures were not applied
+  if(length(variables)>1){
+    for(x in 1:length(variables)){
+      #remove all other variable runs except for the p_th variable
+      if(variables[x] != variables[p]){
+        result <- subset(result, result[,variables[x]]==0)
+      }
+    }
+  }
+  
   #loop over the outputs and create histogram for each output
   for (m in 1:length(outputs)){
     #get the data for the m_th output variable
-    output <- results[,outputs[m]]
+    output <- result[,outputs[m]]
     #get the applicable data for the m_th output variable
-    output_applicable <- results[,applicable_variable]
+    output_applicable <- result[,applicable_variable]
     #set the index for the %Diff variable
     n <- 1
     percent_diff <- c(0)
@@ -67,7 +79,7 @@ for (p in 1:length(variables)){
       for (j in 1:length(climate_zone)){
         for (k in 1:length(building_vintage)){
           #find the row in the output_applicable data for the output variable that matches the specific building type, climate zone and vintage and also has the variable measure set to run (not the baseline)
-          output_applied <- output_applicable[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 1))]
+          output_applied <- output_applicable[intersect(intersect(intersect(which(result$create_doe_prototype_building.building_type == building_type[i]),which(result$create_doe_prototype_building.climate_zone == climate_zone[j])),which(result$create_doe_prototype_building.template == building_vintage[k])),which(result[,variables[p]] == 1))]
           #if nothing was found then skip (possibly due to a failed model)
           if(length(output_applied) == 0){
             print("argument length zero")
@@ -85,19 +97,19 @@ for (p in 1:length(variables)){
           applied <- NA
           baseline <- NA
           #get the output value for the applied measure value for the specific building type, climate zone and vintage
-          applied <- output[intersect(intersect(intersect(which(results$create_doe_prototype_building.building_type == building_type[i]),which(results$create_doe_prototype_building.climate_zone == climate_zone[j])),which(results$create_doe_prototype_building.template == building_vintage[k])),which(results[,variables[p]] == 1))]
+          applied <- output[intersect(intersect(intersect(which(result$create_doe_prototype_building.building_type == building_type[i]),which(result$create_doe_prototype_building.climate_zone == climate_zone[j])),which(result$create_doe_prototype_building.template == building_vintage[k])),which(result[,variables[p]] == 1))]
           if(length(applied) > 1){
             print(paste("too many applied found:",building_type[i],"climate_zone:",climate_zone[j],"building_vintage:",building_vintage[k]))
             stop
           }
           #setup temp copy of the results dataframe
-          temp <- results
+          #temp <- results
           #Loop over all the variables and reduce dataframe to just those where all the measures were not applied to find baselines
-          for(x in 1:length(variables)){
-            temp <- subset(temp, temp[,variables[x]]==0)
-          }
+          #for(x in 1:length(variables)){
+          #  temp <- subset(temp, temp[,variables[x]]==0)
+          #}
           #find the specific building type, climate zone and vintage in the baseline models dataframe (temp)
-          baseline <- output[intersect(intersect(which(temp$create_doe_prototype_building.building_type == building_type[i]),which(temp$create_doe_prototype_building.climate_zone == climate_zone[j])),which(temp$create_doe_prototype_building.template == building_vintage[k]))]
+          baseline <- output[intersect(intersect(intersect(which(result$create_doe_prototype_building.building_type == building_type[i]),which(result$create_doe_prototype_building.climate_zone == climate_zone[j])),which(result$create_doe_prototype_building.template == building_vintage[k])),which(result[,variables[p]] == 0))]
           #there should only be one value for the baseline.  If not, then error out
           if(length(baseline) > 1){
             print(paste("too many baselines found:",building_type[i],"climate_zone:",climate_zone[j],"building_vintage:",building_vintage[k]))
@@ -138,17 +150,8 @@ for (p in 1:length(variables)){
   }
   applicable_display <- metadata$display_name_short[which( metadata$name==variables[p])]
   #setup temp copy of the results dataframe
-  temp <- results
-  #if more than one variable, Loop over all the variables and reduce dataframe to just those where all the measures were not applied
-  if(length(variables)>1){
-    for(x in 1:length(variables)){
-      #remove all other variable runs except for the p_th variable
-      if(variables[x] != variables[p]){
-        temp <- subset(temp, temp[,variables[x]]==0)
-      }
-    }
-  }
-  output_applicable <- temp[,applicable_variable]
+
+  #output_applicable <- result[,applicable_variable]
   hist(output_applicable*1, breaks=c(0,0.25,0.75,1), freq=T, main=applicable_display, xlab="Is Measure Applicable",xaxt="n")
   axis(side=1,at=c(0,1),labels=c("False","True"))
   dev.off()
