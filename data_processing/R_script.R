@@ -1,5 +1,5 @@
-load("ptool_leds_results.RData")
-load("ptool_leds_metadata.RData")
+load("ptool_static_pressure_reset_results.RData")
+load("ptool_static_pressure_reset_metadata.RData")
 
 building_type <- unique(results$create_doe_prototype_building.building_type)
 climate_zone <- unique(results$create_doe_prototype_building.climate_zone)
@@ -59,7 +59,7 @@ for (p in 1:length(variables)){
           if((length(applied) > 0 ) && (length(baseline) > 0)){
             if(!is.na(baseline) && !is.na(applied)){
               diff <- (applied - baseline)/ (baseline) * 100
-              if(!is.nan(diff)){
+              if(!is.nan(diff) && is.finite(diff)){
                 percent_diff[n] <- diff
               } else {
                 percent_diff[n] <- 0
