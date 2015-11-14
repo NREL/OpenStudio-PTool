@@ -3,7 +3,7 @@
 #clear workspace
 rm(list = ls())
 
-dirs = "4_5"  #directory name to run in
+dirs = "test"  #directory name to run in
 a <- list.files(path=dirs)
 #find RData files in the directory
 for(i in 1:length(a)){
