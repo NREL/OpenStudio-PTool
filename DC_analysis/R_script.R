@@ -1,7 +1,7 @@
 #source file after changing the directory to run in below (variable = dirs)
 #make sure there are only 1 results.RData and 1 metadata.RData in the directory
 
-dirs = "2_5"  #directory name to run in
+dirs = "4_5"  #directory name to run in
 a <- list.files(path=dirs)
 #find RData files in the directory
 for(i in 1:length(a)){
@@ -99,7 +99,12 @@ for (p in 1:length(variables)){
           #check if the baseline value is actually a finite number and compute the % difference
           if((length(applied) > 0 ) && (length(baseline) > 0)){
             if(!is.na(baseline) && !is.na(applied)){
-              diff <- (applied - (baseline + 1e-19))/ (baseline + 1e-19) * 100
+              # do % diff unless baseline is 0, then do relative diff
+              if (baseline != 0){
+                diff <- (applied - baseline)/ (baseline) * 100
+              } else {
+                diff <- (applied - baseline)
+              }              
               #if diff is not a number, then set to zero
               if(!is.nan(diff) && is.finite(diff)){
                 percent_diff[n] <- diff
@@ -125,6 +130,18 @@ for (p in 1:length(variables)){
     hist(percent_diff, breaks=20, freq=T, main=outputs_display[m], xlab="% Difference")
   }
   applicable_display <- metadata$display_name_short[which( metadata$name==variables[p])]
+  #setup temp copy of the results dataframe
+  temp <- results
+  #if more than one variable, Loop over all the variables and reduce dataframe to just those where all the measures were not applied
+  if(length(variables)>1){
+    for(x in 1:length(variables)){
+      #remove all other variable runs except for the p_th variable
+      if(variables[x] != variables[p]){
+        temp <- subset(temp, temp[,variables[x]]==0)
+      }
+    }
+  }
+  output_applicable <- temp[,applicable_variable]
   hist(output_applicable*1, breaks=c(0,0.25,0.75,1), freq=T, main=applicable_display, xlab="Is Measure Applicable",xaxt="n")
   axis(side=1,at=c(0,1),labels=c("False","True"))
   dev.off()
