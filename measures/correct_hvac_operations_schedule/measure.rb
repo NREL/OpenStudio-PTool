@@ -3,6 +3,8 @@
 
 require "#{File.dirname(__FILE__)}/resources/Standards.ThermalZoneHVAC"
 require "#{File.dirname(__FILE__)}/resources/Standards.AirLoopHVAC"
+require "#{File.dirname(__FILE__)}/resources/Standards.ScheduleRuleset"
+require "#{File.dirname(__FILE__)}/resources/Standards.ScheduleConstant"
 
 # start the measure
 class CorrectHVACOperationsSchedule < OpenStudio::Ruleset::ModelUserScript
@@ -36,16 +38,57 @@ class CorrectHVACOperationsSchedule < OpenStudio::Ruleset::ModelUserScript
     return args
   end
   
- #  
- def set_equip_availability_schedule (occ_sch, zone_equip_hvac_obj)
- 	object_name = zone_equip_hvac_obj.name
-	old_schedule = zone_equip_hvac_obj.availabilitySchedule
-	old_schedule_name = old_schedule.name
-	zone_equip_hvac_obj.setAvailabilitySchedule(occ_sch)
-	return old_schedule_name
-end # end set equip method
-  
-   
+  # Method to decide whether or not to change the operation schedule,
+  # in case the new schedule is less aggressive than the existing schedule.
+  def compare_eflh(runner, old_sch, new_sch)
+    
+    if old_sch.to_ScheduleRuleset.is_initialized
+      old_sch = old_sch.to_ScheduleRuleset.get
+    elsif old_sch.to_ScheduleConstant.is_initialized
+      old_sch = old_sch.to_ScheduleConstant.get
+    else
+      runner.registerWarning("Can only calculate equivalent full load hours for ScheduleRuleset or ScheduleConstant schedules. #{old_sch.name} is neither.")
+      return false
+    end
+
+    if new_sch.to_ScheduleRuleset.is_initialized
+      new_sch = new_sch.to_ScheduleRuleset.get
+    elsif new_sch.to_ScheduleConstant.is_initialized
+      new_sch = new_sch.to_ScheduleConstant.get
+    else
+      runner.registerWarning("Can only calculate equivalent full load hours for ScheduleRuleset or ScheduleConstant schedules. #{new_sch.name} is neither.")
+      return false
+    end    
+    
+    new_eflh = new_sch.annual_equivalent_full_load_hrs
+    old_eflh = old_sch.annual_equivalent_full_load_hrs
+    if new_eflh < old_eflh
+      runner.registerInfo("The new occupancy-tracking HVAC operation schedule, #{new_sch.name} (#{new_eflh.round} EFLH) is more aggressive than the existing schedule #{old_sch.name} (#{old_eflh.round} EFLH).")
+      return true
+    elsif new_eflh == old_eflh
+      runner.registerWarning("The existing HVAC operation schedule, #{old_sch.name} (#{old_eflh.round} EFLH), is equally as aggressive as the new occupancy-tracking schedule #{new_sch.name} (#{new_eflh.round} EFLH).  Not applying new schedule.")
+      return false  
+    elsif
+      runner.registerWarning("The existing HVAC operation schedule, #{old_sch.name} (#{old_eflh.round} EFLH), is more aggressive than the new occupancy-tracking schedule #{new_sch.name} (#{new_eflh.round} EFLH).  Not applying new schedule.")
+      return false
+    end
+    
+  end 
+ 
+  # Method to set the availability schedule of zone equipment,
+  # first checking to make sure the new schedule has less EFLH
+  # than the old schedule.
+  def set_equip_availability_schedule(runner, thermal_zone, new_sch, zone_equip)
+    old_schedule = zone_equip.availabilitySchedule
+    if compare_eflh(runner, old_schedule, new_sch)
+      zone_equip.setAvailabilitySchedule(new_sch)
+      runner.registerInfo("The availability schedule named #{old_schedule.name} for the #{zone_equip.iddObjectType.valueName} named #{zone_equip.name} has been replaced with a new schedule named #{new_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
+      return true
+    else
+      return false
+    end
+  end
+
   # define what happens when the measure is run
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
@@ -62,273 +105,195 @@ end # end set equip method
       return true     
     end    
     
-	#initialize variables
-	zone_hvac_equip_count = 0
-	pump_count = 0
-	air_loop_count = 0
-	
-	#loop through each air loop in the model
-	model.getAirLoopHVACs.sort.each do |air_loop|
-   
-		# call the method to generate a new occupancy schedule based on a 5% threshold
-		occ_sch = air_loop.get_occupancy_schedule(0.05)
-		# set the availability schedule of the airloop to the newly generated  schedule
-		air_loop.setAvailabilitySchedule(occ_sch)
-		air_loop_count =+1
-		
-	end # end loop through airloops
-
-	#loop through each thermal zone
-	model.getThermalZones.sort.each do |thermal_zone|
-	
-		# zone equipments assigned to thermal zones
-		thermal_zone_equipment = thermal_zone.equipment 
-		
-		if thermal_zone_equipment.size >= 1
-			# run schedule method to create a new schedule ruleset, routines 
-			occ_sch = thermal_zone.get_occupancy_schedule(0.05)
-			
-			#loop through Zone HVAC Equipment
-			thermal_zone_equipment.each do |equip|
-			
-				equip_type = equip.iddObjectType
-				
-				# getting the fan exhaust object & getting relevant information for it. 
-				if equip_type == OpenStudio::Model::FanZoneExhaust.iddObjectType
-					zone_equip_hvac_obj = equip.to_FanZoneExhaust.get
-					object_name = zone_equip_hvac_obj.name
-					old_schedule = zone_equip_hvac_obj.availabilitySchedule.get
-					old_sch_name = old_schedule.name
-					#assign the 'occ_sch' here as exhaust's availability schedule
-					zone_equip_hvac_obj.setAvailabilitySchedule(occ_sch)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Fan Zone Exhaust Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end # end the if statement for fan zone exhaust
-						
-						
-				if equip_type == OpenStudio::Model::RefrigerationAirChiller.iddObjectType
-					zone_equip_hvac_obj = equip.to_RefrigerationAirChiller.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Refrigeration Air Chiller Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-			
-				if equip_type == OpenStudio::Model::WaterHeaterHeatPump.iddObjectType
-					zone_equip_hvac_obj = equip.to_WaterHeaterHeatPump.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Water Heater Heat Pump Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-						
-				if equip_type == OpenStudio::Model::ZoneHVACBaseboardConvectiveElectric.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACBaseboardConvectiveElectric.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Baseboard Convective Electric Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-				
-				if equip_type == OpenStudio::Model::ZoneHVACBaseboardConvectiveWater.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACBaseboardConvectiveWater.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Baseboard Convective Water Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-				
-				if equip_type == OpenStudio::Model::ZoneHVACBaseboardRadiantConvectiveElectric.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACBaseboardRadiantConvectiveElectric.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Baseboard Radiant and Convective Electric Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-				
-				if equip_type == OpenStudio::Model::ZoneHVACBaseboardRadiantConvectiveWater.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACBaseboardRadiantConvectiveWater.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Baseboard Radiant and Convective Water Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-				
-				if equip_type == OpenStudio::Model::ZoneHVACDehumidifierDX.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACDehumidifierDX.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Dehumidifier Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
-					zone_hvac_equip_count =+ 1 
-				end 	
-			
-				if equip_type == OpenStudio::Model::ZoneHVACEnergyRecoveryVentilator.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACEnergyRecoveryVentilator.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Energy Recovery Ventilator Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACFourPipeFanCoil.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACFourPipeFanCoil.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Four Pipe Fan Coil Unit Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACHighTemperatureRadiant.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACHighTemperatureRadiant.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC High Temperature Radiant Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACIdealLoadsAirSystem.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACIdealLoadsAirSystem.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Ideal Air Loads System Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACLowTemperatureRadiantElectric.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACLowTemperatureRadiantElectric.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Low Temperature Radiant Electric Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACLowTempRadiantConstFlow.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACLowTempRadiantConstFlow.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Low Temperature Radiant Constant Flow Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 	
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACLowTempRadiantVarFlow.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACLowTempRadiantVarFlow.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Low Temperature Radiant Variable Flow Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-				
-				if equip_type == OpenStudio::Model::ZoneHVACPackagedTerminalAirConditioner.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACPackagedTerminalAirConditioner.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Packaged Terminal Air Conditioner Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACPackagedTerminalHeatPump.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACPackagedTerminalHeatPump.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Packaged Terminal Heat Pump Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 
-				
-				if equip_type == OpenStudio::Model::ZoneHVACTerminalUnitVariableRefrigerantFlow.iddObjectType
-					equip.to_ZoneHVACTerminalUnitVariableRefrigerantFlow.get.setTerminalUnitAvailabilityschedule(occ_sch)
-					runner.registerInfo("The availability schedule for the Zone HVAC Terminal Unit Variable Refrigerant Flow Object has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneHVACUnitHeater.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACUnitHeater.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Unit Heater Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-				
-				if equip_type == OpenStudio::Model::ZoneHVACUnitVentilator.iddObjectType
-					zone_equip_hvac_obj = equip.to_ZoneHVACUnitVentilator.get
-					old_sch_name = set_equip_availability_schedule(occ_sch, zone_equip_hvac_obj)
-					runner.registerInfo("The availability schedule named #{old_sch_name} for the Zone HVAC Unit Ventilator Object named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
-					zone_hvac_equip_count =+ 1 
-				end 	
-
-				if equip_type == OpenStudio::Model::ZoneVentilationDesignFlowRate.iddObjectType
-					runner.registerInfo("Thermal Zone named #{thermal_zone.name} has a Zone Ventilation Design Flow Rate object attacjhed as a ZoneHVACEquipment object. No modification were made to this object.")		
-				end 	
-			
-			end # end loop through Zone HVAC Equipment
-			
-		else
-			runner.registerInfo("Thermal Zone named #{thermal_zone.name} has no Zone HVAC Equipment objects attached - therefore no schedule objects have been altered.")	
-		end # end of if statement
-	
-	end # end loop through thermal zones
-
-	# Change pump control status
-	
-	# get all plantloops
-	model.getPlantLoops.each do |plantLoop|
-		loop_name = plantLoop.name.to_s
-		#Loop through each plant loop demand component
-		plantLoop.demandComponents.each do |dc|
-			if dc.to_PumpConstantSpeed.is_initialized
-				cs_pump = dc.to_PumpConstantSpeed.get
-				if cs_pump.pumpControlType == ("Intermittent")
-					runner.registerInfo("Demand side Constant Speed Pump object named #{cs_pump.name} on the plant loop named #{dc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
-				else 
-					cs_pump.setPumpControlType("Intermittent")
-					runner.registerInfo("Pump Control Type attribute of Demand side Constant Speed Pump object named #{cs_pump.name} on the plant loop named #{dc.name} was changed from continuous to intermittent.")
-					pump_count =+1
-					end #end if statement	
-			end #end if statement for changing demand side constant speed pump objects
-			
-			if dc.to_PumpVariableSpeed.is_initialized
-				vs_pump = dc.to_PumpVariableSpeed.get
-				if vs_pump.pumpControlType == ("Intermittent")
-					runner.registerInfo("Demand side Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
-				else 
-					cs_pump.setPumpControlType("Intermittent")
-					runner.registerInfo("Demand side Pump Control Type attribute of Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} was changed from continuous to intermittent.")
-					pump_count =+1
-				end #end if statement	
-			end #end if statement for changing demand side variable speed pump objects
-		end # end loop throught plant loop demand components
-		
-		#Loop through each plant loop supply component
-		plantLoop.supplyComponents.each do |sc|
-			if sc.to_PumpConstantSpeed.is_initialized
-				cs_pump = sc.to_PumpConstantSpeed.get
-				if cs_pump.pumpControlType == ("Intermittent")
-					runner.registerInfo("Supply side Constant Speed Pump object named #{cs_pump.name} on the plant loop named #{sc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
-				else 
-					cs_pump.setPumpControlType("Intermittent")
-					runner.registerInfo("Supply Side Pump Control Type atteribute of Constant Speed Pump named #{cs_pump.name} on the plant loop named #{sc.name} was changed from continuous to intermittent.")
-					pump_count =+1
-					end #end if statement	
-			end #end if statement for changing supply component constant speed pump objects
-			
-			if sc.to_PumpVariableSpeed.is_initialized
-				vs_pump = sc.to_PumpVariableSpeed.get
-				if vs_pump.pumpControlType == ("Intermittent")
-					runner.registerInfo("Supply side Variable Speed Pump object named #{vs_pump.name} on the plant loop named #{sc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
-				else 
-					cs_pump.setPumpControlType("Intermittent")
-					runner.registerInfo("Pump Control Type attribute of Supply Side Variable Speed Pump named #{vs_pump.name} on the plant loop named #{sc.name} was changed from continuous to intermittent.")
-					pump_count =+1
-				end #end if statement	
-			end #end if statement for changing supply component variable speed pump objects
-			
-		end # end loop throught plant loop supply side components
-		
-	end # end loop through plant loops
-	
-	
-	#Write N/A message
-	if air_loop_count == 0 and zone_hvac_equip_count == 0 and pump_count == 0 
-		runner.registerAsNotApplicable("The model did not contain any Airloops, Thermal Zones having ZoneHVACEquipment objects or associated plant loop pump objects to act upon. The measure is not applicable.")
-		return true
-	end	
-			
-	#report initial condition of model
-    runner.registerInitialCondition("The model started with #{air_loop_count} AirLoops, #{zone_hvac_equip_count} Zone HVAC Equipment Object and #{pump_count} pump objects subject to modifications.")
-	
-    # report final condition of model
-    runner.registerFinalCondition("The measure modified the availability schedules of #{air_loop_count} AirLoops and #{zone_hvac_equip_count} Zone HVAC Equipment objects. #{pump_count} pump objects had control settings modified.")
+    #initialize variables
+    zone_hvac_count = 0
+    pump_count = 0
+    air_loop_count = 0
   
+    #loop through each air loop in the model
+    model.getAirLoopHVACs.sort.each do |air_loop|
 
-	# Add ASHRAE Standard 55 warnings
-	
-	reporting_frequency = "Timestep"
-	outputVariable = OpenStudio::Model::OutputVariable.new("Zone Thermal Comfort ASHRAE 55 Adaptive Model 90% Acceptability Status []",model)
+      # call the method to generate a new occupancy schedule based on a 5% threshold
+      occ_sch = air_loop.get_occupancy_schedule(0.15)
+      old_sch = air_loop.availabilitySchedule
+      next unless compare_eflh(runner, old_sch, occ_sch)
+      # set the availability schedule of the airloop to the newly generated  schedule
+      air_loop.setAvailabilitySchedule(occ_sch)
+      runner.registerInfo("The availability schedule named #{old_sch.name} for #{air_loop.name} was replaced with a new schedule named #{occ_sch.name} which tracks the occupancy profile of the thermal zones on this airloop.")
+      air_loop_count +=1
+      
+    end
+
+    #loop through each thermal zone
+    model.getThermalZones.sort.each do |thermal_zone|
+    
+      # zone equipments assigned to thermal zones
+      thermal_zone_equipment = thermal_zone.equipment 
+      
+      if thermal_zone_equipment.size >= 1
+        # run schedule method to create a new schedule ruleset, routines 
+        occ_sch = thermal_zone.get_occupancy_schedule(0.15)
+        
+        #loop through Zone HVAC Equipment
+        thermal_zone_equipment.each do |equip|
+        
+          # getting the fan exhaust object & getting relevant information for it. 
+          if equip.to_FanZoneExhaust.is_initialized
+            zone_equip = equip.to_FanZoneExhaust.get
+            old_schedule = zone_equip.availabilitySchedule.get
+            next unless compare_eflh(runner, old_schedule, occ_sch)
+            #assign the 'occ_sch' here as exhaust's availability schedule
+            zone_equip.setAvailabilitySchedule(occ_sch)
+            runner.registerInfo("The availability schedule named #{old_schedule.name} for the OS_Fan_ZoneExhaust named #{zone_equip.name} was replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")
+            zone_hvac_count += 1 	
+          elsif equip.to_RefrigerationAirChiller.is_initialized
+            zone_equip = equip.to_RefrigerationAirChiller.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_WaterHeaterHeatPump.is_initialized
+            zone_equip = equip.to_WaterHeaterHeatPump.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACBaseboardConvectiveElectric.is_initialized
+            zone_equip = equip.to_ZoneHVACBaseboardConvectiveElectric.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACBaseboardConvectiveWater.is_initialized
+            zone_equip = equip.to_ZoneHVACBaseboardConvectiveWater.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACBaseboardRadiantConvectiveElectric.is_initialized
+            zone_equip = equip.to_ZoneHVACBaseboardRadiantConvectiveElectric.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACBaseboardRadiantConvectiveWater.is_initialized
+            zone_equip = equip.to_ZoneHVACBaseboardRadiantConvectiveWater.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACDehumidifierDX.is_initialized
+            zone_equip = equip.to_ZoneHVACDehumidifierDX.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACEnergyRecoveryVentilator.is_initialized
+            zone_equip = equip.to_ZoneHVACEnergyRecoveryVentilator.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)				
+          elsif equip.to_ZoneHVACFourPipeFanCoil.is_initialized
+            zone_equip = equip.to_ZoneHVACFourPipeFanCoil.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)					
+          elsif equip.to_ZoneHVACHighTemperatureRadiant.is_initialized
+            zone_equip = equip.to_ZoneHVACHighTemperatureRadiant.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)				
+          elsif equip.to_ZoneHVACIdealLoadsAirSystem.is_initialized
+            zone_equip = equip.to_ZoneHVACIdealLoadsAirSystem.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)				 
+          elsif equip.to_ZoneHVACLowTemperatureRadiantElectric.is_initialized
+            zone_equip = equip.to_ZoneHVACLowTemperatureRadiantElectric.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)					
+          elsif equip.to_ZoneHVACLowTempRadiantConstFlow.is_initialized
+            zone_equip = equip.to_ZoneHVACLowTempRadiantConstFlow.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)					 	
+          elsif equip.to_ZoneHVACLowTempRadiantVarFlow.is_initialized
+            zone_equip = equip.to_ZoneHVACLowTempRadiantVarFlow.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)					
+          elsif equip.to_ZoneHVACPackagedTerminalAirConditioner.is_initialized
+            zone_equip = equip.to_ZoneHVACPackagedTerminalAirConditioner.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACPackagedTerminalHeatPump.is_initialized
+            zone_equip = equip.to_ZoneHVACPackagedTerminalHeatPump.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)
+          elsif equip.to_ZoneHVACTerminalUnitVariableRefrigerantFlow.is_initialized
+            next unless compare_eflh(runner, old_schedule, occ_sch) 
+            equip.to_ZoneHVACTerminalUnitVariableRefrigerantFlow.get.setTerminalUnitAvailabilityschedule(occ_sch)
+            runner.registerInfo("The availability schedule for the Zone HVAC Terminal Unit Variable Refrigerant Flow Object has been replaced with a new schedule named #{occ_sch.name} representing the occupancy profile of the thermal zone named #{thermal_zone.name}.")					
+            zone_hvac_count += 1 
+          elsif equip.to_ZoneHVACUnitHeater.is_initialized
+            zone_equip = equip.to_ZoneHVACUnitHeater.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)			
+          elsif equip.to_ZoneHVACUnitVentilator.is_initialized
+            zone_equip = equip.to_ZoneHVACUnitVentilator.get
+            zone_hvac_count += 1 if set_equip_availability_schedule(runner, thermal_zone, occ_sch, zone_equip)					
+          elsif equip.to_ZoneVentilationDesignFlowRate.is_initialized
+            runner.registerInfo("Thermal Zone named #{thermal_zone.name} has a Zone Ventilation Design Flow Rate object attacjhed as a ZoneHVACEquipment object. No modification were made to this object.")		
+          end 	
+        
+        end # end loop through Zone HVAC Equipment
+        
+      else
+        runner.registerInfo("Thermal Zone named #{thermal_zone.name} has no Zone HVAC Equipment objects attached - therefore no schedule objects have been altered.")	
+      end # end of if statement
+    
+    end # end loop through thermal zones
+
+    # Change pump control status if any airloops or
+    # zone equipment were changed.
+    if air_loop_count > 0 || zone_hvac_count > 0
+      model.getPlantLoops.each do |plantLoop|
+        #Loop through each plant loop demand component
+        plantLoop.demandComponents.each do |dc|
+          if dc.to_PumpConstantSpeed.is_initialized
+            cs_pump = dc.to_PumpConstantSpeed.get
+            if cs_pump.pumpControlType == ("Intermittent")
+              runner.registerInfo("Demand side Constant Speed Pump object named #{cs_pump.name} on the plant loop named #{dc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
+            else 
+              cs_pump.setPumpControlType("Intermittent")
+              runner.registerInfo("Pump Control Type attribute of Demand side Constant Speed Pump object named #{cs_pump.name} on the plant loop named #{dc.name} was changed from continuous to intermittent.")
+              pump_count +=1
+            end
+          end
+          
+          if dc.to_PumpVariableSpeed.is_initialized
+            vs_pump = dc.to_PumpVariableSpeed.get
+            if vs_pump.pumpControlType == ("Intermittent")
+              runner.registerInfo("Demand side Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
+            else 
+              cs_pump.setPumpControlType("Intermittent")
+              runner.registerInfo("Demand side Pump Control Type attribute of Variable Speed Pump named #{vs_pump.name} on the plant loop named #{dc.name} was changed from continuous to intermittent.")
+              pump_count +=1
+            end
+          end
+        end
+        
+        #Loop through each plant loop supply component
+        plantLoop.supplyComponents.each do |sc|
+          if sc.to_PumpConstantSpeed.is_initialized
+            cs_pump = sc.to_PumpConstantSpeed.get
+            if cs_pump.pumpControlType == ("Intermittent")
+              runner.registerInfo("Supply side Constant Speed Pump object named #{cs_pump.name} on the plant loop named #{sc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
+            else 
+              cs_pump.setPumpControlType("Intermittent")
+              runner.registerInfo("Supply Side Pump Control Type atteribute of Constant Speed Pump named #{cs_pump.name} on the plant loop named #{sc.name} was changed from continuous to intermittent.")
+              pump_count +=1
+              end #end if statement	
+          end #end if statement for changing supply component constant speed pump objects
+          
+          if sc.to_PumpVariableSpeed.is_initialized
+            vs_pump = sc.to_PumpVariableSpeed.get
+            if vs_pump.pumpControlType == ("Intermittent")
+              runner.registerInfo("Supply side Variable Speed Pump object named #{vs_pump.name} on the plant loop named #{sc.name} had a pump control type attribute already set to intermittent. No changes will be made to this object.")
+            else 
+              cs_pump.setPumpControlType("Intermittent")
+              runner.registerInfo("Pump Control Type attribute of Supply Side Variable Speed Pump named #{vs_pump.name} on the plant loop named #{sc.name} was changed from continuous to intermittent.")
+              pump_count +=1
+            end #end if statement	
+          end #end if statement for changing supply component variable speed pump objects
+          
+        end # end loop throught plant loop supply side components
+        
+      end # end loop through plant loops
+    end
+    
+    #Write N/A message
+    if air_loop_count == 0 && zone_hvac_count == 0 && pump_count == 0 
+      runner.registerAsNotApplicable("The model did not contain any Airloops, Thermal Zones having ZoneHVACEquipment objects or associated plant loop pump objects to act upon. The measure is not applicable.")
+      return true
+    end	
+        
+    #report initial condition of model
+    runner.registerInitialCondition("The model started with #{air_loop_count} AirLoops, #{zone_hvac_count} Zone HVAC Equipment Object and #{pump_count} pump objects subject to modifications.")
+  
+    # report final condition of model
+    runner.registerFinalCondition("The measure modified the availability schedules of #{air_loop_count} AirLoops and #{zone_hvac_count} Zone HVAC Equipment objects. #{pump_count} pump objects had control settings modified.")
+  
+    # Add ASHRAE Standard 55 warnings
+    reporting_frequency = "Timestep"
+    outputVariable = OpenStudio::Model::OutputVariable.new("Zone Thermal Comfort ASHRAE 55 Adaptive Model 90% Acceptability Status []",model)
     outputVariable.setReportingFrequency(reporting_frequency)
     runner.registerInfo("Adding output variable for 'Zone Thermal Comfort ASHRAE 55 Adaptive Model 90% Acceptability Status' reporting at the model timestep.")
-	return true
+    
+    return true
 	
   end # end run method
   

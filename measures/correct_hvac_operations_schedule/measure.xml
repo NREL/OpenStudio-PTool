@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>correct_hvac_operations_schedule</name>
   <uid>22acd06c-84b0-4691-83e1-f994f90c983e</uid>
-  <version_id>3b992b2d-294b-4c97-b039-ca023c0c30ac</version_id>
+  <version_id>f56b908d-6ee3-4526-8b31-a2285311867b</version_id>
   <xml_checksum>9B10BC3B</xml_checksum>
   <class_name>CorrectHVACOperationsSchedule</class_name>
   <display_name>Correct HVAC Operations Schedule</display_name>
@@ -90,10 +90,70 @@
       <checksum>E7C2DCB8</checksum>
     </file>
     <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>CFE0DEB4</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D3B6A1A2</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5CB9DAB8</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>9412D202</checksum>
+    </file>
+    <file>
+      <filename>test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>C0C518F5</checksum>
+    </file>
+    <file>
+      <filename>Standards.ScheduleRuleset.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>6D4175D8</checksum>
+    </file>
+    <file>
+      <filename>Standards.ScheduleConstant.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8AAFE398</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>0E7D67BE</checksum>
+    </file>
+    <file>
       <filename>correct_hvac_operations_schedule_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>E80FBA7D</checksum>
+      <checksum>06CD0AFB</checksum>
     </file>
     <file>
       <version>
@@ -104,7 +164,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>E0B42BD3</checksum>
+      <checksum>BACD94CA</checksum>
     </file>
   </files>
 </measure>
