@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>wireless_lighting_occupancy_sensors</name>
   <uid>ce22143c-46aa-4727-a08c-ef32dbc5e774</uid>
-  <version_id>beadb0d5-9065-4ebe-8e76-a415548b7549</version_id>
+  <version_id>61290478-bc05-420f-9071-be8b5ef7614a</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>WirelessLightingOccupancySensors</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
@@ -83,12 +83,6 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>549D9A6B</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_with_occ.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>5AF753C4</checksum>
     </file>
   </files>
 </measure>

@@ -3,8 +3,8 @@
   "name": "advanced_power_strips",
   "display_name": "Advanced Power Strips",
   "measure_type": "RubyMeasure",
-  "description": "Add",
-  "modeler_description": "Looks through",
+  "description": "Advanced power strips can be used to turn off electric equipment when no one is in the building, saving energy without impacting the users of the equipment.",
+  "modeler_description": "Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 10%) between user specified times (default 6pm-9am).",
   "arguments": [
     {
       "name": "run_measure",
@@ -97,7 +97,7 @@
   ],
   "name_xml": "advanced_power_strips",
   "uid": "3517b0f3-db26-4d30-896c-c4908ecac8cc",
-  "version_id": "4de4e916-b09f-4ef3-ab55-d491c0fafd88",
+  "version_id": "729c3684-0eee-48bf-8464-84ba994ece89",
   "tags": [
     "Equipment.Equipment Controls"
   ]
