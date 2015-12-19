@@ -36,7 +36,7 @@ class LowPressureDropAirFiltersTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
+    "run_measure" => 0,
     "pressure_drop_reduction_inh2o" => 1.0
     }
     
@@ -79,7 +79,7 @@ class LowPressureDropAirFiltersTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "pressure_drop_reduction_inh2o" => 1.0
     }
     

@@ -11,12 +11,12 @@ class LowPressureDropAirFilters < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return ""
+    return "Filters are commonly used to remove particulate from the airstream in an HVAC system.  Because of their design, filters commonly introduce a pressure drop of 0.5-2.0 inches of water that the fan must overcome to move the air.  Low pressure drop filters can eliminate much of this pressure drop, saving fan energy."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return ""
+    return "For each AirLoop, find the constant or variable volume fan and reduce the pressure drop by the specified amount. The default reduction is 0.5 inches of water. Note that this measure does not impact zone HVAC equipment or unitary equipment on an airloop."
   end
 
   # define the arguments that the user will input
@@ -34,7 +34,7 @@ class LowPressureDropAirFilters < OpenStudio::Ruleset::ModelUserScript
     pressure_drop_reduction_inh2o = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("pressure_drop_reduction_inh2o",true)
     pressure_drop_reduction_inh2o.setDisplayName("Pressure Drop Reduction")
     pressure_drop_reduction_inh2o.setUnits("in W.C.")
-    pressure_drop_reduction_inh2o.setDefaultValue(1.0)
+    pressure_drop_reduction_inh2o.setDefaultValue(0.5)
     args << pressure_drop_reduction_inh2o
 
     return args
