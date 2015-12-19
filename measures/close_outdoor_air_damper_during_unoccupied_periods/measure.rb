@@ -1,8 +1,10 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
-require "#{File.dirname(__FILE__)}/resources/Standards.ThermalZoneHVAC"
-require "#{File.dirname(__FILE__)}/resources/Standards.AirLoopHVAC"
+require_relative 'resources/Standards.ThermalZoneHVAC'
+require_relative 'resources/Standards.AirLoopHVAC'
+require_relative 'resources/Standards.ScheduleRuleset'
+require_relative 'resources/Standards.ScheduleConstant'
 
 # start the measure
 class CloseOutdoorAirDamperDuringUnoccupiedPeriods < OpenStudio::Ruleset::ModelUserScript
@@ -36,6 +38,43 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriods < OpenStudio::Ruleset::ModelU
     return args
   end
 
+  # Method to decide whether or not to change the exhaust fan schedule,
+  # in case the new schedule is less aggressive than the existing schedule.
+  def compare_eflh(runner, old_sch, new_sch)
+    
+    if old_sch.to_ScheduleRuleset.is_initialized
+      old_sch = old_sch.to_ScheduleRuleset.get
+    elsif old_sch.to_ScheduleConstant.is_initialized
+      old_sch = old_sch.to_ScheduleConstant.get
+    else
+      runner.registerWarning("Can only calculate equivalent full load hours for ScheduleRuleset or ScheduleConstant schedules. #{old_sch.name} is neither.")
+      return false
+    end
+
+    if new_sch.to_ScheduleRuleset.is_initialized
+      new_sch = new_sch.to_ScheduleRuleset.get
+    elsif new_sch.to_ScheduleConstant.is_initialized
+      new_sch = new_sch.to_ScheduleConstant.get
+    else
+      runner.registerWarning("Can only calculate equivalent full load hours for ScheduleRuleset or ScheduleConstant schedules. #{new_sch.name} is neither.")
+      return false
+    end    
+    
+    new_eflh = new_sch.annual_equivalent_full_load_hrs
+    old_eflh = old_sch.annual_equivalent_full_load_hrs
+    if new_eflh < old_eflh
+      runner.registerInfo("The new exhaust fan schedule, #{new_sch.name} (#{new_eflh.round} EFLH) is more aggressive than the existing schedule #{old_sch.name} (#{old_eflh.round} EFLH).")
+      return true
+    elsif new_eflh == old_eflh
+      runner.registerWarning("The existing exhaust fan schedule, #{old_sch.name} (#{old_eflh.round} EFLH), is equally as aggressive as the new occupancy-tracking schedule #{new_sch.name} (#{new_eflh.round} EFLH).  Not applying new schedule.")
+      return false  
+    elsif
+      runner.registerWarning("The existing exhaust fan schedule, #{old_sch.name} (#{old_eflh.round} EFLH), is more aggressive than the new occupancy-tracking schedule #{new_sch.name} (#{new_eflh.round} EFLH).  Not applying new schedule.")
+      return false
+    end
+    
+  end
+  
   # define what happens when the measure is run
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
@@ -72,8 +111,10 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriods < OpenStudio::Ruleset::ModelU
 			controller_outdoor_air = air_loop_hvac_system.getControllerOutdoorAir
 			if controller_outdoor_air.minimumOutdoorAirSchedule.is_initialized
 				exg_schedule = controller_outdoor_air.minimumOutdoorAirSchedule.get
-				
 				oa_damper_schedule = air_loop.get_occupancy_schedule(0.05)
+        # Skip if the new schedule is less aggressive than the existing schedule
+        next unless compare_eflh(runner, exg_schedule, oa_damper_schedule)
+ 
 				controller_outdoor_air.setMinimumOutdoorAirSchedule(oa_damper_schedule)
 				
 				runner.registerInfo("The airloop named #{air_loop.name} has an outdoor air controller named #{controller_outdoor_air.name}. The minimum outdoor air schedule name of #{exg_schedule.name} has been replaced with a new schedule named #{oa_damper_schedule.name}.")
@@ -108,7 +149,9 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriods < OpenStudio::Ruleset::ModelU
 						zone_equip_hvac_obj = equip.to_ZoneHVACFourPipeFanCoil.get
 						if zone_equip_hvac_obj.outdoorAirSchedule.is_initialized
 							exg_outdoor_air_schedule = zone_equip_hvac_obj.outdoorAirSchedule.get
-							zone_equip_hvac_obj.setOutdoorAirSchedule(occ_sch)
+              # Skip if the new schedule is less aggressive than the existing schedule
+              next unless compare_eflh(runner, exg_outdoor_air_schedule, occ_sch)
+              zone_equip_hvac_obj.setOutdoorAirSchedule(occ_sch)
 							runner.registerInfo("The outdoor air schedule named #{exg_outdoor_air_schedule.name} associated with the Four Pipe Fan Coil Unit named #{zone_equip_hvac_obj.name} has been replaced with a new schedule named #{occ_sch.name} representing closing the outdoor air damper when less than 5 percent of peak people are present in the thermal zone.")					
 							fan_coil_count += 1	
 						else

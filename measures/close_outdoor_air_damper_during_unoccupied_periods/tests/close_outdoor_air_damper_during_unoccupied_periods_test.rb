@@ -21,7 +21,7 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriodsTest < MiniTest::Unit::TestCas
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    assert_equal(1, arguments.size)
   end
 
   # This measure is applicable to all models
@@ -92,6 +92,10 @@ class CloseOutdoorAirDamperDuringUnoccupiedPeriodsTest < MiniTest::Unit::TestCas
     # run the measure
     measure.run(model, runner, argument_map)
     result = runner.result
+    
+    # show the output
+    show_output(result)    
+    
 	return result, model
   end  
  

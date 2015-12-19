@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>close_outdoor_air_damper_during_unoccupied_periods</name>
   <uid>f4e23550-96ff-457b-aed7-2a250a2d035a</uid>
-  <version_id>e65cd836-234b-41a1-8920-f35ca5c9452f</version_id>
+  <version_id>2fcb1b8c-e5bf-4548-bebc-833e7a665b21</version_id>
   <xml_checksum>4EED0D08</xml_checksum>
   <class_name>CloseOutdoorAirDamperDuringUnoccupiedPeriods</class_name>
   <display_name>Close Outdoor Air Damper During Unoccupied Periods</display_name>
@@ -93,7 +93,49 @@
       <filename>close_outdoor_air_damper_during_unoccupied_periods_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>78F3AB70</checksum>
+      <checksum>D83EDB1A</checksum>
+    </file>
+    <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>CFE0DEB4</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5A53A838</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D3B6A1A2</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5CB9DAB8</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>9412D202</checksum>
     </file>
     <file>
       <version>
@@ -104,7 +146,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C401E74D</checksum>
+      <checksum>28F3BECD</checksum>
+    </file>
+    <file>
+      <filename>Standards.ScheduleConstant.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8AAFE398</checksum>
+    </file>
+    <file>
+      <filename>Standards.ScheduleRuleset.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>6D4175D8</checksum>
     </file>
   </files>
 </measure>
