@@ -2,3 +2,5 @@
 *.lock
 faraday.log
 /analysis/
+output/
+measure.json
