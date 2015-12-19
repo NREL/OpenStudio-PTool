@@ -17,7 +17,7 @@ def test_number_of_arguments_and_argument_names
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    assert_equal(1, arguments.size)
   end
 
 
@@ -71,7 +71,7 @@ def test_number_of_arguments_and_argument_names
    
     result, model = applytotestmodel("SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm")
     assert(result.warnings.size == 0)
-	assert_equal(result.info.first.logMessage, "The building contains no qualified objects. Measure is not applicable.")
+	assert_equal(result.info.first.logMessage, "The building contains no qualified single duct VAV objects. Measure is not applicable.")
 	assert_equal("NA", result.value.valueName)
 	
   end
@@ -80,7 +80,7 @@ def test_number_of_arguments_and_argument_names
    
     result, model = applytotestmodel("SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm")
     assert(result.warnings.size == 0)
-	assert_equal(result.info.first.logMessage, "The building contains no qualified objects. Measure is not applicable.")
+	assert_equal(result.info.first.logMessage, "The building contains no qualified single duct VAV objects. Measure is not applicable.")
 	assert_equal("NA", result.value.valueName)
 	
   end
@@ -110,8 +110,6 @@ def test_number_of_arguments_and_argument_names
     # show the output
     show_output(result)
 
-
-  
   return result, model
   end
   
