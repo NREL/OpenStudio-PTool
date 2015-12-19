@@ -11,12 +11,12 @@ class OneWattStandby < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return "Add"
+    return "Most modern plug load equipment should be able to power down to use very little energy when not in use.  By establishing a standard requiring common plug load equipment to use one watt or less when not in use, buildings nationwide could use significantly less energy."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return "Looks through"
+    return "Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 5%) between user specified times (default 6pm-9am).  The default value for this measure is not well supported as plug loads are not broken into discrete categories in the prototype buildings."
   end
 
   # define the arguments that the user will input
@@ -33,7 +33,7 @@ class OneWattStandby < OpenStudio::Ruleset::ModelUserScript
     #make an argument for fractional value during specified time
     fraction_value = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("fraction_value",true)
     fraction_value.setDisplayName("Fractional Value for Night Time Load.")
-    fraction_value.setDefaultValue(0.1)
+    fraction_value.setDefaultValue(0.05)
     args << fraction_value
 
     #apply to weekday

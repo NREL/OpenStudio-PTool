@@ -36,8 +36,8 @@ class OneWattStandbyTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
-    "fraction_value" => 0.1,
+    "run_measure" => 0,
+    "fraction_value" => 0.05,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
     "end_weekday" => 9.0,
@@ -88,8 +88,8 @@ class OneWattStandbyTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
-    "fraction_value" => 0.1,
+    "run_measure" => 1,
+    "fraction_value" => 0.05,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
     "end_weekday" => 9.0,
@@ -143,8 +143,8 @@ class OneWattStandbyTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
-    "fraction_value" => 0.1,
+    "run_measure" => 1,
+    "fraction_value" => 0.05,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
     "end_weekday" => 9.0,

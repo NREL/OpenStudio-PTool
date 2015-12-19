@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>one_watt_standby</name>
   <uid>d40a3d72-1161-49fe-a1fb-9efd1e25fe78</uid>
-  <version_id>b17f333d-9a46-478e-9e64-6319fc6b8852</version_id>
+  <version_id>605ca228-f2f4-4dba-afc3-784b58b3d9a8</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>OneWattStandby</class_name>
   <display_name>One Watt Standby</display_name>
-  <description>Add</description>
-  <modeler_description>Looks through</modeler_description>
+  <description>Most modern plug load equipment should be able to power down to use very little energy when not in use.  By establishing a standard requiring common plug load equipment to use one watt or less when not in use, buildings nationwide could use significantly less energy.</description>
+  <modeler_description>Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 5%) between user specified times (default 6pm-9am).  The default value for this measure is not well supported as plug loads are not broken into discrete categories in the prototype buildings.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -24,7 +24,7 @@
       <type>Double</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>0.1</default_value>
+      <default_value>0.05</default_value>
     </argument>
     <argument>
       <name>apply_weekday</name>
@@ -178,7 +178,7 @@
       <filename>one_watt_standby_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>FA368572</checksum>
+      <checksum>BB92F01C</checksum>
     </file>
     <file>
       <version>
@@ -189,7 +189,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D539E2CA</checksum>
+      <checksum>F75EAA92</checksum>
+    </file>
+    <file>
+      <filename>secondary_school_90.1-2010_with_one_w_standby.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F83CB907</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004_with_adv_pwr_strips.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8195E356</checksum>
     </file>
   </files>
 </measure>
