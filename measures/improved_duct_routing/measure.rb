@@ -11,12 +11,12 @@ class ImprovedDuctRouting < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return ""
+    return "The more restrictions and bends in the ductwork that air must move through to reach a space, the greater the fan energy required to move the air.  Using larger ducts or routing them to avoid restrictions and bends can decrease fan energy."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return ""
+    return "For each AirLoop in the model, reduce the fan pressure drop by the user-specified amount (default 10%).  This default is a conservative estimate; further reductions may be achieved, but may not be practical based on size and cost constraints."
   end
 
   # define the arguments that the user will input
