@@ -1,0 +1,61 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>optimal_start_stop</name>
+  <uid>ab9809c2-b99c-4e4c-b119-c034edb87381</uid>
+  <version_id>b0fdf72c-9178-4bf4-a35f-bb09eed528a8</version_id>
+  <xml_checksum>F19E874F</xml_checksum>
+  <class_name>OptimalStartStop</class_name>
+  <display_name>Optimal Start Stop</display_name>
+  <description>This energy efficiency measure (EEM) queries the outdoor air temperature to determine if the HVAC system can be shut off (up to one hour) early. Additionally, this measure modifies the HVAC system start time, optimizing energy savings by delaying startup as long as possible, while still ensuring that the building will be a comfortable temperature when occupants arrive.</description>
+  <modeler_description>This EEM adds EMS logic to the model that actuates the infiltration, HVAC operation, cooling set point, and heating set point schedules. The measure first identifies the schedule HVAC stopping point by day of week (Saturday, Sunday, and Weekdays). Early HVAC system shutoff is determined entirely by the outdoor air temperature (OAT). If the OAT is less than or equal to 2C or greater than or equal to 18C, then no action is taken. The HVAC system is shut off one hour early when the OAT is between 12C and 18C. The HVAC system shut off time varies linearly with OAT from one hour to zero hours between 12C and 2C, and between 18C and 28C. AvailabilityManager:OptimumStart objects are inserted for each HVAC system in the model and use the AdaptiveASHRAE algorithm to dynamically adjust HVAC startup time each day.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.0</identifier>
+        <min_compatible>1.7.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>3077D36C</checksum>
+    </file>
+  </files>
+</measure>
