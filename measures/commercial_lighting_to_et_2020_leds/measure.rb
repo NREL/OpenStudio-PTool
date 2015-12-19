@@ -2,16 +2,16 @@
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
 # start the measure
-class CommercialLightingWithET2020LEDs < OpenStudio::Ruleset::ModelUserScript
+class CommercialLightingToET2020LEDs < OpenStudio::Ruleset::ModelUserScript
 
   # human readable name
   def name
-    return " Commercial Lighting With ET2020 LEDs"
+    return "Commercial Lighting To ET2020 LEDs"
   end
 
   # human readable description
   def description
-    return "Light-emitting diodes (LEDs), a type of solid-state lighting (SSL), offer the electric lighting market a new and revolutionary light source that saves energy and improves light quality, performance, and service. Today, white-light LEDs are competing or are poised to compete successfully with conventional lighting sources across a variety of general illumination applications due to their ability to offer high quality and cost-effective performance.  By 2020 DOE ET has an efficacy goal of 193 lm/W, which is roughtly double the current state-of-the-art T8 linear fluorescent lighting."
+    return "Light-emitting diodes (LEDs), a type of solid-state lighting (SSL), offer the electric lighting market a new and revolutionary light source that saves energy and improves light quality, performance, and service. Today, white-light LEDs are competing or are poised to compete successfully with conventional lighting sources across a variety of general illumination applications due to their ability to offer high quality and cost-effective performance.  By 2020 DOE ET has an efficacy goal of 193 lm/W, which is roughly double the current state-of-the-art T8 linear fluorescent lighting."
   end
 
   # human readable description of modeling approach
@@ -90,4 +90,4 @@ class CommercialLightingWithET2020LEDs < OpenStudio::Ruleset::ModelUserScript
 end
 
 # register the measure to be used by the application
-CommercialLightingWithET2020LEDs.new.registerWithApplication
+CommercialLightingToET2020LEDs.new.registerWithApplication

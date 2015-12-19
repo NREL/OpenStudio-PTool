@@ -2,7 +2,7 @@
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
 # start the measure
-class CommercialLightingWithCurrentLEDs < OpenStudio::Ruleset::ModelUserScript
+class CommercialLightingToCurrentLEDs < OpenStudio::Ruleset::ModelUserScript
 
   # human readable name
   def name
@@ -90,4 +90,4 @@ class CommercialLightingWithCurrentLEDs < OpenStudio::Ruleset::ModelUserScript
 end
 
 # register the measure to be used by the application
-CommercialLightingWithCurrentLEDs.new.registerWithApplication
+CommercialLightingToCurrentLEDs.new.registerWithApplication

@@ -1,12 +1,12 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <name>commercial_lighting_with_et_2020_le_ds</name>
+  <name>commercial_lighting_to_et_2020_le_ds</name>
   <uid>206515cf-902b-4811-a741-af66401fe2cb</uid>
-  <version_id>e582079d-441b-4007-a424-22a6362e9edb</version_id>
+  <version_id>512ee3e1-c3a3-40d1-81f0-ed437b42aeaf</version_id>
   <xml_checksum>49804F74</xml_checksum>
-  <class_name>CommercialLightingWithET2020LEDs</class_name>
-  <display_name> Commercial Lighting With ET2020 LEDs</display_name>
-  <description>Light-emitting diodes (LEDs), a type of solid-state lighting (SSL), offer the electric lighting market a new and revolutionary light source that saves energy and improves light quality, performance, and service. Today, white-light LEDs are competing or are poised to compete successfully with conventional lighting sources across a variety of general illumination applications due to their ability to offer high quality and cost-effective performance.  By 2020 DOE ET has an efficacy goal of 193 lm/W, which is roughtly double the current state-of-the-art T8 linear fluorescent lighting.</description>
+  <class_name>CommercialLightingToET2020LEDs</class_name>
+  <display_name>Commercial Lighting To ET2020 LEDs</display_name>
+  <description>Light-emitting diodes (LEDs), a type of solid-state lighting (SSL), offer the electric lighting market a new and revolutionary light source that saves energy and improves light quality, performance, and service. Today, white-light LEDs are competing or are poised to compete successfully with conventional lighting sources across a variety of general illumination applications due to their ability to offer high quality and cost-effective performance.  By 2020 DOE ET has an efficacy goal of 193 lm/W, which is roughly double the current state-of-the-art T8 linear fluorescent lighting.</description>
   <modeler_description>Assume that the starting point technology is primarily 90.1-2013 T8 lighting, with an efficacy of 90 lm/W.  According to Table 5.2, LED Efficacy Improvement, in (1), 2015 LED luminaire efficacy is projected to be 193 lm/W.  Calculate the total lighting power of the model and divide by this initial efficacy to determine the total number of lumens needed.    Assuming that this same number of lumens should be provided by LED lighting, divide by the LED efficacy to determine the total wattage of LEDs that would be necessary to achieve the same lighting.  Reduce the overall building lighting power by the resulting multiplier.  IE new LPD = old LPD * (1 - 90 lm/W /193 lm/W). This is a very crude estimate of the impact of current LED technology.  In order to perform a more nuanced analysis, lighting in the prototype buildings should be broken down by use type (general space lighting, task lighting, etc.) and by currently assumed technology (T12, T8, metal halide, etc.).  If this breakdown were available, each type of lighting could be modified according to its own efficacy characteristics.  Additionally, this measure does not account for the impact of LEDs on outdoor lighting.</modeler_description>
   <arguments>
     <argument>
@@ -104,12 +104,6 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
-      <filename>commercial_lighting_with_et_2020_leds_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>019351E3</checksum>
-    </file>
-    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.6.0</identifier>
@@ -118,7 +112,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>A30830AB</checksum>
+      <checksum>D0F684A0</checksum>
+    </file>
+    <file>
+      <filename>commercial_lighting_to_et_2020_leds_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>CD77CDE2</checksum>
     </file>
   </files>
 </measure>

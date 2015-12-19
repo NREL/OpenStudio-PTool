@@ -6,12 +6,12 @@ require_relative '../measure.rb'
 
 require 'fileutils'
 
-class CommercialLightingWithET2020LEDsTest < MiniTest::Unit::TestCase
+class CommercialLightingToCurrentLEDsTest < MiniTest::Unit::TestCase
 
   def test_small_office
      
     # Create an instance of the measure
-    measure = CommercialLightingWithET2020LEDs.new
+    measure = CommercialLightingToCurrentLEDs.new
     
     # Create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
@@ -23,9 +23,22 @@ class CommercialLightingWithET2020LEDsTest < MiniTest::Unit::TestCase
     assert((not model.empty?))
     model = model.get
     
-    # Get arguments and test that they are what we are expecting
+    # Create an empty argument map
     arguments = measure.arguments(model)
-    argument_map = OpenStudio::Ruleset::OSArgumentMap.new 
+    argument_map = OpenStudio::Ruleset::OSArgumentMap.new
+
+    # Set argument values
+    arg_values = {
+    "run_measure" => 1
+    }
+    
+    i = 0
+    arg_values.each do |name, val|
+      arg = arguments[i].clone
+      assert(arg.setValue(val))
+      argument_map[name] = arg
+      i += 1
+    end
 
     # Run the measure
     measure.run(model, runner, argument_map)
@@ -40,7 +53,7 @@ class CommercialLightingWithET2020LEDsTest < MiniTest::Unit::TestCase
   def test_secondary_school
      
     # Create an instance of the measure
-    measure = CommercialLightingWithET2020LEDs.new
+    measure = CommercialLightingToCurrentLEDs.new
     
     # Create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
@@ -52,9 +65,22 @@ class CommercialLightingWithET2020LEDsTest < MiniTest::Unit::TestCase
     assert((not model.empty?))
     model = model.get
     
-    # Get arguments and test that they are what we are expecting
+    # Create an empty argument map (this measure has no arguments)
     arguments = measure.arguments(model)
     argument_map = OpenStudio::Ruleset::OSArgumentMap.new
+
+    # Set argument values
+    arg_values = {
+    "run_measure" => 1
+    }
+    
+    i = 0
+    arg_values.each do |name, val|
+      arg = arguments[i].clone
+      assert(arg.setValue(val))
+      argument_map[name] = arg
+      i += 1
+    end
 
     # Run the measure
     measure.run(model, runner, argument_map)
