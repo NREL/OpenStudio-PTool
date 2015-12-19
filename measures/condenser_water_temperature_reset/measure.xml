@@ -1,0 +1,61 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>condenser_water_temperature_reset</name>
+  <uid>fad4dd96-f6a9-4a15-a6fc-046adc86b810</uid>
+  <version_id>3e9f7aed-c518-46f2-abbb-abb99f52441e</version_id>
+  <xml_checksum>F19E874F</xml_checksum>
+  <class_name>CondenserWaterTemperatureReset</class_name>
+  <display_name>Condenser Water Temperature Reset</display_name>
+  <description>This energy efficiency measure (EEM) lowers the condenser loop set point temperature to take advantage of free cooling when the outdoor air wet bulb temperature is low enough. By providing cooler temperature condenser water (when available), the compressor is able to operate more efficiently, using less energy to provide the same amount of cooling to the building.</description>
+  <modeler_description>This EEM adds EMS logic to the model that actuates the condenser loop setpoint manager. The added logic first checks the outdoor air wet-bulb temperature (OAWBT). If OAWBT is between 14.3C and 22.7C then the condenser loop setpoint temperature is set to OAWBT + 4C. If the OAWBT is above 22.7C, the condenser loop setpoint temperature is set to 26.7C. If the OAWBT is below 14.3C, the condenser loop setpoint temperature is set to 18.3C.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.2</identifier>
+        <min_compatible>1.7.2</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>FAB21E1E</checksum>
+    </file>
+  </files>
+</measure>
