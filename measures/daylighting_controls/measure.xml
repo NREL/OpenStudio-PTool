@@ -1,0 +1,117 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>daylighting_controls</name>
+  <uid>9cb0fb2d-d95d-400c-9833-3be2db6a75ec</uid>
+  <version_id>028d4e25-6a39-4625-be73-8acc4cbd675a</version_id>
+  <xml_checksum>9B7BB4D8</xml_checksum>
+  <class_name>DaylightingControls</class_name>
+  <display_name>Daylighting Controls</display_name>
+  <description>Daylighting controls are used to dim the electric lighting when sunlight provides adequate lighting levels in the space.  The design of a daylight harvesting system should account for sensor location, sensor orientation, and number of sensors. During installation, the light sensitivity settings should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimmable ballasts are typically also required as part of a daylighting strategy.</description>
+  <modeler_description>Loop through each zone in the baseline model.  If the zone does not have toplighting or sidelighting control, add daylight sensors per 90.1-2010 9.4.1.4 and 9.4.1.5, with a target illuminance of 300 lux.  The fraction of lighting controlled by the daylighting controls is determined based on the ratio of the daylighted areas to the total floor area.   If the zone already has daylighting controls, skip this zone.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Electric Lighting.Electric Lighting Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Uses SketchUp API</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>1378.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>9E0B5CCB</checksum>
+    </file>
+    <file>
+      <filename>1379.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D14C91BA</checksum>
+    </file>
+    <file>
+      <filename>1377.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AF1E3220</checksum>
+    </file>
+    <file>
+      <filename>1056.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AFBC28AB</checksum>
+    </file>
+    <file>
+      <filename>1056_2.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C2ED5021</checksum>
+    </file>
+    <file>
+      <filename>1056_2_sensors_all_zones.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>9E969221</checksum>
+    </file>
+    <file>
+      <filename>1377_sensors_some_zones.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>88A1E8FD</checksum>
+    </file>
+    <file>
+      <filename>1447.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6AFA196C</checksum>
+    </file>
+    <file>
+      <filename>1448.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DE74DE58</checksum>
+    </file>
+    <file>
+      <filename>recommendation.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>2E28A15E</checksum>
+    </file>
+    <file>
+      <filename>Standards.Space.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>C0E68FC5</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.2.3</identifier>
+        <min_compatible>1.2.3</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>5749437A</checksum>
+    </file>
+  </files>
+</measure>
