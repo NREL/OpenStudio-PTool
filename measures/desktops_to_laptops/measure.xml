@@ -1,0 +1,79 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>desktops_to_laptops</name>
+  <uid>132257d3-1af1-42c6-a15e-26c7899ae492</uid>
+  <version_id>3a43dfd0-cd39-4714-88bf-f655a960a28b</version_id>
+  <xml_checksum>9A202986</xml_checksum>
+  <class_name>DesktopsToLaptops</class_name>
+  <display_name>Desktops to Laptops</display_name>
+  <description>Laptop computers and thin clients are typically much more efficient than desktop computers, providing the same (or better) performance while using less energy.  As a result, switching from desktops to laptops or thin clients can save energy.  Typically, laptops use about 80% less electricity than desktops (1) and thin clients use (77%) less, assuming that servers and server cooling are handled on-site (2).</description>
+  <modeler_description>Assume that each occupant in the building has a computer.  Assume that 53% of these are desktops, and 47% are laptops (1).  Assume that desktops draw 175W at peak, whereas laptops draw 40W and thin clients draw 45W (including data center cooling load).  Calculate the overall building installed electric equipment power in W, then calculate the reduction in W from switching from desktops.  Determine the percent power reduction for the overall building, and apply this percentage to all electric equipment in the building, because electric equipment is not typically identified in a granular fashion.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Equipment.Electric Equipment</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>EnvelopeAndLoadTestModel_01.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>138E2AAC</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F24EE7E9</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.5</identifier>
+        <min_compatible>1.8.5</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>B6C3ECA2</checksum>
+    </file>
+    <file>
+      <filename>DesktopsToLaptops_Test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>A03A7FA8</checksum>
+    </file>
+  </files>
+</measure>

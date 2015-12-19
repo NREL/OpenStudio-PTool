@@ -11,12 +11,12 @@ class DesktopPowerManagement < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return "Add"
+    return "Individual users may forget to or be reluctant to turn their computers off at night for a variety of reasons such as increased morning startup time.  This behavior may conflict with energy savings goals of the organization.  With newer operating systems, IT departments can remotely roll out and enable more aggressive power settings to all computers on their network."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return "Looks through"
+    return "Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 10%) between user specified times (default 6pm-9am).  The default value for this measure is not well supported as plug loads are not broken into discrete categories in the prototype buildings."
   end
 
   # define the arguments that the user will input
