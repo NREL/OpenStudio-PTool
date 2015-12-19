@@ -1,0 +1,104 @@
+{
+  "classname": "AdvancedPowerStrips",
+  "name": "advanced_power_strips",
+  "display_name": "Advanced Power Strips",
+  "measure_type": "RubyMeasure",
+  "description": "Add",
+  "modeler_description": "Looks through",
+  "arguments": [
+    {
+      "name": "run_measure",
+      "display_name": "Run Measure",
+      "variable_type": "Integer",
+      "local_variable": "run_measure",
+      "units": null,
+      "default_value": 1
+    },
+    {
+      "name": "fraction_value",
+      "display_name": "Fractional Value for Night Time Load",
+      "variable_type": "Double",
+      "local_variable": "fraction_value",
+      "units": null,
+      "default_value": 0.1
+    },
+    {
+      "name": "apply_weekday",
+      "display_name": "Apply Schedule Changes to Weekday and Default Profiles",
+      "variable_type": "Bool",
+      "local_variable": "apply_weekday",
+      "units": null,
+      "default_value": true
+    },
+    {
+      "name": "start_weekday",
+      "display_name": "Weekday/Default Time to Start Night Time Fraction",
+      "variable_type": "Double",
+      "local_variable": "start_weekday",
+      "units": "24hr, use decimal for sub hour",
+      "default_value": 18.0
+    },
+    {
+      "name": "end_weekday",
+      "display_name": "Weekday/Default Time to End Night Time Fraction",
+      "variable_type": "Double",
+      "local_variable": "end_weekday",
+      "units": "24hr, use decimal for sub hour",
+      "default_value": 9.0
+    },
+    {
+      "name": "apply_saturday",
+      "display_name": "Apply Schedule Changes to Saturdays",
+      "variable_type": "Bool",
+      "local_variable": "apply_saturday",
+      "units": null,
+      "default_value": true
+    },
+    {
+      "name": "start_saturday",
+      "display_name": "Saturday Time to Start Night Time Fraction",
+      "variable_type": "Double",
+      "local_variable": "start_saturday",
+      "units": "24hr, use decimal for sub hour",
+      "default_value": 18.0
+    },
+    {
+      "name": "end_saturday",
+      "display_name": "Saturday Time to End Night Time Fraction",
+      "variable_type": "Double",
+      "local_variable": "end_saturday",
+      "units": "24hr, use decimal for sub hour",
+      "default_value": 9.0
+    },
+    {
+      "name": "apply_sunday",
+      "display_name": "Apply Schedule Changes to Sundays",
+      "variable_type": "Bool",
+      "local_variable": "apply_sunday",
+      "units": null,
+      "default_value": true
+    },
+    {
+      "name": "start_sunday",
+      "display_name": "Sunday Time to Start Night Time Fraction",
+      "variable_type": "Double",
+      "local_variable": "start_sunday",
+      "units": "24hr, use decimal for sub hour",
+      "default_value": 18.0
+    },
+    {
+      "name": "end_sunday",
+      "display_name": "Sunday Time to End Night Time Fraction",
+      "variable_type": "Double",
+      "local_variable": "end_sunday",
+      "units": "24hr, use decimal for sub hour",
+      "default_value": 9.0
+    }
+  ],
+  "name_xml": "advanced_power_strips",
+  "uid": "3517b0f3-db26-4d30-896c-c4908ecac8cc",
+  "version_id": "4de4e916-b09f-4ef3-ab55-d491c0fafd88",
+  "tags": [
+    "Equipment.Equipment Controls"
+  ]
+}

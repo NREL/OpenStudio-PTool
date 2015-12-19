@@ -36,7 +36,7 @@ class AdvancedPowerStripsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
+    "run_measure" => 0,
     "fraction_value" => 0.1,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
@@ -88,7 +88,7 @@ class AdvancedPowerStripsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "fraction_value" => 0.1,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
@@ -143,7 +143,7 @@ class AdvancedPowerStripsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => true,
+    "run_measure" => 1,
     "fraction_value" => 0.1,
     "apply_weekday" => true,
     "start_weekday" => 18.0,
