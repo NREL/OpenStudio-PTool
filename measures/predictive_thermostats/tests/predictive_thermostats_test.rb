@@ -36,7 +36,7 @@ class PredictiveThermostatsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
+    "run_measure" => 0,
     "occ_threshold" => 15.0
     }
     
@@ -79,7 +79,7 @@ class PredictiveThermostatsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "occ_threshold" => 15.0
     }
     
@@ -124,7 +124,7 @@ class PredictiveThermostatsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "occ_threshold" => 15.0
     }
     

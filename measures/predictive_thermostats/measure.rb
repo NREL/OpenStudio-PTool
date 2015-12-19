@@ -6,17 +6,17 @@ class PredictiveThermostats < OpenStudio::Ruleset::ModelUserScript
 
   # human readable name
   def name
-    return "Wireless Lighting Occupancy Sensors"
+    return "Predictive Thermostats"
   end
 
   # human readable description
   def description
-    return ""
+    return "Predictive thermostats adapt over time to learn when occupants are going to be present or not, and widen the heating and cooling deadband when the space is unoccupied."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return ""
+    return "For each zone in the model, determine the current heating and cooling setback and setup temperatures.  Compare the thermostat schedule to the occupancy schedule.  Whenever the occupancy level is below the threshold, change the thermostat to the setback/setup temperature.  This modeling approach assumes very good, very granular predictive capabilities."
   end
 
   # define the arguments that the user will input
@@ -150,7 +150,7 @@ class PredictiveThermostats < OpenStudio::Ruleset::ModelUserScript
     # Then, go through the occupancy schedule for each zone and set the
     # thermostat setpoint to the setback value for any hour where the
     # occupancy is less than the threshold.  If the original thermostat
-    # has no setback, make the setback 5F and warn the user.\
+    # has no setback, make the setback 5F and warn the user.
     default_setback_delta_f = 5
     default_setback_delta_c = OpenStudio.convert(default_setback_delta_f, "R", "K").get.round(1)
     zones_changed = []
