@@ -1,0 +1,85 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>static_pressure_reset</name>
+  <uid>fad4dd96-f6a9-4a15-a6fc-046adc76b717</uid>
+  <version_id>0a1cbdc2-f9a3-4ba6-9489-8fbafcee869a</version_id>
+  <xml_checksum>56434E32</xml_checksum>
+  <class_name>StaticPressureReset</class_name>
+  <display_name>Static Pressure Reset</display_name>
+  <description>When a building's supply fan(s) system is operational, the supply fan's static pressure set point can be automatically adjusted to load conditions that will allow the supply fan to operate more efficiently. The variable frequency drive (VFD) of the supply fan is modulated to maintain a dynamically reset static pressure set point. This can be done by sorting all variable-air-volume (VAV) box dampers by position; if the average of the highest (most open) 10% of VAV boxes are open less that 70%, the reset control will decrease the static pressure set point in 0.1 W.C. (inches of water column) increments until the set point achieves the low operation limit (30% of the original value). If the average of the highest 10% of VAV boxes is greater than 90% open, the reset control will increase the static pressure set point in 0.1 W.C. increments until the set point achieves the original set point.</description>
+  <modeler_description>At each simulation time step, check the damper position for each VAV terminal on the airloop.  Reset the fan pressure rise to the max damper position divided by 0.95, down to a minimum of 50% of the design pressure rise.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.Distribution</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EF42DC2D</checksum>
+    </file>
+    <file>
+      <filename>static_pressure_rest_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F84DB4AF</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8D5EAD8A</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.2</identifier>
+        <min_compatible>1.7.2</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>D0587A8B</checksum>
+    </file>
+  </files>
+</measure>
