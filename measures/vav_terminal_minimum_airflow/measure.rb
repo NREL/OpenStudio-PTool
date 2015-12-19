@@ -2,11 +2,11 @@
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
 # start the measure
-class LowerMinimumAirflowRatesForVAVTerminal < OpenStudio::Ruleset::ModelUserScript
+class VAVTerminalMinimumAirflow < OpenStudio::Ruleset::ModelUserScript
 
 	# human readable name
 		def name
-		return "Lower minimum airflow rates for VAV terminal"
+		return "VAV Terminal Minimum Airflow"
 	end
 
 	# human readable description
@@ -181,4 +181,4 @@ class LowerMinimumAirflowRatesForVAVTerminal < OpenStudio::Ruleset::ModelUserScr
 end #ends the class
 
 # register the measure to be used by the application
-LowerMinimumAirflowRatesForVAVTerminal.new.registerWithApplication
+VAVTerminalMinimumAirflow.new.registerWithApplication

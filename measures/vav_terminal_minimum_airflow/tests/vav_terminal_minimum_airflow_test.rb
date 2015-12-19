@@ -4,13 +4,13 @@ require 'minitest/autorun'
 require_relative '../measure.rb'
 require 'fileutils'
 
-class LowerMinimumAirflowRatesForVAVTerminalTest < MiniTest::Unit::TestCase
+class VAVTerminalMinimumAirflowTest < MiniTest::Unit::TestCase
 
 
  
 def test_number_of_arguments_and_argument_names
     # create an instance of the measure
-    measure = LowerMinimumAirflowRatesForVAVTerminal.new
+    measure = VAVTerminalMinimumAirflow.new
 
     # make an empty model
     model = OpenStudio::Model::Model.new
@@ -87,7 +87,7 @@ def test_number_of_arguments_and_argument_names
   
   def applytotestmodel(model_file)
   
-  measure = LowerMinimumAirflowRatesForVAVTerminal.new
+  measure = VAVTerminalMinimumAirflow.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
