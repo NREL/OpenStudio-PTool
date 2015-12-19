@@ -6,7 +6,7 @@ require_relative '../measure.rb'
 
 require 'fileutils'
 
-class ReplaceDesktopsWithThinClientsTest < MiniTest::Test
+class DesktopsToThinClientsTest < MiniTest::Test
 
   # def setup
   # end
@@ -17,7 +17,7 @@ class ReplaceDesktopsWithThinClientsTest < MiniTest::Test
   def test_na_because_initial_model_didnt_have_elec_equip
      
     # Create an instance of the measure
-    measure = ReplaceDesktopsWithThinClients.new
+    measure = DesktopsToThinClients.new
     
     # Create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
@@ -59,7 +59,7 @@ class ReplaceDesktopsWithThinClientsTest < MiniTest::Test
   def test_medium_office
      
     # Create an instance of the measure
-    measure = ReplaceDesktopsWithThinClients.new
+    measure = DesktopsToThinClients.new
     
     # Create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new

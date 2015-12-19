@@ -1,9 +1,9 @@
 #start the measure
-class ReplaceDesktopsWithThinClients < OpenStudio::Ruleset::ModelUserScript
+class DesktopsToThinClients < OpenStudio::Ruleset::ModelUserScript
 
   #define the name that a user will see
   def name
-    return "Replace Desktops with Thin Clients"
+    return "Desktops To Thin Clients"
   end
 
   # human readable description
@@ -107,4 +107,4 @@ class ReplaceDesktopsWithThinClients < OpenStudio::Ruleset::ModelUserScript
 end #end the measure
 
 #this allows the measure to be used by the application
-ReplaceDesktopsWithThinClients.new.registerWithApplication
+DesktopsToThinClients.new.registerWithApplication
