@@ -11,7 +11,7 @@ class SolarCogenerationAndDaylighting < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return "Solar cogeneration and daylighting refers to using a concave concentrating mirror on the roof to focus light into a fiberoptic cable, which is run from the roof to light fixtures throughout the building to provide an alternative to electric lighting during sunny times.  Additionally, the light in the IR spectrum is directed onto a PV cell to generate electricity.  See http://www.jxcrystals.com/old_Solar/munich2.pdf for a more detailed description."
+    return "Solar cogeneration and daylighting refers to using a concave concentrating mirror on the roof to focus light into a fiber optic cable, which is run from the roof to light fixtures throughout the building to provide an alternative to electric lighting during sunny times.  Additionally, the light in the IR spectrum is directed onto a PV cell to generate electricity.  See http://www.jxcrystals.com/old_Solar/munich2.pdf for a more detailed description."
   end
 
   # human readable description of modeling approach

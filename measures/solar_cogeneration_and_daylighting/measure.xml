@@ -2,11 +2,11 @@
   <schema_version>3.0</schema_version>
   <name>solar_cogeneration_and_daylighting</name>
   <uid>1bdb24ed-c7b5-46a6-a0c4-467f00a2cb91</uid>
-  <version_id>9429c5db-415d-49e7-85ea-36b649b366e8</version_id>
+  <version_id>111033c5-6edd-4e63-b74e-66b3e0deb5a4</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>SolarCogenerationAndDaylighting</class_name>
   <display_name>Solar Cogeneration And Daylighting</display_name>
-  <description>Solar cogeneration and daylighting refers to using a concave concentrating mirror on the roof to focus light into a fiberoptic cable, which is run from the roof to light fixtures throughout the building to provide an alternative to electric lighting during sunny times.  Additionally, the light in the IR spectrum is directed onto a PV cell to generate electricity.  See http://www.jxcrystals.com/old_Solar/munich2.pdf for a more detailed description.</description>
+  <description>Solar cogeneration and daylighting refers to using a concave concentrating mirror on the roof to focus light into a fiber optic cable, which is run from the roof to light fixtures throughout the building to provide an alternative to electric lighting during sunny times.  Additionally, the light in the IR spectrum is directed onto a PV cell to generate electricity.  See http://www.jxcrystals.com/old_Solar/munich2.pdf for a more detailed description.</description>
   <modeler_description>Reduces runtime fraction of lights by user-specified amount during the user-specified time period (typically daytime).  This is an attempt to represent the impact of using the light collected on the roof instead of electric lighting.  This modeling approach does not capture the impact of using a PV cell to turn the IR spectrum of the captured light into electricity.</modeler_description>
   <arguments>
     <argument>
@@ -88,7 +88,7 @@
       <filename>solar_cogeneration_and_daylighting_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>8A4616D8</checksum>
+      <checksum>714EF894</checksum>
     </file>
     <file>
       <version>
@@ -99,7 +99,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>91A8EB86</checksum>
+      <checksum>BFD797A0</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004_with_solar_cogen_daylt.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>773A46FF</checksum>
     </file>
   </files>
 </measure>

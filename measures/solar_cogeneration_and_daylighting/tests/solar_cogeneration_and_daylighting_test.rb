@@ -36,7 +36,7 @@ class SolarCogenerationAndDaylightingTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
+    "run_measure" => 0,
     "pct_red" => 40.0,
     "start_hr" => 9.0,
     "end_hr" => 18.0
@@ -81,7 +81,7 @@ class SolarCogenerationAndDaylightingTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "pct_red" => 50.0,
     "start_hr" => 9.0,
     "end_hr" => 18.0
