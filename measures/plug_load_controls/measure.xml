@@ -1,0 +1,203 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>plug_load_controls</name>
+  <uid>66e18298-f9c2-451e-b4c1-af089b07d01a</uid>
+  <version_id>7692b9fb-3fb1-43c1-aac5-2bcfeb73616c</version_id>
+  <xml_checksum>B2EAAD67</xml_checksum>
+  <class_name>PlugLoadControls</class_name>
+  <display_name>Plug Load Controls</display_name>
+  <description>Plug loads represent a significant fraction of the energy consumption in commercial buildings.  Turning plug loads off when not in use can save energy.  This can be accomplished through a variety of methods depending on the plug load being controlled.  Some options include occupancy sensors, scheduled outlets, advanced power strips, and equipment with built-in lower power modes.</description>
+  <modeler_description>Find all of the electric equipment schedules in the building. Reduce their fractional values by 10% during occupied hours (default 6pm-9am), and by 25% during unoccupied hours.  These savings represent the application of a variety of control strategies.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>unoc_pct_red</name>
+      <display_name>Percent Reduction for Unoccupied Time.</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.25</default_value>
+    </argument>
+    <argument>
+      <name>oc_pct_red</name>
+      <display_name>Percent Reduction for Occupied Time.</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.1</default_value>
+    </argument>
+    <argument>
+      <name>apply_weekday</name>
+      <display_name>Apply Schedule Changes to Weekday and Default Profiles?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>start_weekday</name>
+      <display_name>Weekday/Default Time to Start Unoccupied.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>18</default_value>
+    </argument>
+    <argument>
+      <name>end_weekday</name>
+      <display_name>Weekday/Default Time to End Unoccupied.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>9</default_value>
+    </argument>
+    <argument>
+      <name>apply_saturday</name>
+      <display_name>Apply Schedule Changes to Saturdays?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>start_saturday</name>
+      <display_name>Saturday Time to Start Unoccupied.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>18</default_value>
+    </argument>
+    <argument>
+      <name>end_saturday</name>
+      <display_name>Saturday Time to End Unoccupied.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>9</default_value>
+    </argument>
+    <argument>
+      <name>apply_sunday</name>
+      <display_name>Apply Schedule Changes to Sundays?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>start_sunday</name>
+      <display_name>Sunday Time to Start Unoccupied.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>18</default_value>
+    </argument>
+    <argument>
+      <name>end_sunday</name>
+      <display_name>Sunday Time to End Unoccupied.</display_name>
+      <type>Double</type>
+      <units>24hr, use decimal for sub hour</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>9</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Equipment.Equipment Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2B663484</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.0</identifier>
+        <min_compatible>1.5.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>51702C80</checksum>
+    </file>
+    <file>
+      <filename>plug_load_controls_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>55B382C0</checksum>
+    </file>
+  </files>
+</measure>
