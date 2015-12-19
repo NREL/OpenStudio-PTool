@@ -16,9 +16,19 @@ class ThermoelasticHeatPump < OpenStudio::Ruleset::ModelUserScript
   #define the name that a user will see, this method may be deprecated as
   #the display name in PAT comes from the name field in measure.xml
   def name
-    return "ThermoelasticHeatPump"
+    return "Thermoelastic Heat Pump"
   end
 
+  # human readable description
+  def description
+    return "When a shape-memory alloy is mechanically stressed it undergoes a solid-to-solid phase transformation and rejects heat to the surroundings.  When exposed to the surroundings, it absorbs heat and returns to the original shape.  Researchers have prototyped air conditioning equipment based on this concept.  It is estimated that cooling equipment based on this technology can realistically achieve a COP of around 6, which is roughly twice as good as existing vapor compression technologies."
+  end
+
+  # human readable description of modeling approach
+  def modeler_description
+    return "For each model, find every DX cooling and heating coil and increase the COP to 6.  Since very little information about this technology is available, do not change performance curves or upper/lower operating temperature limits."
+  end  
+  
   #define the arguments that the user will input
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new

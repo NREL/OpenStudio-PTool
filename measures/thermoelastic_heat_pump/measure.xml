@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>thermoelastic_heat_pump</name>
   <uid>95e83d5c-4ae9-4072-9885-cd51ee01f7e1</uid>
-  <version_id>853dad45-ca71-43d4-93ff-2268e54c81dc</version_id>
+  <version_id>d8bd6212-be2b-4d20-8ba9-204db523fe8e</version_id>
   <xml_checksum>48FEEDDD</xml_checksum>
   <class_name>ThermoelasticHeatPump</class_name>
-  <display_name>ThermoelasticHeatPump</display_name>
+  <display_name>Thermoelastic Heat Pump</display_name>
   <description>When a shape-memory alloy is mechanically stressed it undergoes a solid-to-solid phase transformation and rejects heat to the surroundings.  When exposed to the surroundings, it absorbs heat and returns to the original shape.  Researchers have prototyped air conditioning equipment based on this concept.  It is estimated that cooling equipment based on this technology can realistically achieve a COP of around 6, which is roughly twice as good as existing vapor compression technologies.</description>
-  <modeler_description>For each model, find every DX cooling and heating coil and increase the COP to 6.  Since very little information about this technology is available, do not change performance curves or upper/lower operating temperature limits..</modeler_description>
+  <modeler_description>For each model, find every DX cooling and heating coil and increase the COP to 6.  Since very little information about this technology is available, do not change performance curves or upper/lower operating temperature limits.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -60,7 +60,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>50C592E3</checksum>
+      <checksum>9223BD00</checksum>
     </file>
   </files>
 </measure>
