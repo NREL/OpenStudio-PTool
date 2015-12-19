@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>elevator_cab_lighting_controls</name>
   <uid>46280f71-7c4a-4d81-a580-a8843312dffd</uid>
-  <version_id>a0be7862-91dd-4799-a28c-edc8fb9229a9</version_id>
+  <version_id>8367ee4a-448b-4dee-bf41-914a83a28eee</version_id>
   <xml_checksum>9A585DCE</xml_checksum>
   <class_name>ElevatorCabLightingControls</class_name>
   <display_name>Elevator Cab Lighting Controls</display_name>
-  <description></description>
-  <modeler_description>This EEM replaces the elevator lighting definition from the baseline value (assumed to coincide with 88 W/elevator cab, or 3.14 W/ft^2) to one representing 100% high-efficacy fixtures, with an effective lighting power of 32 W/elevator cab. The measure identifies the electric equipment load definition whose name includes the words ?elevator lights? and replaces that definition with a new one meeting the high efficacy lighting power. Instance multipliers are applied as per the original load. </modeler_description>
+  <description>This energy efficiency measure (EEM) reduces the lighting power density in elevators by switching from low efficacy incandescent lamps to LEDs.</description>
+  <modeler_description>This EEM replaces the elevator lighting definition from the baseline value (assumed to coincide with 88 W/elevator cab, or 3.14 W/ft^2) to one representing 100% high-efficacy fixtures, with an effective lighting power of 32 W/elevator cab. The measure identifies the electric equipment load definition whose name includes the words elevator lights and replaces that definition with a new one meeting the high efficacy lighting power. Instance multipliers are applied as per the original load.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -47,10 +47,16 @@
   </attributes>
   <files>
     <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-5A w Elevators.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>7DE684A5</checksum>
+    </file>
+    <file>
       <filename>elevator_cab_lighting_controls_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>1E89C333</checksum>
+      <checksum>67E75933</checksum>
     </file>
     <file>
       <version>
@@ -61,13 +67,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D83C0FFB</checksum>
-    </file>
-    <file>
-      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-5A w Elevators.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>7DE684A5</checksum>
+      <checksum>0B49D977</checksum>
     </file>
   </files>
 </measure>

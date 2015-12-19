@@ -11,12 +11,12 @@ class ElevatorCabLightingControls < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return ""
+    return "This energy efficiency measure (EEM) reduces the lighting power density in elevators by switching from low efficacy incandescent lamps to LEDs."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return "This EEM replaces the elevator lighting definition from the baseline value (assumed to coincide with 88 W/elevator cab, or 3.14 W/ft^2) to one representing 100% high-efficacy fixtures, with an effective lighting power of 32 W/elevator cab. The measure identifies the electric equipment load definition whose name includes the words �elevator lights� and replaces that definition with a new one meeting the high efficacy lighting power. Instance multipliers are applied as per the original load. "
+    return "This EEM replaces the elevator lighting definition from the baseline value (assumed to coincide with 88 W/elevator cab, or 3.14 W/ft^2) to one representing 100% high-efficacy fixtures, with an effective lighting power of 32 W/elevator cab. The measure identifies the electric equipment load definition whose name includes the words elevator lights and replaces that definition with a new one meeting the high efficacy lighting power. Instance multipliers are applied as per the original load."
   end
 
   # define the arguments that the user will input
