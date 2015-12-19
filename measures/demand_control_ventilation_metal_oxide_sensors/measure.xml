@@ -1,0 +1,79 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>demand_control_ventilation_metal_oxide_sensors</name>
+  <uid>fb52ed45-4581-4185-aa2c-226ebcec36ee</uid>
+  <version_id>8ef90fd1-6a45-4ab0-95f4-366b8d5a4872</version_id>
+  <xml_checksum>61BFE8C1</xml_checksum>
+  <class_name>DemandControlVentilationMetalOxideSensors</class_name>
+  <display_name>Demand Control Ventilation Metal Oxide Sensors</display_name>
+  <description>This measure dynamically reduces the amount of outdoor air intake below the design minimum values based on the actual occupancy of the building at each hour.  This reduces the energy needed to heat and cool this outdoor air.</description>
+  <modeler_description>For each AirLoop, check if it is a VAV system, and if DCV is not already enabled, enable it via the Controller:MechanicalVentilation object and also reduce the minimum OA flow rate to zero to enable maximum OA turndown. This measure is currently modeled exactly like typical DCV.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.Ventilation</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2B663484</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.0</identifier>
+        <min_compatible>1.5.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>8F5973F0</checksum>
+    </file>
+    <file>
+      <filename>demand_control_ventilation_metal_oxide_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>7D9CA5FD</checksum>
+    </file>
+  </files>
+</measure>
