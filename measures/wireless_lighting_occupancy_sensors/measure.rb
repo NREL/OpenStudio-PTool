@@ -11,12 +11,12 @@ class WirelessLightingOccupancySensors < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return ""
+    return "Occupancy sensors can be used to turn off lights when no one is present in the space.  If a large space is controlled by a single sensor, the odds that part of the space is occupied are higher and therefore savings potential is lower.  Wireless occupancy sensors can allow smaller groups of fixtures to be created cost effectively, increasing the amount of savings by turning off those areas of a large space that are actually unoccupied, while keeping lights on in those areas that are occupied."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return ""
+    return "For each light in the model, reduce the lighting fraction by the user specified amount.  The default reduction of 15% comes from ASHRAE 90.1-2010 Table G3.2, as wireless occupancy sensors should be able to control groups of lights at a more granular level, as opposed to the standard 10% reduction for large, open spaces."
   end
 
   # define the arguments that the user will input

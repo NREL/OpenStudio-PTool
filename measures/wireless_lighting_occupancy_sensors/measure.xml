@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>wireless_lighting_occupancy_sensors</name>
   <uid>ce22143c-46aa-4727-a08c-ef32dbc5e774</uid>
-  <version_id>2bfc6be2-3624-4d6b-ae72-487d9457f057</version_id>
+  <version_id>beadb0d5-9065-4ebe-8e76-a415548b7549</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>WirelessLightingOccupancySensors</class_name>
   <display_name>Wireless Lighting Occupancy Sensors</display_name>
-  <description></description>
-  <modeler_description></modeler_description>
+  <description>Occupancy sensors can be used to turn off lights when no one is present in the space.  If a large space is controlled by a single sensor, the odds that part of the space is occupied are higher and therefore savings potential is lower.  Wireless occupancy sensors can allow smaller groups of fixtures to be created cost effectively, increasing the amount of savings by turning off those areas of a large space that are actually unoccupied, while keeping lights on in those areas that are occupied.</description>
+  <modeler_description>For each light in the model, reduce the lighting fraction by the user specified amount.  The default reduction of 15% comes from ASHRAE 90.1-2010 Table G3.2, as wireless occupancy sensors should be able to control groups of lights at a more granular level, as opposed to the standard 10% reduction for large, open spaces.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -56,12 +56,6 @@
   </attributes>
   <files>
     <file>
-      <filename>wireless_lighting_occupancy_sensors_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FF202F70</checksum>
-    </file>
-    <file>
       <filename>secondary_school_90.1-2010.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -74,6 +68,12 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
+      <filename>wireless_lighting_occupancy_sensors_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C6B78300</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.5.0</identifier>
@@ -82,7 +82,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C042EC13</checksum>
+      <checksum>549D9A6B</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004_with_occ.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5AF753C4</checksum>
     </file>
   </files>
 </measure>

@@ -36,7 +36,7 @@ class WirelessLightingOccupancySensorsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => false,
+    "run_measure" => 0,
     "percent_runtime_reduction" => 15.0
     }
     
@@ -79,7 +79,7 @@ class WirelessLightingOccupancySensorsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => true,
+    "run_measure" => 1,
     "percent_runtime_reduction" => 15.0
     }
     
