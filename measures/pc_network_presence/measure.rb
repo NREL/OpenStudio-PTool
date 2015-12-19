@@ -11,12 +11,12 @@ class PCNetworkPresence < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return "Add"
+    return "Computer users and IT departments may be reluctant to turn off computers at night because of the desire to push software updates during these times.  However, a new technology can allow computers to maintain their presence on the network and be awoken remotely for task such as pushing software updates.  This technology allows computers to be turned off at night without compromising the requirements of the IT department."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return "Looks through"
+    return "Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 10%) between user specified times (default 6pm-9am).  The default value for this measure is not well supported as plug loads are not broken into discrete categories in the prototype buildings."
   end
 
   # define the arguments that the user will input
