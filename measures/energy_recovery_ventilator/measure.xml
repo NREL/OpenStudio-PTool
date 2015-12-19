@@ -1,0 +1,152 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>energy_recovery_ventilator</name>
+  <uid>6e07a8b4-0610-4f87-9031-f78179f6107d</uid>
+  <version_id>a8896fa8-0596-4b60-a19c-58bbd75b2bf1</version_id>
+  <xml_checksum>7BBDE1A2</xml_checksum>
+  <class_name>EnergyRecoveryVentilator</class_name>
+  <display_name>Energy Recovery Ventilator</display_name>
+  <description>Energy recovery ventilators (ERVs) transfer some of the energy between the entering outdoor air and the leaving exhaust air.  This lowers the amount of conditioning that needs to be performed on the entering outdoor air, saving energy.  However, ERVs add additional an fan pressure rise to the HVAC system, and the increased fan energy may outweigh the saving in heating and cooling energy in milder climates.</description>
+  <modeler_description>For each AirLoop, add a rotary ERV with a user-specified increase in fan pressure rise.  This measure currently assumes that the ERV is always creating an additional pressure rise, even when it is being bypassed.  This measure also assumes that the ERV rotation motor consumes a negligible amount of energy.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>fan_pressure_increase_inH2O</name>
+      <display_name>Increase in Fan Pressure from ERV</display_name>
+      <type>Double</type>
+      <units>in H2O</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>sensible_eff_at_100_heating</name>
+      <display_name>Sensible Effectiveness at 100% Heating Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.76</default_value>
+    </argument>
+    <argument>
+      <name>latent_eff_at_100_heating</name>
+      <display_name>Latent Effectiveness at 100% Heating Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.68</default_value>
+    </argument>
+    <argument>
+      <name>sensible_eff_at_75_heating</name>
+      <display_name>Sensible Effectiveness at 75% Heating Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.81</default_value>
+    </argument>
+    <argument>
+      <name>latent_eff_at_75_heating</name>
+      <display_name>Latent Effectiveness at 75% Heating Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.73</default_value>
+    </argument>
+    <argument>
+      <name>sensible_eff_at_100_cooling</name>
+      <display_name>Sensible Effectiveness at 100% Cooling Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.76</default_value>
+    </argument>
+    <argument>
+      <name>latent_eff_at_100_cooling</name>
+      <display_name>Latent Effectiveness at 100% Cooling Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.68</default_value>
+    </argument>
+    <argument>
+      <name>sensible_eff_at_75_cooling</name>
+      <display_name>Sensible Effectiveness at 75% Cooling Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.81</default_value>
+    </argument>
+    <argument>
+      <name>latent_eff_at_75_cooling</name>
+      <display_name>Latent Effectiveness at 75% Cooling Air Flow</display_name>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.73</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.Energy Recovery</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2B663484</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.0</identifier>
+        <min_compatible>1.5.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>C68DD7D4</checksum>
+    </file>
+    <file>
+      <filename>energy_recovery_ventilator_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C40EF577</checksum>
+    </file>
+  </files>
+</measure>
