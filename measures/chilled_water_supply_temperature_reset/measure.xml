@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>chilled_water_supply_temperature_reset</name>
   <uid>ece0e213-408a-4f6a-a2ac-6d15f9bacff3</uid>
-  <version_id>0cac5b39-e8ea-4be1-b019-0ab51220704b</version_id>
+  <version_id>bd95b960-d3f0-41fa-ae07-964a2559cf41</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>ChilledWaterSupplyTemperatureReset</class_name>
   <display_name>Chilled Water Supply Temperature Reset</display_name>
@@ -68,12 +68,6 @@
       <checksum>C4F35230</checksum>
     </file>
     <file>
-      <filename>chilled_water_supply_temperature_reset_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>E15C1173</checksum>
-    </file>
-    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.9.0</identifier>
@@ -83,6 +77,54 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>75BB90A9</checksum>
+    </file>
+    <file>
+      <filename>chilled_water_supply_temperature_reset_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3A304173</checksum>
+    </file>
+    <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>CFE0DEB4</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5A53A838</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D3B6A1A2</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5CB9DAB8</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>9412D202</checksum>
     </file>
   </files>
 </measure>
