@@ -6,17 +6,17 @@ class BrushlessDCCompressorMotors < OpenStudio::Ruleset::ModelUserScript
 
   # human readable name
   def name
-    return "Low Pressure Drop Air Filters"
+    return "Brushless DC Compressor Motors"
   end
 
   # human readable description
   def description
-    return ""
+    return "Permanent magnet brushless DC motors can be 10% more efficient than their brushed counterparts (1).  Using these motors in the compressors of DX cooling systems has the potential to increase their efficiency."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return ""
+    return "For each DX cooling coil in the model, increase the COP by the user-defined amount (default 2%).  The default is not well supported, but since the motor efficiency increase is 10%, the overall increase in COP should be lower because the compressor motor is only one of the energy-consuming parts of the system."
   end
 
   # define the arguments that the user will input
@@ -111,7 +111,7 @@ class BrushlessDCCompressorMotors < OpenStudio::Ruleset::ModelUserScript
     
     # Not applicable if no dx coils
     if dx_coils.size == 0
-      runner.registerAsNotApplicable("This measure is not applicable because there were no airloops in the building.")
+      runner.registerAsNotApplicable("This measure is not applicable because there were no DX cooling coils in the building.")
       return true    
     end
 

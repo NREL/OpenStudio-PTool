@@ -36,7 +36,7 @@ class BrushlessDCCompressorMotorsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
+    "run_measure" => 0,
     "cop_increase_percentage" => 2.0
     }
     
@@ -79,7 +79,7 @@ class BrushlessDCCompressorMotorsTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "cop_increase_percentage" => 2.0
     }
     

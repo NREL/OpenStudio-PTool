@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>brushless_dc_compressor_motors</name>
   <uid>504b9c38-024d-4164-9161-a524b404f61d</uid>
-  <version_id>9d1909b1-fc3f-4aab-884c-e1a8ce2c77e6</version_id>
+  <version_id>3eb4aa8f-a7bd-4a80-9bc5-2730d28e80c8</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>BrushlessDCCompressorMotors</class_name>
-  <display_name>Low Pressure Drop Air Filters</display_name>
-  <description></description>
-  <modeler_description></modeler_description>
+  <display_name>Brushless DC Compressor Motors</display_name>
+  <description>Permanent magnet brushless DC motors can be 10% more efficient than their brushed counterparts (1).  Using these motors in the compressors of DX cooling systems has the potential to increase their efficiency.</description>
+  <modeler_description>For each DX cooling coil in the model, increase the COP by the user-defined amount (default 2%).  The default is not well supported, but since the motor efficiency increase is 10%, the overall increase in COP should be lower because the compressor motor is only one of the energy-consuming parts of the system.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -68,16 +68,16 @@
       <checksum>2B663484</checksum>
     </file>
     <file>
-      <filename>brushless_dc_compressor_motors_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>DB4D53CE</checksum>
-    </file>
-    <file>
       <filename>small_office_1980-2004_lower_pd.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>BC08B003</checksum>
+    </file>
+    <file>
+      <filename>brushless_dc_compressor_motors_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>945109FB</checksum>
     </file>
     <file>
       <version>
@@ -88,7 +88,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9D7F5046</checksum>
+      <checksum>A68E5727</checksum>
     </file>
   </files>
 </measure>
