@@ -11,12 +11,12 @@ class ControllablePowerOutlets < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return "Add"
+    return "The building energy management system can use controllable outlets to turn off electric equipment when no one is in the building, saving energy without impacting the users of the equipment."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return "Looks through"
+    return "Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 10%) between user specified times (default 6pm-9am)."
   end
 
   # define the arguments that the user will input

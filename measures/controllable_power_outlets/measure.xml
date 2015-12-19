@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>controllable_power_outlets</name>
   <uid>662f055b-7f79-42c9-911e-05fd6a0eb7e9</uid>
-  <version_id>8465ee0d-7a0d-463f-925a-3a96377c5694</version_id>
+  <version_id>96d4fb0c-819f-4f20-b164-0cd145901145</version_id>
   <xml_checksum>B2EAAD67</xml_checksum>
   <class_name>ControllablePowerOutlets</class_name>
   <display_name>Controllable Power Outlets</display_name>
-  <description>Add</description>
-  <modeler_description>Looks through</modeler_description>
+  <description>The building energy management system can use controllable outlets to turn off electric equipment when no one is in the building, saving energy without impacting the users of the equipment.</description>
+  <modeler_description>Find all of the electric equipment schedules in the building, and reduce their fractional values to a user-specified level (default 10%) between user specified times (default 6pm-9am).</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -178,7 +178,7 @@
       <filename>controllable_power_outlets_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>05E0F1B8</checksum>
+      <checksum>C7744330</checksum>
     </file>
     <file>
       <version>
@@ -189,7 +189,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8991B5DE</checksum>
+      <checksum>8CB08B5C</checksum>
+    </file>
+    <file>
+      <filename>secondary_school_90.1-2010_with_controllable_outlets.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D9B97C57</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004_with_adv_pwr_strips.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D3FBAC15</checksum>
     </file>
   </files>
 </measure>
