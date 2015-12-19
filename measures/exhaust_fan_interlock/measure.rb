@@ -1,6 +1,10 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
+
+require_relative 'resources/Standards.ScheduleRuleset'
+require_relative 'resources/Standards.ScheduleConstant'
+
 # start the measure
 class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
 
@@ -33,6 +37,43 @@ class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
     return args
   end
 
+  # Method to decide whether or not to change the exhaust fan schedule,
+  # in case the new schedule is less aggressive than the existing schedule.
+  def compare_eflh(runner, old_sch, new_sch)
+    
+    if old_sch.to_ScheduleRuleset.is_initialized
+      old_sch = old_sch.to_ScheduleRuleset.get
+    elsif old_sch.to_ScheduleConstant.is_initialized
+      old_sch = old_sch.to_ScheduleConstant.get
+    else
+      runner.registerWarning("Can only calculate equivalent full load hours for ScheduleRuleset or ScheduleConstant schedules. #{old_sch.name} is neither.")
+      return false
+    end
+
+    if new_sch.to_ScheduleRuleset.is_initialized
+      new_sch = new_sch.to_ScheduleRuleset.get
+    elsif new_sch.to_ScheduleConstant.is_initialized
+      new_sch = new_sch.to_ScheduleConstant.get
+    else
+      runner.registerWarning("Can only calculate equivalent full load hours for ScheduleRuleset or ScheduleConstant schedules. #{new_sch.name} is neither.")
+      return false
+    end    
+    
+    new_eflh = new_sch.annual_equivalent_full_load_hrs
+    old_eflh = old_sch.annual_equivalent_full_load_hrs
+    if new_eflh < old_eflh
+      runner.registerInfo("The new exhaust fan schedule, #{new_sch.name} (#{new_eflh.round} EFLH) is more aggressive than the existing schedule #{old_sch.name} (#{old_eflh.round} EFLH).")
+      return true
+    elsif new_eflh == old_eflh
+      runner.registerWarning("The existing exhaust fan schedule, #{old_sch.name} (#{old_eflh.round} EFLH), is equally as aggressive as the new occupancy-tracking schedule #{new_sch.name} (#{new_eflh.round} EFLH).  Not applying new schedule.")
+      return false  
+    elsif
+      runner.registerWarning("The existing exhaust fan schedule, #{old_sch.name} (#{old_eflh.round} EFLH), is more aggressive than the new occupancy-tracking schedule #{new_sch.name} (#{new_eflh.round} EFLH).  Not applying new schedule.")
+      return false
+    end
+    
+  end   
+  
   # define what happens when the measure is run
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
@@ -76,14 +117,25 @@ class ExhaustFanInterlock < OpenStudio::Ruleset::ModelUserScript
 					# Check to see if Exhaust Fan Object has an availability schedule already defined
 					if @fan_exhaust.availabilitySchedule.is_initialized
 						fan_exh_avail_sch = @fan_exhaust.availabilitySchedule.get 
-						#Set availability schedule for current fan exhaust object. NOTE: boolean set method returns true if successful
-						changed_sch = @fan_exhaust.setAvailabilitySchedule(@airloops_availability_sch) 
-						runner.registerInfo("Availability Schedule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' has been changed to '#{@airloops_availability_sch.name}' from '#{fan_exh_avail_sch.name}'.")
-						if changed_sch == true 
-							changed_sch_array_true << changed_sch
-						elsif  
-							changed_sch_array_false << changed_sch
-						end
+            # Don't make a change if the schedules are already the same
+            if fan_exh_avail_sch == @airloops_availability_sch
+              runner.registerInfo("Availability Schedule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' was already identical to the HVAC operation schedule, no change was made.")
+              changed_sch_array_false << changed_sch
+              next
+            end
+            # Only change the schedule if the new schedules is more aggressive than the existing schedule
+						if compare_eflh(runner, fan_exh_avail_sch, @airloops_availability_sch)
+              #Set availability schedule for current fan exhaust object. NOTE: boolean set method returns true if successful
+              changed_sch = @fan_exhaust.setAvailabilitySchedule(@airloops_availability_sch) 
+              runner.registerInfo("Availability Schedule for OS:FanZoneExhaust named: '#{@fan_exhaust.name}' has been changed to '#{@airloops_availability_sch.name}' from '#{fan_exh_avail_sch.name}'.")
+              if changed_sch == true 
+                changed_sch_array_true << changed_sch
+              else  
+                changed_sch_array_false << changed_sch
+              end
+            else
+              changed_sch_array_false << changed_sch
+            end
 					end #end fan exhaust availability if loop
 				end  # end fan exhaust 
 			end # end loop through zone HVAC equipment objects

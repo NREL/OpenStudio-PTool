@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>exhaust_fan_interlock</name>
   <uid>4e7528ac-4926-400f-8932-a18d924bb1a7</uid>
-  <version_id>e3b6b776-8029-4fc7-bad7-88a47c40cb59</version_id>
+  <version_id>3509b4e9-a3a5-4957-a27e-84affa5ed604</version_id>
   <xml_checksum>3379E2F8</xml_checksum>
   <class_name>ExhaustFanInterlock</class_name>
   <display_name>Exhaust Fan Interlock</display_name>
@@ -80,12 +80,6 @@
       <checksum>56708A27</checksum>
     </file>
     <file>
-      <filename>exhaust_fan_interlock_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>37C63F98</checksum>
-    </file>
-    <file>
       <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -124,7 +118,25 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>21078E06</checksum>
+      <checksum>E86AA042</checksum>
+    </file>
+    <file>
+      <filename>exhaust_fan_interlock_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>83BBA7BF</checksum>
+    </file>
+    <file>
+      <filename>Standards.ScheduleConstant.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8AAFE398</checksum>
+    </file>
+    <file>
+      <filename>Standards.ScheduleRuleset.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>6D4175D8</checksum>
     </file>
   </files>
 </measure>
