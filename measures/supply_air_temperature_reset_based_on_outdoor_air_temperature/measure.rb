@@ -17,12 +17,12 @@ class SupplyAirTemperatureResetBasedOnOutdoorAirTemperature < OpenStudio::Rulese
 
   # human readable description
   def description
-    return "Some buildings use a constant supply-air (also referred to discharge-air) temperature set point of 55°F. When a building's supply fan system is operational, the supply-air temperature set point value should be automatically adjusting to internal/external conditions that will allow the supply fan to operate more efficiently. The simplest way to implement this strategy is to raise supply-air temperature when the outdoor air is cold and the building is less likely to need cooling.  Supplying this warmer air to the  terminals decreases the amount of reheat necessary at the terminal, saving heating energy."
+    return "Some buildings use a constant supply-air (also referred to discharge-air) temperature set point of 55F. When a building's supply fan system is operational, the supply-air temperature set point value should be automatically adjusting to internal/external conditions that will allow the supply fan to operate more efficiently. The simplest way to implement this strategy is to raise supply-air temperature when the outdoor air is cold and the building is less likely to need cooling.  Supplying this warmer air to the  terminals decreases the amount of reheat necessary at the terminal, saving heating energy."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return "For each multi-zone system in the model, replace the scheduled supply-air temperature setpoint manager with an outdoor air reset setpoint manager.  When the outdoor temperature is above 75°F, supply-air temperature is 55°F.  When the outdoor temperature is below 45°F, increase the supply-air temperature setpoint to 60°F.  When the outdoor temperature is between 45°F and 75°F, vary the supply-air temperature between 55°F and 60°F."
+    return "For each multi-zone system in the model, replace the scheduled supply-air temperature setpoint manager with an outdoor air reset setpoint manager.  When the outdoor temperature is above 75F, supply-air temperature is 55F.  When the outdoor temperature is below 45F, increase the supply-air temperature setpoint to 60F.  When the outdoor temperature is between 45F and 75F, vary the supply-air temperature between 55F and 60F."
   end
   
   #define the arguments that the user will input

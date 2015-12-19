@@ -1,12 +1,10 @@
 require 'openstudio'
-
 require 'openstudio/ruleset/ShowRunnerOutput'
+require 'minitest/autorun'
+require_relative '../measure.rb'
+require 'fileutils'
 
-require "#{File.dirname(__FILE__)}/../measure.rb"
-
-require 'test/unit'
-
-class SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test < Test::Unit::TestCase
+class SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test < MiniTest::Unit::TestCase
 
   def test_building_658
      
@@ -23,12 +21,22 @@ class SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test < Test::Unit::T
     assert((not model.empty?))
     model = model.get
     
-    # Get arguments and test that they are what we are expecting
+    # Create an empty argument map
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    argument_map = OpenStudio::Ruleset::OSArgumentMap.new
 
-    # Create an empty argument map (this measure has no arguments)
-    argument_map = OpenStudio::Ruleset::OSArgumentMap.new    
+    # Set argument values
+    arg_values = {
+    "run_measure" => 1
+    }
+    
+    i = 0
+    arg_values.each do |name, val|
+      arg = arguments[i].clone
+      assert(arg.setValue(val))
+      argument_map[name] = arg
+      i += 1
+    end  
     
     # Run the measure
     measure.run(model, runner, argument_map)
@@ -64,12 +72,22 @@ class SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test < Test::Unit::T
     assert((not model.empty?))
     model = model.get
     
-    # Get arguments and test that they are what we are expecting
+    # Create an empty argument map
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    argument_map = OpenStudio::Ruleset::OSArgumentMap.new
 
-    # Create an empty argument map (this measure has no arguments)
-    argument_map = OpenStudio::Ruleset::OSArgumentMap.new    
+    # Set argument values
+    arg_values = {
+    "run_measure" => 1
+    }
+    
+    i = 0
+    arg_values.each do |name, val|
+      arg = arguments[i].clone
+      assert(arg.setValue(val))
+      argument_map[name] = arg
+      i += 1
+    end
     
     # Run the measure
     measure.run(model, runner, argument_map)
@@ -105,12 +123,22 @@ class SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test < Test::Unit::T
     assert((not model.empty?))
     model = model.get
     
-    # Get arguments and test that they are what we are expecting
+    # Create an empty argument map
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    argument_map = OpenStudio::Ruleset::OSArgumentMap.new
 
-    # Create an empty argument map (this measure has no arguments)
-    argument_map = OpenStudio::Ruleset::OSArgumentMap.new    
+    # Set argument values
+    arg_values = {
+    "run_measure" => 1
+    }
+    
+    i = 0
+    arg_values.each do |name, val|
+      arg = arguments[i].clone
+      assert(arg.setValue(val))
+      argument_map[name] = arg
+      i += 1
+    end   
     
     # Run the measure
     measure.run(model, runner, argument_map)

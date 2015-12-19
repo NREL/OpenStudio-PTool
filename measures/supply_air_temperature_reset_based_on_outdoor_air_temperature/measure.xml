@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>supply_air_temperature_reset_based_on_outdoor_air_temperature</name>
   <uid>6b169642-c52a-47ac-b045-abcbb90cbf9b</uid>
-  <version_id>6d7d93a3-a2ef-4493-ad90-3d03ca14284d</version_id>
+  <version_id>1a8eb5f2-40bf-4eac-ad44-3846db791237</version_id>
   <xml_checksum>2C877DEB</xml_checksum>
   <class_name>SupplyAirTemperatureResetBasedOnOutdoorAirTemperature</class_name>
   <display_name>Supply Air Temperature Reset Based On Outdoor Air Temperature</display_name>
-  <description>Some buildings use a constant supply-air (also referred to discharge-air) temperature set point of 55°F. When a building's supply fan system is operational, the supply-air temperature set point value should be automatically adjusting to internal/external conditions that will allow the supply fan to operate more efficiently. The simplest way to implement this strategy is to raise supply-air temperature when the outdoor air is cold and the building is less likely to need cooling.  Supplying this warmer air to the  terminals decreases the amount of reheat necessary at the terminal, saving heating energy.</description>
-  <modeler_description>For each multi-zone system in the model, replace the scheduled supply-air temperature setpoint manager with an outdoor air reset setpoint manager.  When the outdoor temperature is above 75°F, supply-air temperature is 55°F.  When the outdoor temperature is below 45°F, increase the supply-air temperature setpoint to 60°F.  When the outdoor temperature is between 45°F and 75°F, vary the supply-air temperature between 55°F and 60°F.</modeler_description>
+  <description>Some buildings use a constant supply-air (also referred to discharge-air) temperature set point of 55F. When a building's supply fan system is operational, the supply-air temperature set point value should be automatically adjusting to internal/external conditions that will allow the supply fan to operate more efficiently. The simplest way to implement this strategy is to raise supply-air temperature when the outdoor air is cold and the building is less likely to need cooling.  Supplying this warmer air to the  terminals decreases the amount of reheat necessary at the terminal, saving heating energy.</description>
+  <modeler_description>For each multi-zone system in the model, replace the scheduled supply-air temperature setpoint manager with an outdoor air reset setpoint manager.  When the outdoor temperature is above 75F, supply-air temperature is 55F.  When the outdoor temperature is below 45F, increase the supply-air temperature setpoint to 60F.  When the outdoor temperature is between 45F and 75F, vary the supply-air temperature between 55F and 60F.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -37,12 +37,6 @@
   </attributes>
   <files>
     <file>
-      <filename>SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>E52D15B8</checksum>
-    </file>
-    <file>
       <filename>658.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -67,6 +61,12 @@
       <checksum>F8A36B18</checksum>
     </file>
     <file>
+      <filename>SupplyAirTemperatureResetBasedOnOutdoorAirTemperature_Test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>092B5D9E</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.3.0</identifier>
@@ -75,7 +75,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9545D572</checksum>
+      <checksum>4EC060A2</checksum>
     </file>
   </files>
 </measure>
