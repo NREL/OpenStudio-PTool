@@ -1,0 +1,97 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>membrane_heat_pump_cooling_only</name>
+  <uid>fad4dd96-f6a9-4a15-a6fc-135adc77b808</uid>
+  <version_id>fa26a2ea-bda2-4d9b-92d2-7e8c10b798a3</version_id>
+  <xml_checksum>F19E874F</xml_checksum>
+  <class_name>MembraneHeatPumpCoolingOnly</class_name>
+  <display_name>Membrane Heat Pump Cooling Only</display_name>
+  <description>Unlike a standard heat pump with an electric compressor, a membrane heat pumps works in two stages.  First, latent cooling (moisture removal) is performed by using a vacuum pump to extract moisture from the airstream via a membrane that is moisture permeable but not air permeable.  Second, sensible cooling is provided via a chilled water loop, which is itself cooled by using the same vacuum pump to perform forced evaporative cooling via another membrane.  Moisture is rejected to the outdoor air via a third membrane. The entire system has peak EER of about 26, which is significantly higher than traditional DX cooling equipment.  However, the evaporative cooling process that cools the chilled water loop consumes roughly 3 gallons of water per ton-hour of sensible cooling.</description>
+  <modeler_description>Each DX cooling coil in the model is replaced by a membrane heat pump.  To represent the membrane heat pump, the DX cooling coil COP is increased to 7.62 (26 EER).  Additionally, add a water use equipment object to account for the 3 gallons of water used per ton*hr of sensible cooling process.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.0</identifier>
+        <min_compatible>1.7.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>3ABECC78</checksum>
+    </file>
+    <file>
+      <filename>ems_membrane_heat_pump_cooling_only.ems</filename>
+      <filetype>ems</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8E7121A4</checksum>
+    </file>
+    <file>
+      <filename>ems_results.json</filename>
+      <filetype>json</filetype>
+      <usage_type>test</usage_type>
+      <checksum>BC3C9BAC</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5A53A838</checksum>
+    </file>
+    <file>
+      <filename>membrane_heat_pump_cooling_only_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>01A3A558</checksum>
+    </file>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EF42DC2D</checksum>
+    </file>
+  </files>
+</measure>

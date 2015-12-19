@@ -1,0 +1,168 @@
+
+Output:Variable,*,Cooling Coil Sensible Cooling Energy,timestep; !- HVAC Sum [J]
+
+EnergyManagementSystem:Sensor,
+    MembraneHP1SensibleClgJ,
+    PSZ-AC-3 1spd DX HP Clg Coil,
+    Cooling Coil Sensible Cooling Energy;
+
+WaterUse:Equipment,
+  MembraneHP1WaterUse, !- Name
+  Membrane HP Cooling, !- End-Use Subcategory
+  0.003155, !- Peak Flow Rate {m3/s} = 3000 gal/hr
+  MembraneHP1WaterUseSchedule; !- Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  MembraneHP1WaterUseSchedule,          !- Name
+  ,                             !- Schedule Type Limits Name
+  1;                                      !- Hourly Value
+
+EnergyManagementSystem:Actuator,
+    MembraneHP1WaterUseCtrl,
+    MembraneHP1WaterUseSchedule,
+    Schedule:Constant,
+   Schedule Value;
+
+EnergyManagementSystem:Sensor,
+    MembraneHP2SensibleClgJ,
+    PSZ-AC-5 1spd DX HP Clg Coil,
+    Cooling Coil Sensible Cooling Energy;
+
+WaterUse:Equipment,
+  MembraneHP2WaterUse, !- Name
+  Membrane HP Cooling, !- End-Use Subcategory
+  0.003155, !- Peak Flow Rate {m3/s} = 3000 gal/hr
+  MembraneHP2WaterUseSchedule; !- Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  MembraneHP2WaterUseSchedule,          !- Name
+  ,                             !- Schedule Type Limits Name
+  1;                                      !- Hourly Value
+
+EnergyManagementSystem:Actuator,
+    MembraneHP2WaterUseCtrl,
+    MembraneHP2WaterUseSchedule,
+    Schedule:Constant,
+   Schedule Value;
+
+EnergyManagementSystem:Sensor,
+    MembraneHP3SensibleClgJ,
+    PTHP 1 Spd DX Clg Coil,
+    Cooling Coil Sensible Cooling Energy;
+
+WaterUse:Equipment,
+  MembraneHP3WaterUse, !- Name
+  Membrane HP Cooling, !- End-Use Subcategory
+  0.003155, !- Peak Flow Rate {m3/s} = 3000 gal/hr
+  MembraneHP3WaterUseSchedule; !- Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  MembraneHP3WaterUseSchedule,          !- Name
+  ,                             !- Schedule Type Limits Name
+  1;                                      !- Hourly Value
+
+EnergyManagementSystem:Actuator,
+    MembraneHP3WaterUseCtrl,
+    MembraneHP3WaterUseSchedule,
+    Schedule:Constant,
+   Schedule Value;
+
+EnergyManagementSystem:Sensor,
+    MembraneHP4SensibleClgJ,
+    PSZ-AC-1 1spd DX HP Clg Coil,
+    Cooling Coil Sensible Cooling Energy;
+
+WaterUse:Equipment,
+  MembraneHP4WaterUse, !- Name
+  Membrane HP Cooling, !- End-Use Subcategory
+  0.003155, !- Peak Flow Rate {m3/s} = 3000 gal/hr
+  MembraneHP4WaterUseSchedule; !- Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  MembraneHP4WaterUseSchedule,          !- Name
+  ,                             !- Schedule Type Limits Name
+  1;                                      !- Hourly Value
+
+EnergyManagementSystem:Actuator,
+    MembraneHP4WaterUseCtrl,
+    MembraneHP4WaterUseSchedule,
+    Schedule:Constant,
+   Schedule Value;
+
+EnergyManagementSystem:Sensor,
+    MembraneHP5SensibleClgJ,
+    PSZ-AC-2 1spd DX HP Clg Coil,
+    Cooling Coil Sensible Cooling Energy;
+
+WaterUse:Equipment,
+  MembraneHP5WaterUse, !- Name
+  Membrane HP Cooling, !- End-Use Subcategory
+  0.003155, !- Peak Flow Rate {m3/s} = 3000 gal/hr
+  MembraneHP5WaterUseSchedule; !- Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  MembraneHP5WaterUseSchedule,          !- Name
+  ,                             !- Schedule Type Limits Name
+  1;                                      !- Hourly Value
+
+EnergyManagementSystem:Actuator,
+    MembraneHP5WaterUseCtrl,
+    MembraneHP5WaterUseSchedule,
+    Schedule:Constant,
+   Schedule Value;
+
+EnergyManagementSystem:Sensor,
+    MembraneHP6SensibleClgJ,
+    PSZ-AC-4 1spd DX HP Clg Coil,
+    Cooling Coil Sensible Cooling Energy;
+
+WaterUse:Equipment,
+  MembraneHP6WaterUse, !- Name
+  Membrane HP Cooling, !- End-Use Subcategory
+  0.003155, !- Peak Flow Rate {m3/s} = 3000 gal/hr
+  MembraneHP6WaterUseSchedule; !- Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  MembraneHP6WaterUseSchedule,          !- Name
+  ,                             !- Schedule Type Limits Name
+  1;                                      !- Hourly Value
+
+EnergyManagementSystem:Actuator,
+    MembraneHP6WaterUseCtrl,
+    MembraneHP6WaterUseSchedule,
+    Schedule:Constant,
+   Schedule Value;
+
+EnergyManagementSystem:ProgramCallingManager,
+    MembraneHPWaterUseProgramControl,    !- Name
+    AfterPredictorBeforeHVACManagers,  !- EnergyPlus Model Calling Point
+    MembraneHPWaterUseProgram;            !- Program Name 1
+
+EnergyManagementSystem:Program,
+    MembraneHPWaterUseProgram,        !- Name
+    SET TimeStepsPerHr = 6
+    SET MembraneHP1SensibleClgTonHr = MembraneHP1SensibleClgJ * 0.0000007898,
+    SET MembraneHP1SensibleWtrGal = MembraneHP1SensibleClgTonHr * 3.0,
+    SET MembraneHP1SensibleWtrGalPerHr = MembraneHP1SensibleWtrGal * TimeStepsPerHr,
+    SET MembraneHP1WaterUseCtrl = MembraneHP1SensibleWtrGalPerHr / 3000.0,
+    SET MembraneHP2SensibleClgTonHr = MembraneHP2SensibleClgJ * 0.0000007898,
+    SET MembraneHP2SensibleWtrGal = MembraneHP2SensibleClgTonHr * 3.0,
+    SET MembraneHP2SensibleWtrGalPerHr = MembraneHP2SensibleWtrGal * TimeStepsPerHr,
+    SET MembraneHP2WaterUseCtrl = MembraneHP2SensibleWtrGalPerHr / 3000.0,
+    SET MembraneHP3SensibleClgTonHr = MembraneHP3SensibleClgJ * 0.0000007898,
+    SET MembraneHP3SensibleWtrGal = MembraneHP3SensibleClgTonHr * 3.0,
+    SET MembraneHP3SensibleWtrGalPerHr = MembraneHP3SensibleWtrGal * TimeStepsPerHr,
+    SET MembraneHP3WaterUseCtrl = MembraneHP3SensibleWtrGalPerHr / 3000.0,
+    SET MembraneHP4SensibleClgTonHr = MembraneHP4SensibleClgJ * 0.0000007898,
+    SET MembraneHP4SensibleWtrGal = MembraneHP4SensibleClgTonHr * 3.0,
+    SET MembraneHP4SensibleWtrGalPerHr = MembraneHP4SensibleWtrGal * TimeStepsPerHr,
+    SET MembraneHP4WaterUseCtrl = MembraneHP4SensibleWtrGalPerHr / 3000.0,
+    SET MembraneHP5SensibleClgTonHr = MembraneHP5SensibleClgJ * 0.0000007898,
+    SET MembraneHP5SensibleWtrGal = MembraneHP5SensibleClgTonHr * 3.0,
+    SET MembraneHP5SensibleWtrGalPerHr = MembraneHP5SensibleWtrGal * TimeStepsPerHr,
+    SET MembraneHP5WaterUseCtrl = MembraneHP5SensibleWtrGalPerHr / 3000.0,
+    SET MembraneHP6SensibleClgTonHr = MembraneHP6SensibleClgJ * 0.0000007898,
+    SET MembraneHP6SensibleWtrGal = MembraneHP6SensibleClgTonHr * 3.0,
+    SET MembraneHP6SensibleWtrGalPerHr = MembraneHP6SensibleWtrGal * TimeStepsPerHr,
+    SET MembraneHP6WaterUseCtrl = MembraneHP6SensibleWtrGalPerHr / 3000.0,
+    SET UnusedLine = 0;
