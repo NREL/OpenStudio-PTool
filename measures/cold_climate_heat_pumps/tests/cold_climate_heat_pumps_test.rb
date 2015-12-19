@@ -21,7 +21,7 @@ class ColdClimateHeatPumpsTests < MiniTest::Unit::TestCase
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    assert_equal(1, arguments.size)
   end
 
   def test_is_applicable_to_test_models
@@ -77,14 +77,14 @@ class ColdClimateHeatPumpsTests < MiniTest::Unit::TestCase
     
   def applytotestmodel(model_file)
   
-	measure = ColdClimateHeatPumps.new
+    measure = ColdClimateHeatPumps.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
 
     # load the test model
     translator = OpenStudio::OSVersion::VersionTranslator.new
-    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/../../../testing_models/#{model_file}")
+    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/#{model_file}")
     model = translator.loadModel(path)
     assert((not model.empty?))
     model = model.get
@@ -93,10 +93,27 @@ class ColdClimateHeatPumpsTests < MiniTest::Unit::TestCase
     arguments = measure.arguments(model)
     argument_map = OpenStudio::Ruleset.convertOSArgumentVectorToMap(arguments)
 
+    # Set argument values
+    arg_values = {
+    "run_measure" => 1
+    }
+    
+    i = 0
+    arg_values.each do |name, val|
+      arg = arguments[i].clone
+      assert(arg.setValue(val))
+      argument_map[name] = arg
+      i += 1
+    end    
+    
     # run the measure
     measure.run(model, runner, argument_map)
     result = runner.result
-	return result, model
+
+    # show the output
+    show_output(result)
+    
+    return result, model
   end  
  
 end

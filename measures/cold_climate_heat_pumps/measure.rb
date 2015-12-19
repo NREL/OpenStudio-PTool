@@ -20,7 +20,7 @@ class ColdClimateHeatPumps < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description
   def description
-    return  "This energy efficiency measure (EEM) adds cold-climate Air-Source Heat Pumps (ccASHP) to all air loops in a model having heat pump heating coils. The measure modifies all existing CoilHeatingDXSingleSpeed coils in a model by replacing performance curves with those representing the heating performance of a cold-climate Air-Source Heat Pumps (ccASHP).  ccASHP are defined as ducted or ductless, air-to-air, split system heat pumps serving either single-zone or multi-zone, best suited to heat efficiently in cold climates (IECC climate zone 4 and higher). ccASHP DOES NOT include ground-source or air-to-water heat pump systems. This measure also sets the Min. OADB Temperature for ccASHP operation to -4F. "
+    return  "This energy efficiency measure (EEM) adds cold-climate Air-Source Heat Pumps (ccASHP) to all air loops in a model having heat pump heating coils. The measure modifies all existing CoilHeatingDXSingleSpeed coils in a model by replacing performance curves with those representing the heating performance of a cold-climate Air-Source Heat Pumps (ccASHP).  ccASHP are defined as ducted or ductless, air-to-air, split system heat pumps serving either single-zone or multi-zone, best suited to heat efficiently in cold climates (IECC climate zone 4 and higher). ccASHP DOES NOT include ground-source or air-to-water heat pump systems. This measure also sets the Min. OADB Temperature for ccASHP operation to -4F. "
   end
   # human readable description of modeling approach
   def modeler_description
@@ -30,7 +30,7 @@ class ColdClimateHeatPumps < OpenStudio::Ruleset::ModelUserScript
 3)	EnergyInputRatioFunctionofTemperature 
 4)	EnergyInputRatioFunctionofFlowFraction 
 5)	PartLoadFractionCorrelationCurve.
-In addition, the setting for the MinimumOutdoorDryBulbTemperatureforCompressorOperation will be changed to -4F.
+In addition, the setting for the MinimumOutdoorDryBulbTemperatureforCompressorOperation will be changed to -4F.
 The replacement curves have been developed by using the 3rd stage of a 4 stage heat pump description of performance curve data used in BeOpt v2.4 for low temperature dx heat pump heating coils. 
 "
   end
