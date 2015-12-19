@@ -1,0 +1,85 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>electrochromic_windows</name>
+  <uid>d2e0c2d3-ada2-4e63-af7b-6cf894e06473</uid>
+  <version_id>37f30ecf-0994-4734-a37b-bd583f9cb713</version_id>
+  <xml_checksum>BC9625C9</xml_checksum>
+  <class_name>ElectrochromicWindows</class_name>
+  <display_name>Electrochromic Windows</display_name>
+  <description>Unlike a standard heat pump with an electric compressor, a membrane heat pumps works in two stages.  First, latent cooling (moisture removal) is performed by using a vacuum pump to extract moisture from the airstream via a membrane that is moisture permeable but not air permeable.  Second, sensible cooling is provided via a chilled water loop, which is itself cooled by using the same vacuum pump to perform forced evaporative cooling via another membrane.  Moisture is rejected to the outdoor air via a third membrane. The entire system has peak EER of about 26, which is significantly higher than traditional DX cooling equipment.  However, the evaporative cooling process that cools the chilled water loop consumes roughly 3 gallons of water per ton-hour of sensible cooling.</description>
+  <modeler_description>Each DX cooling coil in the model is replaced by a membrane heat pump.  To represent the membrane heat pump, the DX cooling coil COP is increased to 7.62 (26 EER).  Additionally, add a water use equipment object to account for the 3 gallons of water used per ton*hr of sensible cooling process.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Envelope.Fenestration</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.0</identifier>
+        <min_compatible>1.7.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>626B9969</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>7FDDC3D5</checksum>
+    </file>
+    <file>
+      <filename>electrochromic_windows_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>0E3AF7AA</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AC01B31A</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3FCA8A77</checksum>
+    </file>
+  </files>
+</measure>
