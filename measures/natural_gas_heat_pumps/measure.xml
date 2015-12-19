@@ -1,0 +1,91 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>natural_gas_heat_pumps</name>
+  <uid>968f4399-c37a-40e7-9cc9-b69d3d6d3036</uid>
+  <version_id>ca431414-beba-4d68-8d9e-64fac4e23d97</version_id>
+  <xml_checksum>B7427881</xml_checksum>
+  <class_name>NaturalGasHeatPumps</class_name>
+  <display_name>Natural Gas Heat Pumps</display_name>
+  <description>Natural gas driven heat pumps burn natural gas to drive a refrigerant-absorbent heating and cooling cycle.  These are currently available as large units that replace a boiler/chiller pair, providing hot and chilled water to a building.  These heat pumps can reduce peak demand by shifting from electricity to natural gas.  They may save heating energy since the heating COP of the heat pump is higher than direct combustion efficiency.  However, cooling energy may increase since cooling efficiency is lower than standard vapor-compression chillers.</description>
+  <modeler_description>This measure identifies buildings with boiler/chiller pairs providing hot/chilled water to hydronic systems in the building.  The boiler/chiller pair is replaced by a direct-fired absorption chiller heater.  The condenser type is air cooled or water cooled depending on the configuration of the original chiller.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5A53A838</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.0</identifier>
+        <min_compatible>1.7.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>24411F13</checksum>
+    </file>
+    <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>A6786F2E</checksum>
+    </file>
+    <file>
+      <filename>natural_gas_heat_pumps_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>381CCD59</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2007-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3D358B4B</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6037BFF9</checksum>
+    </file>
+  </files>
+</measure>
