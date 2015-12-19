@@ -2,7 +2,7 @@
 # http://nrel.github.io/OpenStudio-user-documentation/measures/measure_writing_guide/
 
 # start the measure
-class AddHotWaterPumpDifferentialPressureResetControls < OpenStudio::Ruleset::ModelUserScript
+class HotWaterPumpDifferentialPressureReset < OpenStudio::Ruleset::ModelUserScript
 
   # Load the helper libraries for getting the autosized
   # values for constant and variable speed pump objects.
@@ -10,7 +10,7 @@ class AddHotWaterPumpDifferentialPressureResetControls < OpenStudio::Ruleset::Mo
 
   # human readable name
   def name
-    return "  Add Hot Water Pump Differential Pressure Reset Controls"
+    return "Hot Water Pump Differential Pressure Reset"
   end
 
   # human readable description
@@ -406,4 +406,4 @@ class AddHotWaterPumpDifferentialPressureResetControls < OpenStudio::Ruleset::Mo
 	end # end def run
 end # end class 
 # register the measure to be used by the application
-AddHotWaterPumpDifferentialPressureResetControls.new.registerWithApplication
+HotWaterPumpDifferentialPressureReset.new.registerWithApplication

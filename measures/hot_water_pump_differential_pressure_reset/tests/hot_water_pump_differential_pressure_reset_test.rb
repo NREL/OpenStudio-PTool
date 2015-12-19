@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require_relative '../measure.rb'
 require 'fileutils'
 
-class AddHotWaterPumpDifferentialPressureResetControlsTest < MiniTest::Unit::TestCase
+class HotWaterPumpDifferentialPressureResetTest < MiniTest::Unit::TestCase
 
   # def setup
   # end
@@ -14,7 +14,7 @@ class AddHotWaterPumpDifferentialPressureResetControlsTest < MiniTest::Unit::Tes
 
   def test_number_of_arguments_and_argument_names
     # create an instance of the measure
-    measure = AddHotWaterPumpDifferentialPressureResetControls.new
+    measure = HotWaterPumpDifferentialPressureReset.new
 
     # make an empty model
     model = OpenStudio::Model::Model.new
@@ -69,7 +69,7 @@ class AddHotWaterPumpDifferentialPressureResetControlsTest < MiniTest::Unit::Tes
     
   def applytotestmodel(model_file)
   
-	measure = AddHotWaterPumpDifferentialPressureResetControls.new
+	measure = HotWaterPumpDifferentialPressureReset.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
