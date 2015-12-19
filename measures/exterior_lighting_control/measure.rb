@@ -22,7 +22,7 @@ class ExteriorLightingControl < OpenStudio::Ruleset::ModelUserScript
 
   # human readable description of modeling approach
   def modeler_description
-    return "TODO"
+    return "This measure first loops through all occupancy schedules in the model, determines the earliest and latest occupied, compares these times to a fixed 0000-0600 schedule, and creates a new fractional schedule for exterior lights with the shortest interval. The new schedule reduces the exterior lighting power to from 1.0 to 0.7 (30% reduction) during this interval. The measure then loops through all exterior lights objects in the model, changes the control option to ScheduleNameOnly if necessary, and sets the schedule to the new exterior lights schedule."
   end
 
   # define the arguments that the user will input

@@ -2,12 +2,12 @@
   <schema_version>3.0</schema_version>
   <name>exterior_lighting_control</name>
   <uid>6d3fcb63-b3dd-4892-a77e-965c4737483f</uid>
-  <version_id>93763a34-2bc6-4e23-baaf-84cc99705816</version_id>
+  <version_id>e987e468-6a56-4705-8231-84208273509b</version_id>
   <xml_checksum>D2211B31</xml_checksum>
   <class_name>ExteriorLightingControl</class_name>
   <display_name>Exterior Lighting Control</display_name>
   <description>This energy efficiency measure (EEM) reduces all exterior lighting to 30% of its peak power between midnight or within 1 hour of business closing, whichever is later, and until 6 am or business opening, whichever is earlier, and during any period activity is not detected for a time longer than 15 minutes.</description>
-  <modeler_description>TODO</modeler_description>
+  <modeler_description>This measure first loops through all occupancy schedules in the model, determines the earliest and latest occupied, compares these times to a fixed 0000-0600 schedule, and creates a new fractional schedule for exterior lights with the shortest interval. The new schedule reduces the exterior lighting power to from 1.0 to 0.7 (30% reduction) during this interval. The measure then loops through all exterior lights objects in the model, changes the control option to ScheduleNameOnly if necessary, and sets the schedule to the new exterior lights schedule.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -69,23 +69,6 @@
       <checksum>6C783B13</checksum>
     </file>
     <file>
-      <filename>exterior_lighting_control_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>C977ADFB</checksum>
-    </file>
-    <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.9.0</identifier>
-        <min_compatible>1.9.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>14F25B9A</checksum>
-    </file>
-    <file>
       <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -108,6 +91,23 @@
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>3499F9CF</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>1B225E27</checksum>
+    </file>
+    <file>
+      <filename>exterior_lighting_control_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>6CE3BD26</checksum>
     </file>
   </files>
 </measure>

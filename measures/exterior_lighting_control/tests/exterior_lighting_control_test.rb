@@ -21,7 +21,7 @@ class ExteriorLightingControlsTest < MiniTest::Unit::TestCase
     assert((not model.empty?))
     model = model.get
 
-    # Create an empty argument map (this measure has no arguments)
+    # Create an empty argument map
     arguments = measure.arguments(model)
     argument_map = OpenStudio::Ruleset::OSArgumentMap.new
 
