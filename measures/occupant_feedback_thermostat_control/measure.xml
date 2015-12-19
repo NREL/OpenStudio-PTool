@@ -1,0 +1,79 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>occupant_feedback_thermostat_control</name>
+  <uid>1b87fbdd-3a5b-49ea-b464-e6f59083fbfb</uid>
+  <version_id>32d82f34-aeda-4cde-bdc0-dba4ba375b97</version_id>
+  <xml_checksum>B7427881</xml_checksum>
+  <class_name>OccupantFeedbackThermostatControl</class_name>
+  <display_name>Occupant Feedback Thermostat Control</display_name>
+  <description>Traditional thermostats have heating and cooling setpoints set based on typical operating hours and assumptions about occupant comfort.  Occupant feedback thermostats actually enable occupants to modify these setpoints by reporting their feelings (hot, cold) to a central system, which uses this feedback to modify the heating and cooling operation.  This measure may increase energy consumption if the current setpoints are currently too cold in winter or too hot in summer.  It may also save less in buildings that already have aggressive nighttime setbacks.</description>
+  <modeler_description>Each zone is given a ZoneControl:Thermostat:ThermalComfort object with heating and cooling schedules set to a Predicted Mean Vote (PMV) of -0.5 during heating and +0.5 during cooling.  This object will set the heating and cooling setpoints such that 90% of the occupants are comfortable.  This control is applied 8am-6pm on weekdays.  During the rest of the time, the building follows the current setpoints. It is not applied to zones without people.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.7.0</identifier>
+        <min_compatible>1.7.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>4596BC1A</checksum>
+    </file>
+    <file>
+      <filename>occupant_feedback_thermostat_control_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>391563B6</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-DOE Ref Pre-1980-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F070829D</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4CDD8B3</checksum>
+    </file>
+  </files>
+</measure>
