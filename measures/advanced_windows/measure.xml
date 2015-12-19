@@ -1,0 +1,104 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>advanced_windows</name>
+  <uid>e9cc8132-fe83-4cd6-a168-8c7637b04e12</uid>
+  <version_id>23665734-fd32-4bbe-9704-5f5c13cd4a25</version_id>
+  <xml_checksum>6DE831F7</xml_checksum>
+  <class_name>AdvancedWindows</class_name>
+  <display_name>Advanced Windows</display_name>
+  <description>The appropriate high performance windows can reduce energy consumption in some buildings by decreasing heat loss and heat gain.  It is important to ensure that the combinations of properties tested through this measure are physically realistic; the measure will not check this.</description>
+  <modeler_description>This measure applied user-specified window properties to all exterior windows in the model.  It is important to ensure that the combinations of properties tested through this measure are physically realistic; the measure will not check this.</modeler_description>
+  <arguments>
+    <argument>
+      <name>run_measure</name>
+      <display_name>Run Measure</display_name>
+      <description>integer argument to run measure [1 is run, 0 is no run]</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>window_r_value_ip</name>
+      <display_name>Window R-Value</display_name>
+      <type>Double</type>
+      <units>ft^2*h*R/Btu</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>10</default_value>
+    </argument>
+    <argument>
+      <name>window_shgc</name>
+      <display_name>Window SHGC</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.5</default_value>
+    </argument>
+    <argument>
+      <name>window_vlt</name>
+      <display_name>Window VLT</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.6</default_value>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>Envelope.Fenestration</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Measure Function</name>
+      <value>Measure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Requires EnergyPlus Results</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+    <attribute>
+      <name>Uses SketchUp API</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>secondary_school_90.1-2010.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DB233375</checksum>
+    </file>
+    <file>
+      <filename>small_office_1980-2004.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2B663484</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>0.11.5</identifier>
+        <min_compatible>0.11.5</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>E76474CC</checksum>
+    </file>
+    <file>
+      <filename>advanced_windows_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>255E8559</checksum>
+    </file>
+  </files>
+</measure>
