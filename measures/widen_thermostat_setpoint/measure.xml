@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>widen_thermostat_setpoint</name>
   <uid>2b067fa3-cf9e-4a1c-8b30-7a51585d2a69</uid>
-  <version_id>5e56c669-0015-43d1-a5a9-ca0c7045b116</version_id>
+  <version_id>0fb887f6-697d-4fe7-8e8d-0eea564767fe</version_id>
   <xml_checksum>710CDA7C</xml_checksum>
   <class_name>WidenThermostatSetpoint</class_name>
   <display_name>Widen Thermostat Setpoint</display_name>
@@ -68,12 +68,6 @@
       <checksum>C4F35230</checksum>
     </file>
     <file>
-      <filename>widen_thermostat_setpoint_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>AEEB894E</checksum>
-    </file>
-    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.9.0</identifier>
@@ -83,6 +77,54 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>96B34789</checksum>
+    </file>
+    <file>
+      <filename>widen_thermostat_setpoint_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>4E9FEF99</checksum>
+    </file>
+    <file>
+      <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>FEF48F6F</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F9663EDD</checksum>
+    </file>
+    <file>
+      <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E3745F63</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2007-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>56708A27</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-4A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C4911AB4</checksum>
+    </file>
+    <file>
+      <filename>SmallHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3D921039</checksum>
+    </file>
+    <file>
+      <filename>SmallOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EF42DC2D</checksum>
     </file>
   </files>
 </measure>

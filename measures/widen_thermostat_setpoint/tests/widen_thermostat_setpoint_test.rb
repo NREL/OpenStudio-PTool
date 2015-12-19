@@ -21,7 +21,7 @@ class WidenThermostatSetpointTests < MiniTest::Unit::TestCase
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
-    assert_equal(0, arguments.size)
+    assert_equal(1, arguments.size)
   end
 
   # This measure is applicable to all models
@@ -84,7 +84,7 @@ class WidenThermostatSetpointTests < MiniTest::Unit::TestCase
 
     # load the test model
     translator = OpenStudio::OSVersion::VersionTranslator.new
-    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/../../../testing_models/#{model_file}")
+    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/#{model_file}")
     model = translator.loadModel(path)
     assert((not model.empty?))
     model = model.get
@@ -96,6 +96,10 @@ class WidenThermostatSetpointTests < MiniTest::Unit::TestCase
     # run the measure
     measure.run(model, runner, argument_map)
     result = runner.result
+    
+    # show the output
+    show_output(result)    
+    
 	return result, model
   end  
  
