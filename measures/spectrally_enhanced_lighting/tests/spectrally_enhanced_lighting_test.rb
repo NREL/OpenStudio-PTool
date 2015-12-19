@@ -36,7 +36,7 @@ class SpectrallyEnhancedLightingTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "FALSE",
+    "run_measure" => 0,
     "lighting_power_reduction_percent" => 20.0
     }
     
@@ -79,7 +79,7 @@ class SpectrallyEnhancedLightingTest < MiniTest::Test
 
     # Set argument values
     arg_values = {
-    "apply_measure" => "TRUE",
+    "run_measure" => 1,
     "lighting_power_reduction_percent" => 20.0
     }
     

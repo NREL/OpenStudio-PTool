@@ -8,12 +8,12 @@ class SpectrallyEnhancedLighting < OpenStudio::Ruleset::ModelUserScript
   
   # human readable description
   def description
-    return ""
+    return "Spectrally Enhanced Lighting is a design method that capitalizes on naturally occurring gains in visual efficiency as a consequence of the spectral content of higher CCT light sources. These gains can be translated directly into improved energy efficiency by employing lamps with higher CCT and Color Rendering Index (CRI), such as the 5000K, 80-85 CRI (850) lamp (1).  These lamps can be installed at lighting levels 20% lower than traditional linear fluorescent lighting without occupant acceptance issues."
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return ""
+    return "Find all of the lights in the building, and reduce their powers by the user-specified fraction (default 20%) This default comes from a DOE-funded study.  Do not apply this lighting power reduction in hospital operating rooms or other areas where lighting quality is not similar to that used in offices."
   end  
 
   # Define the arguments that the user will input
@@ -31,7 +31,7 @@ class SpectrallyEnhancedLighting < OpenStudio::Ruleset::ModelUserScript
     lighting_power_reduction_percent = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("lighting_power_reduction_percent",true)
     lighting_power_reduction_percent.setDisplayName("Lighting Power Reduction Percentage")
     lighting_power_reduction_percent.setUnits("%")
-    lighting_power_reduction_percent.setDefaultValue(30.0)
+    lighting_power_reduction_percent.setDefaultValue(20.0)
     args << lighting_power_reduction_percent
 
     return args
