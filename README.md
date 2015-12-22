@@ -66,6 +66,7 @@ In the Git Bash/terminal:
 3. You can click on an individual simulation to see more details about the run, including which Measures were applied (1 = measure was applied).
 4. After all simulations complete, click on the `CSV` files in the `Downloads` section at the top right of the page.
 5. Use your data processing tool of choice to parse the results. The `data_processing` folder contains some examples that may be useful. Typically, savings are calculated by finding a run with a particular building type/climate zone/vintage combination, then comparing that to the same combination with one Measure applied.  
+6.  **Important:  after you finish running the analysis and downloading the results, make sure you go to your Amazon AWS Console and Terminate any running instances.  Amazon charges by the hour, and you will be charged until you shut them down.  NREL and DOE are not responsible for any charges you may incur.**
 
 ## Modifying this for your own needs
 
