@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>advanced_hybrid_rt_us</name>
   <uid>7b08b843-f8da-43c5-beb4-a7b1570ec3dd</uid>
-  <version_id>9b923ee0-ae62-485d-bee2-0e8ee0b72c39</version_id>
+  <version_id>69f30946-11a4-4348-958b-7002a44d1486</version_id>
   <xml_checksum>D48F381B</xml_checksum>
   <class_name>AdvancedHybridRTUs</class_name>
   <display_name>Advanced Hybrid RTUs</display_name>
@@ -47,23 +47,6 @@
   </attributes>
   <files>
     <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.8.5</identifier>
-        <min_compatible>1.8.5</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>765905F9</checksum>
-    </file>
-    <file>
-      <filename>advanced_hybrid_rtus_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>94148A2C</checksum>
-    </file>
-    <file>
       <filename>MediumOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
@@ -92,6 +75,29 @@
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum>9412D202</checksum>
+    </file>
+    <file>
+      <filename>advanced_hybrid_rtus_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>89B74F0A</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.8.5</identifier>
+        <min_compatible>1.8.5</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>D1DFB596</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>5A53A838</checksum>
     </file>
   </files>
 </measure>

@@ -277,19 +277,19 @@ class AdvancedHybridRTUs < OpenStudio::Ruleset::ModelUserScript
           modify_cooling_coil(clg_coil)
           runner.registerInfo("Air loop #{air_loop.name} already has a two speed DX cooling coil.  Only the COP will be modified.")
         elsif sc.to_CoilCoolingDXSingleSpeed.is_initialized
-          clg_coil = sc.to_CoilCoolingDXTwoSpeed.get
+          clg_coil = sc.to_CoilCoolingDXSingleSpeed.get
           node = clg_coil.inletModelObject.get.to_Node.get
           new_clg_coil = OpenStudio::Model::CoilCoolingDXTwoSpeed.new(model)
-          modify_cooling_coil(clg_coil)
+          modify_cooling_coil(new_clg_coil)
           new_clg_coil.addToNode(node)
           new_clg_coil.setName("#{air_loop.name} 2spd DX Clg Coil")
           clg_coil.remove
           runner.registerInfo("Air loop #{air_loop.name} had a single speed DX cooling coil replaced by a two speed DX cooling coil.")
         elsif sc.to_CoilCoolingWater.is_initialized
-          clg_coil = sc.to_CoilCoolingDXTwoSpeed.get
-          node = clg_coil.inletModelObject.get.to_Node.get
+          clg_coil = sc.to_CoilCoolingWater.get
+          node = clg_coil.airInletModelObject.get.to_Node.get
           new_clg_coil = OpenStudio::Model::CoilCoolingDXTwoSpeed.new(model)
-          modify_cooling_coil(clg_coil)
+          modify_cooling_coil(new_clg_coil)
           new_clg_coil.addToNode(node)
           new_clg_coil.setName("#{air_loop.name} 2spd DX Clg Coil")
           clg_coil.remove    
