@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>predictive_thermostats</name>
   <uid>3ce919e1-5bee-46e7-a48f-383894339313</uid>
-  <version_id>9b71182a-4e37-41f4-bf5d-41ed583fc5c3</version_id>
+  <version_id>4d342e12-9274-4c93-9660-95430fd16e0d</version_id>
   <xml_checksum>D4024775</xml_checksum>
   <class_name>PredictiveThermostats</class_name>
   <display_name>Predictive Thermostats</display_name>
@@ -71,7 +71,7 @@
       <filename>predictive_thermostats_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>4C2A7295</checksum>
+      <checksum>F061B858</checksum>
     </file>
     <file>
       <version>
@@ -82,19 +82,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>37802B90</checksum>
-    </file>
-    <file>
-      <filename>secondary_school_90.1-2010_with_pred_tstats.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>AD496CFA</checksum>
-    </file>
-    <file>
-      <filename>small_office_1980-2004_with_pred_tstats.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>F13FE4D9</checksum>
+      <checksum>24C51A42</checksum>
     </file>
   </files>
 </measure>

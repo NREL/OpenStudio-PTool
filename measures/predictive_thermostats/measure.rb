@@ -140,6 +140,27 @@ class PredictiveThermostats < OpenStudio::Ruleset::ModelUserScript
       pred_tstat_sch.scheduleRules.each do |sch_rule|
         adjust_pred_tstat_day_sch(sch_rule.daySchedule, occ_threshold_pct, occ_temp_c , unocc_temp_c)
       end
+      
+      # Winter design day
+      adjust_pred_tstat_day_sch(pred_tstat_sch.winterDesignDaySchedule, occ_threshold_pct, occ_temp_c, occ_temp_c)
+      
+      # Summer design day
+      adjust_pred_tstat_day_sch(pred_tstat_sch.summerDesignDaySchedule, occ_threshold_pct, occ_temp_c, occ_temp_c)
+      
+      
+      # Set the schedule type limits
+      type_limits = nil
+      if model.getScheduleTypeLimitsByName("Temperature").is_initialized
+        type_limits = model.getScheduleTypeLimitsByName("Temperature").get
+      else
+        type_limits = OpenStudio::Model::ScheduleTypeLimits.new(model)
+        type_limits.setName("Temperature")
+        type_limits.setLowerLimitValue(0.0)
+        type_limits.setUpperLimitValue(100.0)
+        type_limits.setNumericType("Continuous")
+        type_limits.setUnitType("Temperature")
+      end
+      pred_tstat_sch.setScheduleTypeLimits(type_limits)
         
       return pred_tstat_sch  
         

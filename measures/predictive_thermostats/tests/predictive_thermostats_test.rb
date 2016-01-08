@@ -99,7 +99,7 @@ class PredictiveThermostatsTest < MiniTest::Test
     # Ensure the measure finished successfully
     assert(result.value.valueName == "Success")
     
-    model.save(OpenStudio::Path.new("#{Dir.pwd}/small_office_1980-2004_with_pred_tstats.osm"),true)
+    model.save(OpenStudio::Path.new("#{Dir.pwd}/output/small_office_1980-2004_with_pred_tstats.osm"),true)
       
   end  
 
@@ -144,7 +144,7 @@ class PredictiveThermostatsTest < MiniTest::Test
     # Ensure the measure finished successfully
     assert(result.value.valueName == "Success")
     
-    model.save(OpenStudio::Path.new("#{Dir.pwd}/secondary_school_90.1-2010_with_pred_tstats.osm"),true)
+    model.save(OpenStudio::Path.new("#{Dir.pwd}/output/secondary_school_90.1-2010_with_pred_tstats.osm"),true)
       
   end  
   
