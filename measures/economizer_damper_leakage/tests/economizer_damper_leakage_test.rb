@@ -75,7 +75,14 @@ class EconomizerDamperLeakageTests < MiniTest::Unit::TestCase
 	refute_nil(result.info.find {|m| m.logMessage == "The model contains no OA controllers which are currently configured for operable economizer controls. This measure is not applicable."})
   end
     
-  def applytotestmodel(model_file)
+  def test_sec_school_1980_2004_3B
+	result,_ = applytotestmodel("SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B.osm","USA_TX_El.Paso.Intl.AP.722700_TMY3.epw")
+  # Ensure the measure finished successfully
+  assert(result.value.valueName == "Success")
+  end
+  
+    
+  def applytotestmodel(model_file, weather_file = "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
   
 	measure = EconomizerDamperLeakage.new
 
@@ -94,7 +101,7 @@ class EconomizerDamperLeakageTests < MiniTest::Unit::TestCase
 		model = model.get
 
 		# Set weather file
-		wf_path = OpenStudio::Path.new(File.dirname(__FILE__) + "/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")
+		wf_path = OpenStudio::Path.new(File.dirname(__FILE__) + "/#{weather_file}")
 		wf = OpenStudio::EpwFile.new(wf_path)
 		OpenStudio::Model::WeatherFile.setWeatherFile(model, wf)
 		

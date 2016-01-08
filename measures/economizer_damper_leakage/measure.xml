@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>economizer_damper_leakage</name>
   <uid>07954d64-49ba-4091-87ff-18013930571c</uid>
-  <version_id>c1a24841-a80b-4b79-8246-b9bc4cfe61f7</version_id>
+  <version_id>8bafa08d-1158-46af-b7e7-b119d511ef6f</version_id>
   <xml_checksum>3379E2F8</xml_checksum>
   <class_name>EconomizerDamperLeakage</class_name>
   <display_name>Economizer Damper Leakage</display_name>
@@ -74,12 +74,6 @@
       <checksum>B4F5B5FB</checksum>
     </file>
     <file>
-      <filename>HVACSizing.Model.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>4C79D4D4</checksum>
-    </file>
-    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.9.0</identifier>
@@ -89,12 +83,6 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>3355DCBE</checksum>
-    </file>
-    <file>
-      <filename>economizer_damper_leakage_test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>6625C5BA</checksum>
     </file>
     <file>
       <filename>LargeHotel-90.1-2010-ASHRAE 169-2006-3B.osm</filename>
@@ -155,6 +143,42 @@
       <filetype>stat</filetype>
       <usage_type>test</usage_type>
       <checksum>E8C83421</checksum>
+    </file>
+    <file>
+      <filename>HVACSizing.Model.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>16E28373</checksum>
+    </file>
+    <file>
+      <filename>economizer_damper_leakage_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>73122AD6</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8F362431</checksum>
+    </file>
+    <file>
+      <filename>USA_TX_El.Paso.Intl.AP.722700_TMY3.ddy</filename>
+      <filetype>ddy</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3122EFA9</checksum>
+    </file>
+    <file>
+      <filename>USA_TX_El.Paso.Intl.AP.722700_TMY3.epw</filename>
+      <filetype>epw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>CC705637</checksum>
+    </file>
+    <file>
+      <filename>USA_TX_El.Paso.Intl.AP.722700_TMY3.stat</filename>
+      <filetype>stat</filetype>
+      <usage_type>test</usage_type>
+      <checksum>A544E55E</checksum>
     </file>
   </files>
 </measure>
