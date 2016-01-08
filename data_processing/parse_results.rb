@@ -1,6 +1,6 @@
 
 require 'csv'
-
+require 'profile'
 # Method to search through a hash for an object that meets the
 # desired search criteria, as passed via a hash.
 #
@@ -83,8 +83,13 @@ def csv_to_json(rows)
 
 end
 
+# Define the location of the results
+analysis_name = "ptool_full_analysis"
+results_path = "../results"
+
 # Load the metadata csv
-metadata_csv = "#{Dir.pwd}/ptool_full_analysis_metadata.csv"
+#metadata_csv = "../results/ptool_full_analysis_metadata.csv"
+metadata_csv = "#{results_path}/#{analysis_name}_metadata.csv"
 metadata_rows = CSV.read(metadata_csv)
 metadata_cols = metadata_rows.transpose
 metadata_headers = metadata_rows[0]
@@ -94,23 +99,30 @@ puts "found #{metadata.size} rows in metadata"
 # Get the list of varialbes and outputs
 variables = []
 outputs = []
+anti_measures = []
 metadata.each do |data|
   type = data['type_of_variable']
   if type == 'variable'
     variables << data['name']
   elsif type == 'output'
     next if data['name'].include?('applicable')
+    if data['name'].include?('anti_measure')
+      anti_measures << data['name']
+      next
+    end
     outputs << data['name']
   end
 end
 outputs = outputs.sort
 variables = variables.sort
+anti_measures = anti_measures.sort
 
 puts "variables = #{variables.size}: #{variables.join(', ')}"
 puts "outputs = #{outputs.size}: #{outputs.join(', ')}"
+puts "anti_measures = #{anti_measures.size}: #{anti_measures.join(', ')}"
 
 # Load the results csv
-results_csv = "#{Dir.pwd}/ptool_full_analysis.csv"
+results_csv = "#{results_path}/#{analysis_name}.csv"
 results_rows = CSV.read(results_csv)
 results_cols = results_rows.transpose
 results_headers = results_rows[0]
@@ -138,47 +150,68 @@ puts "building_types = #{building_types.size}: #{building_types.join(', ')}"
 puts "climate_zones = #{climate_zones.size}: #{climate_zones.join(', ')}"
 puts "templates = #{templates.size}: #{templates.join(', ')}"
   
+# Pre-flag all the baseline runs to speed up searches
+runs.each do |run|
+  is_baseline = true
+  variables.each do |var|
+    if run[var] == '1.0'
+      is_baseline = false
+      break
+    end
+  end
+  run['is_baseline'] = is_baseline
+end
+  
 # For each variable (measure), calculate the
 # savings for every building type/climate zone/template combo
 variables.sort.each do |var_of_interest|
-  next unless var_of_interest == 'exterior_lighting_control.run_measure'
   # Get the name of the N/A inidicator
   na_indicator = ""
+  measure_name = ""
   if match_data = /(.*)\.run_measure/.match(var_of_interest)
-    na_indicator = "#{match_data[1]}.applicable"
+    measure_name = match_data[1]
+    na_indicator = "#{measure_name}.applicable"
   else
     puts "ERROR - Could not determine measure name from variable #{var_of_interest}" 
     next
+  end
+
+  #puts measure_name
+  
+  # Determine if it is an anti_measure,
+  # in which case the savings need to be inverted.
+  is_anti_measure = false
+  if anti_measures.include?("#{measure_name}.anti_measure")
+    is_anti_measure = true
   end
 
   num_runs_applicable = 0
   
   all_pct_savings = Hash.new {|h,k| h[k] = [] }  
 
-
-  # Add the header
-  CSV.open("#{Dir.pwd}/#{var_of_interest}.csv", 'w') do |csv|
+  # Add the CSV header
+  CSV.open("#{Dir.pwd}/#{measure_name}.csv", 'w') do |csv|
     csv << ['building_type', 'climate_zone', 'template'] + outputs
-    #csv << outputs
   end
   
   building_types.each do |building_type|
   climate_zones.each do |climate_zone|
   templates.each do |template|
 
-    puts "#{building_type} #{climate_zone} #{template}"
+    #puts "#{building_type} #{climate_zone} #{template}"
   
     # Get the baseline run, where all variables are 0
     baseline_search_criteria = {
     'create_doe_prototype_building.building_type' => building_type,
     'create_doe_prototype_building.climate_zone' => climate_zone,
     'create_doe_prototype_building.template' => template,
+    'is_baseline' => true
     }
     variables.each do |var|
       baseline_search_criteria[var] = '0.0' # Not applied
     end
     baseline = find_object(runs, baseline_search_criteria)
-    puts "baseline = #{baseline}"
+    #puts "baseline = #{baseline}"
    
     # Get the applied run, where all variables are 0
     # except for the variable of interest
@@ -190,12 +223,10 @@ variables.sort.each do |var_of_interest|
     variables.each do |var|
       if var == var_of_interest
         applied_search_criteria[var] = '1.0' # Applied
-      else
-        applied_search_criteria[var] = '0.0' # Not applied
       end
     end
     applied = find_object(runs, applied_search_criteria)
-    puts "applied = #{applied}"
+    #puts "applied = #{applied}"
     
     if baseline.nil? || applied.nil?
       puts "ERROR - Could not find one of either baseline or applied runs"
@@ -221,14 +252,18 @@ variables.sort.each do |var_of_interest|
         pct_svgs = 0.0
       else
         pct_svgs = ((baseline_val.to_f - applied_val.to_f) / baseline_val.to_f ) * 100
+        # Invert the savings for anti measures
+        if is_anti_measure
+          pct_svgs = -1.0 * pct_svgs
+        end
       end
       all_pct_savings[output] << pct_svgs
       row << pct_svgs.round(1)
       next if pct_svgs == 0
-      puts "   #{pct_svgs.round(1)}%  #{output}"
+      #puts "   #{pct_svgs.round(1)}%  #{output}"
     end
   
-    CSV.open("#{Dir.pwd}/#{var_of_interest}.csv", 'a') do |csv|
+    CSV.open("#{Dir.pwd}/#{measure_name}.csv", 'a') do |csv|
       csv << row
     end  
   
@@ -236,7 +271,7 @@ variables.sort.each do |var_of_interest|
   end
   end
   
-  puts "*** #{var_of_interest} Overall Impacts ***"
+  puts "*** #{measure_name} Overall Impacts ***"
   puts "Applied to #{num_runs_applicable} of #{runs.size/variables.size - 1} Runs"
   all_pct_savings.each do |output, vals|
     avg = vals.inject{ |sum, el| sum + el }.to_f / vals.size
