@@ -2,7 +2,7 @@
 # http://openstudio.nrel.gov/openstudio-measure-writing-guide
 
 # start the measure
-class EIFS Wall Insulation < OpenStudio::Ruleset::ModelUserScript
+class EIFSWallInsulation < OpenStudio::Ruleset::ModelUserScript
 
   # human readable name
   def name
@@ -142,4 +142,4 @@ class EIFS Wall Insulation < OpenStudio::Ruleset::ModelUserScript
 end
 
 # register the measure to be used by the application
-EIFS Wall Insulation.new.registerWithApplication
+EIFSWallInsulation.new.registerWithApplication

@@ -6,7 +6,7 @@ require_relative '../measure.rb'
 
 require 'fileutils'
 
-class EIFS Wall InsulationTest < MiniTest::Test
+class EIFSWallInsulationTest < MiniTest::Test
 
   # def setup
   # end
@@ -17,7 +17,7 @@ class EIFS Wall InsulationTest < MiniTest::Test
   def test_do_not_apply
      
     # Create an instance of the measure
-    measure = EIFS Wall Insulation.new
+    measure = EIFSWallInsulation.new
     
     # Create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
@@ -55,7 +55,7 @@ class EIFS Wall InsulationTest < MiniTest::Test
   def test_different_wall_constructions
      
     # Create an instance of the measure
-    measure = EIFS Wall Insulation.new
+    measure = EIFSWallInsulation.new
     
     # Create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new

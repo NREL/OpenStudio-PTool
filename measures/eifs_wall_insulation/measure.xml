@@ -1,16 +1,13 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <error>C:/GitRepos/OpenStudio-PTool/measures/eifs_wall_insulation/measure.rb:5: syntax error, unexpected tCONSTANT, expecting '&lt;' or ';' or '\n'
-class EIFS Wall Insulation &lt; OpenStudio::Ruleset::ModelUserScript&#xd;
-               ^</error>
-  <name>add_eifs_wall_insulation</name>
+  <name>eifs_wall_insulation</name>
   <uid>7245a115-8b31-4ef0-8449-c021307855a9</uid>
-  <version_id>22601f72-3272-45bd-a181-ea061b5589df</version_id>
+  <version_id>01711f37-3a88-4499-95d6-573500c0c06d</version_id>
   <xml_checksum>4E797983</xml_checksum>
-  <class_name>AddEIFSWallInsulation</class_name>
-  <display_name>Add EIFS Wall Insulation</display_name>
-  <description>EIFS is a a layer of insulation that is applied to the outside walls of a building.  It is typically a layer of foam insulation covered by a thin layer of fiber mesh embedded in polymer.</description>
-  <modeler_description>Determine the thickness of Polyisocyanurate insulation required to meet the specified R-value.  Find all the constructions used by exterior walls in the model, clone them, add a layer of insulation to the cloned constructioins, and then assign the construction back to the wall.</modeler_description>
+  <class_name>EIFSWallInsulation</class_name>
+  <display_name>EIFS Wall Insulation</display_name>
+  <description>EIFS is a layer of insulation that is applied to the outside walls of a building.  It is typically a layer of foam insulation covered by a thin layer of fiber mesh embedded in polymer.</description>
+  <modeler_description>Determine the thickness of expanded polystyrene insulation required to meet the specified R-value.  Find all the constructions used by exterior walls in the model, clone them, add a layer of insulation to the cloned constructions, and then assign the construction back to the wall.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -73,13 +70,13 @@ class EIFS Wall Insulation &lt; OpenStudio::Ruleset::ModelUserScript&#xd;
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>198B0848</checksum>
+      <checksum>E6B47D68</checksum>
     </file>
     <file>
       <filename>eifs_wall_insulation_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>07EE3236</checksum>
+      <checksum>2F2D92EA</checksum>
     </file>
   </files>
 </measure>
