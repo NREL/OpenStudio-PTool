@@ -154,6 +154,10 @@ class OptimalStartStop < OpenStudio::Ruleset::WorkspaceUserScript
           end
         end
         result = {"min" => min, "max" => max} # this doesn't include summer and winter design day
+      elsif schedule.to_ScheduleConstant.is_initialized
+        schedule = schedule.to_ScheduleConstant.get
+        const_val = schedule.value
+        result = {"min" => const_val, "max" => const_val}
       else
         result =  nil
       end
@@ -324,7 +328,11 @@ class OptimalStartStop < OpenStudio::Ruleset::WorkspaceUserScript
         if min_oa_sch.is_initialized
           puts "min_oa_sch = #{min_oa_sch.get.name}"
           puts "min_oa_frac = #{find_min_max_values(min_oa_sch.get)['min']}"
-          temp[:min_oa_sch] = min_oa_sch.get.name.to_s 
+          temp[:min_oa_sch] = min_oa_sch.get.name.to_s
+          temp[:min_oa_sch_type] = "Schedule:Year"
+          if min_oa_sch.get.to_ScheduleConstant.is_initialized
+            temp[:min_oa_sch_type] = "Schedule:Constant"
+          end
           temp[:min_oa_frac] = find_min_max_values(min_oa_sch.get)['min']
         end
       end
@@ -436,7 +444,7 @@ class OptimalStartStop < OpenStudio::Ruleset::WorkspaceUserScript
     ems_string << "EnergyManagementSystem:Actuator," + "\n"
     ems_string << "   EMS_#{results.keys[i].gsub(/\W/,'_')}_MinOA," + "\n"
     ems_string << "    #{value[:min_oa_sch]}," + "\n"
-    ems_string << "    Schedule:Year," + "\n"
+    ems_string << "    #{value[:min_oa_sch_type]}," + "\n"
     ems_string << "    Schedule Value;" + "\n"
     ems_string << "\n"
     value[:zones].each do |zone|

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>optimal_start_stop</name>
   <uid>ab9809c2-b99c-4e4c-b119-c034edb87381</uid>
-  <version_id>b0fdf72c-9178-4bf4-a35f-bb09eed528a8</version_id>
+  <version_id>71cce80d-8941-4066-8eb8-724e5a498a84</version_id>
   <xml_checksum>F19E874F</xml_checksum>
   <class_name>OptimalStartStop</class_name>
   <display_name>Optimal Start Stop</display_name>
@@ -55,7 +55,49 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>3077D36C</checksum>
+      <checksum>133060EF</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>AC01B31A</checksum>
+    </file>
+    <file>
+      <filename>LargeOffice-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>7FDDC3D5</checksum>
+    </file>
+    <file>
+      <filename>optimal_start_stop_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>1A3F52BA</checksum>
+    </file>
+    <file>
+      <filename>PrimarySchool-90.1-2010-ASHRAE 169-2006-5A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>3FCA8A77</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-90.1-2010-ASHRAE 169-2006-2A.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>36E495CB</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-DOE Ref 1980-2004-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8F362431</checksum>
+    </file>
+    <file>
+      <filename>SecondarySchool-DOE Ref Pre-1980-ASHRAE 169-2006-3B.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>2063B282</checksum>
     </file>
   </files>
 </measure>
