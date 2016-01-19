@@ -18,7 +18,7 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
   
   # human readable description
   def description
-    return "Daylighting controls are used to dim the electric lighting when sunlight provides adequate lighting levels in the space.  The design of a daylight harvesting system should account for sensor location, sensor orientation, and number of sensors. During installation, the light sensitivity settings should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimmable ballasts are typically also required as part of a daylighting strategy."
+    return "Daylighting controls are used to dim the electric lighting when daylight provides adequate lighting levels in the space.  The design of a daylight-responsive lighting control system should account for sensor location, sensor orientation, and number of sensors. During installation, the setpoints should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimming or switching fluorescent ballasts are also required as part of a daylighting strategy."
   end
 
   # human readable description of modeling approach
@@ -110,7 +110,7 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
       runner.registerAsNotApplicable("The building has no spaces with daylighting potential that need daylight controls, this measure is not applicable.")
       return true
     else
-      runner.registerFinalCondition("#{spaces_daylight_sensors_added.size} spaces had daylight controls added. There names were spaces #{spaces_affected.join(", ")}.")  
+      runner.registerFinalCondition("#{spaces_daylight_sensors_added.size} spaces had daylight controls added. Their names were spaces #{spaces_affected.join(", ")}.")  
     end    
 
     return true

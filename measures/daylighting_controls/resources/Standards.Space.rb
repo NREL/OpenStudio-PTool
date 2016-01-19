@@ -1189,7 +1189,7 @@ class OpenStudio::Model::Space
   # Red = primary sidelighted area
   # Blue = secondary sidelighted area
   # Light Blue = floor
-  def addDaylightingControls(vintage, remove_existing_controls, draw_daylight_areas_for_debugging = false)
+  def addDaylightingControls(vintage, remove_existing_controls, draw_daylight_areas_for_debugging = true)
   
     OpenStudio::logFree(OpenStudio::Debug, "openstudio.model.Space", "******For #{self.name}, adding daylight controls.")
 
@@ -1662,7 +1662,7 @@ class OpenStudio::Model::Space
         sub_surface = sensor_1_window[0]
         outward_normal = sub_surface.outwardNormal
         centroid = OpenStudio::getCentroid(sub_surface.vertices).get
-        ht_above_flr = OpenStudio::convert(3.0, "ft", "m").get
+        ht_above_flr = OpenStudio::convert(2.5, "ft", "m").get
         outward_normal.setLength(sensor_1_window[1][:head_height_m] - ht_above_flr)
         sensor_vertex = centroid + outward_normal.reverseVector
       else
@@ -1673,7 +1673,7 @@ class OpenStudio::Model::Space
         vertex = window_centroid + window_outward_normal.reverseVector
         vertex_on_floorplane = floor_surface.plane.project(vertex)
         floor_outward_normal = floor_surface.outwardNormal
-        floor_outward_normal.setLength(OpenStudio::convert(3.0, "ft", "m").get)
+        floor_outward_normal.setLength(OpenStudio::convert(2.5, "ft", "m").get)
         sensor_vertex = vertex_on_floorplane + floor_outward_normal.reverseVector
       end
       sensor_1.setPosition(sensor_vertex)
@@ -1698,7 +1698,7 @@ class OpenStudio::Model::Space
         sub_surface = sensor_2_window[0]
         outward_normal = sub_surface.outwardNormal
         centroid = OpenStudio::getCentroid(sub_surface.vertices).get
-        ht_above_flr = OpenStudio::convert(3.0, "ft", "m").get
+        ht_above_flr = OpenStudio::convert(2.5, "ft", "m").get
         outward_normal.setLength(sensor_2_window[1][:head_height_m] - ht_above_flr)
         sensor_vertex = centroid + outward_normal.reverseVector
       else
@@ -1709,7 +1709,7 @@ class OpenStudio::Model::Space
         vertex = window_centroid + window_outward_normal.reverseVector
         vertex_on_floorplane = floor_surface.plane.project(vertex)
         floor_outward_normal = floor_surface.outwardNormal
-        floor_outward_normal.setLength(OpenStudio::convert(3.0, "ft", "m").get)
+        floor_outward_normal.setLength(OpenStudio::convert(2.5, "ft", "m").get)
         sensor_vertex = vertex_on_floorplane + floor_outward_normal.reverseVector
       end
       sensor_2.setPosition(sensor_vertex)

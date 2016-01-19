@@ -2,11 +2,11 @@
   <schema_version>3.0</schema_version>
   <name>daylighting_controls</name>
   <uid>9cb0fb2d-d95d-400c-9833-3be2db6a75ec</uid>
-  <version_id>028d4e25-6a39-4625-be73-8acc4cbd675a</version_id>
+  <version_id>c51dab2e-ab78-4eac-8e28-bf98ba20fa39</version_id>
   <xml_checksum>9B7BB4D8</xml_checksum>
   <class_name>DaylightingControls</class_name>
   <display_name>Daylighting Controls</display_name>
-  <description>Daylighting controls are used to dim the electric lighting when sunlight provides adequate lighting levels in the space.  The design of a daylight harvesting system should account for sensor location, sensor orientation, and number of sensors. During installation, the light sensitivity settings should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimmable ballasts are typically also required as part of a daylighting strategy.</description>
+  <description>Daylighting controls are used to dim the electric lighting when daylight provides adequate lighting levels in the space.  The design of a daylight-responsive lighting control system should account for sensor location, sensor orientation, and number of sensors. During installation, the setpoints should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimming or switching fluorescent ballasts are also required as part of a daylighting strategy.</description>
   <modeler_description>Loop through each zone in the baseline model.  If the zone does not have toplighting or sidelighting control, add daylight sensors per 90.1-2010 9.4.1.4 and 9.4.1.5, with a target illuminance of 300 lux.  The fraction of lighting controlled by the daylighting controls is determined based on the ratio of the daylighted areas to the total floor area.   If the zone already has daylighting controls, skip this zone.</modeler_description>
   <arguments>
     <argument>
@@ -100,7 +100,7 @@
       <filename>Standards.Space.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C0E68FC5</checksum>
+      <checksum>A9116B36</checksum>
     </file>
     <file>
       <version>
@@ -111,7 +111,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>5749437A</checksum>
+      <checksum>7CDBBA9E</checksum>
     </file>
   </files>
 </measure>
