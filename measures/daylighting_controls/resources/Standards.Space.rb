@@ -1390,6 +1390,9 @@ class OpenStudio::Model::Space
       return false
     end
     
+    # Add an illuminance map
+    self.add_illuminance_map
+    
     # Record a floor in the space for later use
     floor_surface = nil
     self.surfaces.each do |surface|
@@ -1720,6 +1723,106 @@ class OpenStudio::Model::Space
     
     return true
     
+  end
+  
+  def add_illuminance_map()
+  
+    # Record all floor polygons
+    floor_polygons = []
+    floor_z = 0.0
+    self.surfaces.each do |surface|
+      if surface.surfaceType == "Floor"
+        floor_surface = surface
+        floor_z = surface.vertices[0].z
+        # floor_polygons << surface.vertices
+        # Hard-set the z for the floor to zero    
+        new_floor_polygon = []
+        surface.vertices.each do |vertex|
+          new_floor_polygon << OpenStudio::Point3d.new(vertex.x, vertex.y, 0.0)       
+        end
+        floor_polygons << new_floor_polygon
+      end
+    end
+
+    # Combine them into bigger polygons
+    combined_floor_polygons = join_polygons(floor_polygons, 0.01, 'floor_polygons_for_illuminance_map')    
+    
+    # Get the biggest combined rectangular floor polygon
+    biggest_rect_floor_polygon = nil
+    biggest_rect_floor_polygon_area = 0.0
+    combined_floor_polygons.each do |combined_floor_polygon|
+      next unless combined_floor_polygon.size == 4
+      area_m2 = OpenStudio.getArea(combined_floor_polygon)
+      if area_m2.is_initialized
+        if area_m2.get > biggest_rect_floor_polygon_area
+          biggest_rect_floor_polygon = combined_floor_polygon
+        end
+      end
+    end
+
+    # For now this is limited to rectangular spaces
+    if biggest_rect_floor_polygon.nil?
+      OpenStudio::logFree(OpenStudio::Warn, "openstudio.model.Space", "For #{self.name}, can't add illuminance map because there are no combined rectangular floor polygons.")
+      return false
+    end
+   
+    # Align the vertices with face coordinate system
+    # face_transform = OpenStudio::Transformation.alignFace(sub_surface.vertices)
+    # aligned_vertices = face_transform.inverse * sub_surface.vertices
+    
+    # Find the min and max x values
+    min_x_val = 99999
+    max_x_val = -99999
+    biggest_rect_floor_polygon.each do |vertex|
+      # Min x value
+      if vertex.x < min_x_val
+        min_x_val = vertex.x
+      end
+      # Max x value
+      if vertex.x > max_x_val
+        max_x_val = vertex.x
+      end
+    end    
+ 
+    # Find the min and may y values
+    min_y_val = 99999
+    max_y_val = -99999
+    biggest_rect_floor_polygon.each do |vertex|
+      # Min y value
+      if vertex.y < min_y_val
+        min_y_val = vertex.y
+      end
+      # Max y value
+      if vertex.y > max_y_val
+        max_y_val = vertex.y
+      end
+    end
+    
+    puts "#{self.name}"
+    puts " -- min_vals = #{min_x_val}, #{min_y_val}"
+    puts " -- max_vals = #{max_x_val}, #{max_y_val}"
+    
+    # Make an illuminance map
+    # for this rectangle
+    ill_map = OpenStudio::Model::IlluminanceMap.new(self.model)
+    ill_map.setName("#{self.name} Illuminance Map")
+    ill_map.setSpace(self)
+    # Origin
+    ill_map.setOriginXCoordinate(min_x_val)
+    ill_map.setOriginYCoordinate(min_y_val)
+    ill_map.setOriginZCoordinate(OpenStudio.convert(30.0, 'in', 'm').get)
+    # Size
+    length_x = max_x_val - min_x_val
+    length_y = max_y_val - min_y_val
+    ill_map.setXLength(length_x)
+    ill_map.setYLength(length_y)
+    # Number of points
+    # Currently set at a 1m X 1m grid
+    ill_map.setNumberofXGridPoints(length_x.round.to_i)
+    ill_map.setNumberofYGridPoints(length_y.round.to_i)
+  
+    return true
+  
   end
   
 end
