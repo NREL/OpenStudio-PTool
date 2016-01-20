@@ -1,13 +1,13 @@
 <measure>
   <schema_version>3.0</schema_version>
-  <name>viewglass_windows</name>
+  <name>add_smarter_shade</name>
   <uid>07954d64-49ca-4091-87ff-18013930571c</uid>
-  <version_id>3dc18a57-45f9-4274-b633-b99b9930e5ea</version_id>
-  <xml_checksum>3379E2F8</xml_checksum>
-  <class_name>ViewglassWindows</class_name>
-  <display_name>Viewglass Windows</display_name>
-  <description>Add some Viewglass Windows</description>
-  <modeler_description>Add some Viewglass Windows</modeler_description>
+  <version_id>5e96d137-2d91-4b61-a2d0-da2e57f7692d</version_id>
+  <xml_checksum>0CDF7770</xml_checksum>
+  <class_name>AddSmarterShade</class_name>
+  <display_name>Add SmarterShade</display_name>
+  <description>Add SmarterShade to Exterior Windows</description>
+  <modeler_description>Add SmarterShade switchable film cartridge to interior side of all exterior windows, by applying a shading control, and two constructions to represent the original window/IGU with the SmarterShade in its clear and tinted states.</modeler_description>
   <arguments>
     <argument>
       <name>run_measure</name>
@@ -21,7 +21,7 @@
   </arguments>
   <provenances/>
   <tags>
-    <tag>HVAC.Ventilation</tag>
+    <tag>Envelope.Fenestration</tag>
   </tags>
   <attributes>
     <attribute>
@@ -152,17 +152,6 @@
       <checksum>A544E55E</checksum>
     </file>
     <file>
-      <version>
-        <software_program>OpenStudio</software_program>
-        <identifier>1.9.0</identifier>
-        <min_compatible>1.9.0</min_compatible>
-      </version>
-      <filename>measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>script</usage_type>
-      <checksum>B1947E42</checksum>
-    </file>
-    <file>
       <filename>HVACSizing.Model.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
@@ -179,6 +168,17 @@
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
       <checksum>F408C706</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>E166AD05</checksum>
     </file>
   </files>
 </measure>

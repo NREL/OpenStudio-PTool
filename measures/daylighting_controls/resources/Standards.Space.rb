@@ -1820,6 +1820,11 @@ class OpenStudio::Model::Space
     # Currently set at a 1m X 1m grid
     ill_map.setNumberofXGridPoints(length_x.round.to_i)
     ill_map.setNumberofYGridPoints(length_y.round.to_i)
+    
+    # Set map to parent thermal zone
+    # TODO support multiple spaces within zone
+    zone = self.thermalZone.get
+    zone.setIlluminanceMap(ill_map)
   
     return true
   
