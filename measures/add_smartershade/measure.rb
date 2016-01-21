@@ -108,6 +108,7 @@ class AddSmarterShade < OpenStudio::Ruleset::ModelUserScript
 			# make shading control with the ss(tinted) construction
 			shading_control = OpenStudio::Model::ShadingControl.new(window_construction2)
 			shading_control.setName("SmarterShade on #{const.name}")
+			shading_control.setSetpoint(20000)
       runner.registerInfo("Created shading control '#{shading_control.name.get}'.")
 
 			# loop through sub surfaces and assign new ss clear state window construction

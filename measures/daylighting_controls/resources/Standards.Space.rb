@@ -1189,9 +1189,9 @@ class OpenStudio::Model::Space
   # Red = primary sidelighted area
   # Blue = secondary sidelighted area
   # Light Blue = floor
-  def addDaylightingControls(vintage, remove_existing_controls, draw_daylight_areas_for_debugging = true)
+  def addDaylightingControls(vintage, remove_existing_controls, draw_daylight_areas_for_debugging = false)
   
-    OpenStudio::logFree(OpenStudio::Debug, "openstudio.model.Space", "******For #{self.name}, adding daylight controls.")
+    OpenStudio::logFree(OpenStudio::Debug, "openstudio.model.Space", "******For #{self.name}, adding daylighting controls.")
 
     # Check for existing daylighting controls
     # and remove if specified in the input
@@ -1201,9 +1201,9 @@ class OpenStudio::Model::Space
         existing_daylighting_controls.each do |dc|
           dc.remove
         end
-        OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{self.name}, removed #{existing_daylighting_controls.size} existing daylight controls before adding new controls.")
+        OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{self.name}, removed #{existing_daylighting_controls.size} existing daylighting controls before adding new controls.")
       else
-        OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{self.name}, daylight controls were already present, no additional controls added.")
+        OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{self.name}, daylighting controls were already present, no additional controls added.")
         return false
       end
     end
@@ -1784,7 +1784,7 @@ class OpenStudio::Model::Space
       end
     end    
  
-    # Find the min and may y values
+    # Find the min and max y values
     min_y_val = 99999
     max_y_val = -99999
     biggest_rect_floor_polygon.each do |vertex|
@@ -1798,6 +1798,9 @@ class OpenStudio::Model::Space
       end
     end
     
+    # Set wall offset for map
+    wall_offset = 0.6096  # 2'0" (per IESNA LM-80)
+       
     puts "#{self.name}"
     puts " -- min_vals = #{min_x_val}, #{min_y_val}"
     puts " -- max_vals = #{max_x_val}, #{max_y_val}"
@@ -1808,12 +1811,12 @@ class OpenStudio::Model::Space
     ill_map.setName("#{self.name} Illuminance Map")
     ill_map.setSpace(self)
     # Origin
-    ill_map.setOriginXCoordinate(min_x_val)
-    ill_map.setOriginYCoordinate(min_y_val)
+    ill_map.setOriginXCoordinate(min_x_val + wall_offset)
+    ill_map.setOriginYCoordinate(min_y_val + wall_offset)
     ill_map.setOriginZCoordinate(OpenStudio.convert(30.0, 'in', 'm').get)
     # Size
-    length_x = max_x_val - min_x_val
-    length_y = max_y_val - min_y_val
+    length_x = (max_x_val - min_x_val) - (2 * wall_offset)
+    length_y = (max_y_val - min_y_val) - (2 * wall_offset)
     ill_map.setXLength(length_x)
     ill_map.setYLength(length_y)
     # Number of points
@@ -1821,7 +1824,7 @@ class OpenStudio::Model::Space
     ill_map.setNumberofXGridPoints(length_x.round.to_i)
     ill_map.setNumberofYGridPoints(length_y.round.to_i)
     
-    # Set map to parent thermal zone
+    # Associate map with parent thermal zone
     # TODO support multiple spaces within zone
     zone = self.thermalZone.get
     zone.setIlluminanceMap(ill_map)

@@ -2,7 +2,7 @@
   <schema_version>3.0</schema_version>
   <name>add_smarter_shade</name>
   <uid>07954d64-49ca-4091-87ff-18013930571c</uid>
-  <version_id>5e96d137-2d91-4b61-a2d0-da2e57f7692d</version_id>
+  <version_id>41639ec4-6c01-43b2-8cf0-b167d271ef05</version_id>
   <xml_checksum>0CDF7770</xml_checksum>
   <class_name>AddSmarterShade</class_name>
   <display_name>Add SmarterShade</display_name>
@@ -178,7 +178,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>E166AD05</checksum>
+      <checksum>30C18C8A</checksum>
     </file>
   </files>
 </measure>
