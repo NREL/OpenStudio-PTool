@@ -58,6 +58,11 @@ In the Git Bash/terminal:
 3. Type the number of the analysis you want to run, ENTER
 4. If this is your first run, enter your AWS keys into `C:/Users/username/aws_config.yml`
 5. After the analysis starts, you will get a URL.  Go to this URL in a web browser.
+6. Open your [Amazon AWS Console](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1)
+7. Make sure you are in the **N. Virginia** region (dropdown in upper right corner).
+8. Click Instances in the left column.  This will show you all the servers and workers that are running.
+9. To get the URL of the server, click on the server and the URL shows up toward the bottom.  You can copy/paste this into a browser.  This is the same URL that showed up in the terminal.
+10. **Important:  after you finish running the analysis and downloading the results, make sure you go to your [Amazon AWS Console](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1) and Terminate any running instances.  Amazon charges by the hour, and you will be charged until you shut them down.  NREL and DOE are not responsible for any charges you may incur.** To terminate instances, click Instances, check them, right click > instance state > terminate (ok).
   
 ## Looking at the results
 
@@ -66,7 +71,7 @@ In the Git Bash/terminal:
 3. You can click on an individual simulation to see more details about the run, including which Measures were applied (1 = measure was applied).
 4. After all simulations complete, click on the `CSV` files in the `Downloads` section at the top right of the page.
 5. Use your data processing tool of choice to parse the results. The `data_processing` folder contains some examples that may be useful. Typically, savings are calculated by finding a run with a particular building type/climate zone/vintage combination, then comparing that to the same combination with one Measure applied.  
-6.  **Important:  after you finish running the analysis and downloading the results, make sure you go to your Amazon AWS Console and Terminate any running instances.  Amazon charges by the hour, and you will be charged until you shut them down.  NREL and DOE are not responsible for any charges you may incur.**
+6.  **Important:  after you finish running the analysis and downloading the results, make sure you go to your [Amazon AWS Console](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1) and Terminate any running instances.  Amazon charges by the hour, and you will be charged until you shut them down.  NREL and DOE are not responsible for any charges you may incur.** To terminate instances, click Instances, check them, right click > instance state > terminate (ok).
 
 ## Modifying this for your own needs
 
@@ -77,3 +82,26 @@ Running large-scale energy modeling analyses can be difficult because of the ove
 3. Fork the [OpenStudio-PTool Repository](https://github.com/NREL/OpenStudio-PTool).
 4. Modify the Measures in the `measures` directory.
 5. Run your own large-scale analysis!
+
+## Troubleshooting
+
+### AWS
+
+#### New account verification
+
+If you just created your Amazon Web Service account and try to run the analysis, you may notice an error regarding verification of the account (see below).
+
+```
+Aws::EC2::Errors::PendingVerification: Your account is currently being verified. 
+Verification normally takes less than 2 hours. Until your account is verified, 
+you may not be able to launch additional instances or create additional volumes. 
+If you are still receiving this message after more than 2 hours, please let us 
+know by writing to aws-verification@amazon.com. We appreciate your patience.
+```
+
+If this happens, wait a couple hours and try again.  You can also contact Amazon to check if they have verified your account.
+
+#### New account instance limits exceeded
+
+When you first create an Amazon AWS Account, Amazon temporarily limits the number of instance you can enable.  This is automatically increased [to these  normal limits](http://aws.amazon.com/ec2/faqs/#How_many_instances_can_I_run_in_Amazon_EC2) after some amount of time (a day or two?).  You can view your current limits (**OS only uses the N. Virginia region**) by [following these instructions](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html). Contact Amazon if the limit doesn't increase after a few days.
+
