@@ -18,7 +18,7 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
   
   # human readable description
   def description
-    return "Daylighting controls are used to dim the electric lighting when daylight provides adequate lighting levels in the space.  The design of a daylight-responsive lighting control system should account for sensor location, sensor orientation, and number of sensors. During installation, the setpoints should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimming or switching fluorescent ballasts are also required as part of a daylighting strategy."
+    return "Daylighting controls are used to dim the electric lighting when daylight provides adequate lighting levels in the space.  The proper design of a daylight-responsive lighting control system should account for sensor location, sensor orientation, and number of sensors. During installation, the setpoints should be adjusted so that the desired lighting level is maintained in the space. Also, the system should be tested for proper functionality.  Dimming or switching fluorescent ballasts are also required as part of a daylighting strategy."
   end
 
   # human readable description of modeling approach
@@ -35,8 +35,26 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
     run_measure.setDisplayName("Run Measure")
     run_measure.setDescription("integer argument to run measure [1 is run, 0 is no run]")
     run_measure.setDefaultValue(1)
-    args << run_measure
+    args << run_measure    
+
+    add_maps = OpenStudio::Ruleset::OSArgument.makeBoolArgument('add_maps',false)
+    add_maps.setDisplayName("Add Maps")
+    add_maps.setDefaultValue('false')
+    add_maps.setDescription('Add illuminance maps to daylight controlled spaces')
+    args << add_maps
+
+    force_placement = OpenStudio::Ruleset::OSArgument::makeBoolArgument('force_placement',false)
+    force_placement.setDisplayName('Force Placement')
+    force_placement.setDefaultValue('false')
+    force_placement.setDescription('Add controls to all daylight-accessible spaces regardless of code')
+    args << force_placement
     
+    remove_existing_controls = OpenStudio::Ruleset::OSArgument::makeBoolArgument('remove_existing_controls',false)
+		remove_existing_controls.setDisplayName('Remove Existing Controls')
+		remove_existing_controls.setDefaultValue('false')
+		remove_existing_controls.setDescription('Remove any existing daylight controls from model')
+		args << remove_existing_controls
+		
     return args
   end
 
@@ -55,6 +73,11 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
       runner.registerAsNotApplicable("Run Measure set to #{run_measure}.")
       return true     
     end    
+    
+    # assign the user inputs to variables
+    force_placement = runner.getBoolArgumentValue('force_placement', user_arguments)    
+    add_maps = runner.getBoolArgumentValue('add_maps', user_arguments)
+    remove_existing_controls = runner.getBoolArgumentValue('remove_existing_controls', user_arguments)
     
     # Load a library that has the daylighting area calculations
     require_relative 'resources/Standards.Space'
@@ -94,7 +117,7 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
     spaces_affected = []
     model.getSpaces.sort.each do |space|
 
-      added = space.addDaylightingControls('AssetScore', false, false)
+      added = space.addDaylightingControls('AssetScore', remove_existing_controls, false, force_placement, add_maps)
       if added
         spaces_daylight_sensors_added << space
         spaces_affected << space.name.get.to_s

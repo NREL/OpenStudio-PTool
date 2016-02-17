@@ -4,8 +4,7 @@ class OpenStudio::Model::Space
   
   # Returns a hash of values for the daylighted areas in the space.
   # {toplighted_area, primary_sidelighted_area, secondary_sidelighted_area, total_window_area, total_skylight_area}
-  # Debugging input will  daylight 
-  # areas added to the model as surfaces.
+  # Debugging input will show daylight areas added to the model as surfaces.
   # Yellow = toplighted area
   # Red = primary sidelighted area
   # Blue = secondary sidelighted area
@@ -1189,7 +1188,7 @@ class OpenStudio::Model::Space
   # Red = primary sidelighted area
   # Blue = secondary sidelighted area
   # Light Blue = floor
-  def addDaylightingControls(vintage, remove_existing_controls, draw_daylight_areas_for_debugging = false)
+  def addDaylightingControls(vintage, remove_existing_controls, draw_daylight_areas_for_debugging = false, force_placement, add_maps)
   
     OpenStudio::logFree(OpenStudio::Debug, "openstudio.model.Space", "******For #{self.name}, adding daylighting controls.")
 
@@ -1227,6 +1226,7 @@ class OpenStudio::Model::Space
       # Do nothing, no daylighting controls required
       OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{vintage} #{self.name}, daylighting control not required by this standard.")
       return false
+         
     
     when '90.1-2010'
       
@@ -1360,20 +1360,24 @@ class OpenStudio::Model::Space
       # Check if the primary sidelit area < 250 ft2
       if areas['primary_sidelighted_area'] == 0.0
         OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{vintage} #{self.name}, primary sidelighting control not required because primary sidelighted area = 0ft2 per 9.4.1.4.")
-        req_pri_ctrl = false
-      elsif areas['primary_sidelighted_area'] < OpenStudio.convert(250, 'ft^2', 'm^2').get
+        req_pri_ctrl = false          
+      elsif areas['primary_sidelighted_area'] < OpenStudio.convert(250, 'ft^2', 'm^2').get && !force_placement
         OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{vintage} #{self.name}, primary sidelighting control not required because primary sidelighted area < 250ft2 per 9.4.1.4.")
         req_pri_ctrl = false
+      elsif areas['primary_sidelighted_area'] < OpenStudio.convert(250, 'ft^2', 'm^2').get && force_placement
+        OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "Force option selected, adding controls despite #{vintage} #{self.name} primary sidelighted area < 250ft2.")
       end
-      
+
       # Toplighting
       # Check if the toplit area < 900 ft2
       if areas['toplighted_area'] == 0.0
         OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{vintage} #{self.name}, toplighting control not required because toplighted area = 0ft2 per 9.4.1.5.")
         req_top_ctrl = false
-      elsif areas['toplighted_area'] < OpenStudio.convert(900, 'ft^2', 'm^2').get
+      elsif areas['toplighted_area'] < OpenStudio.convert(900, 'ft^2', 'm^2').get && !force_placement
         OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "For #{vintage} #{self.name}, toplighting control not required because toplighted area < 900ft2 per 9.4.1.5.")
         req_top_ctrl = false     
+      elsif areas['toplighted_area'] < OpenStudio.convert(900, 'ft^2', 'm^2').get && force_placement
+        OpenStudio::logFree(OpenStudio::Info, "openstudio.model.Space", "Force option selected, adding controls despite #{vintage} #{self.name} toplighted area < 900ft2.")    
       end    
       
     end # End of vintage case statement
@@ -1389,10 +1393,7 @@ class OpenStudio::Model::Space
       OpenStudio::logFree(OpenStudio::Debug, "openstudio.model.Space", "For #{vintage} #{self.name}, no daylighting control is required.")
       return false
     end
-    
-    # Add an illuminance map
-    self.add_illuminance_map
-    
+        
     # Record a floor in the space for later use
     floor_surface = nil
     self.surfaces.each do |surface|
@@ -1683,6 +1684,12 @@ class OpenStudio::Model::Space
       #TODO rotate sensor to face window (only needed for glare calcs)
       zone.setPrimaryDaylightingControl(sensor_1)
       zone.setFractionofZoneControlledbyPrimaryDaylightingControl(sensor_1_frac)
+      
+      # Add an illuminance map, if requested
+    	if add_maps
+    		self.add_illuminance_map
+    	end
+
     end
     
     # Second sensor
