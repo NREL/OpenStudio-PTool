@@ -1,8 +1,9 @@
 <measure>
   <schema_version>3.0</schema_version>
   <name>add_smarter_shade</name>
-  <uid>07954d64-49ca-4091-87ff-18013930571c</uid>
-  <version_id>41639ec4-6c01-43b2-8cf0-b167d271ef05</version_id>
+  <uid>447c0040-d691-4ff1-8b79-f07acf582eaa</uid>
+  <version_id>2e8d026e-c10e-4857-b1b0-2537fa516a78</version_id>
+  <version_modified>20160608T185916Z</version_modified>
   <xml_checksum>0CDF7770</xml_checksum>
   <class_name>AddSmarterShade</class_name>
   <display_name>Add SmarterShade</display_name>
@@ -17,6 +18,40 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>facade</name>
+      <display_name>Cardinal Direction(s).</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>South</default_value>
+      <choices>
+        <choice>
+          <value>North</value>
+          <display_name>North</display_name>
+        </choice>
+        <choice>
+          <value>East</value>
+          <display_name>East</display_name>
+        </choice>
+        <choice>
+          <value>South</value>
+          <display_name>South</display_name>
+        </choice>
+        <choice>
+          <value>West</value>
+          <display_name>West</display_name>
+        </choice>
+        <choice>
+          <value>S+W</value>
+          <display_name>S+W</display_name>
+        </choice>
+        <choice>
+          <value>E+S+W</value>
+          <display_name>E+S+W</display_name>
+        </choice>
+      </choices>
     </argument>
   </arguments>
   <provenances/>
@@ -178,7 +213,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>30C18C8A</checksum>
+      <checksum>FFADCFE8</checksum>
     </file>
   </files>
 </measure>
