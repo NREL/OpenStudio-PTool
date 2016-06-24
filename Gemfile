@@ -6,4 +6,4 @@ gem 'git', require: false
 
 gem 'bcl', '~> 0.5.5'
 gem 'openstudio-aws', '~> 0.4.2'
-gem 'openstudio-analysis', '~> 0.4.4'
+gem 'openstudio-analysis', '~> 0.4.5'
