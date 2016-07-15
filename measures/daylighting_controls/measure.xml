@@ -2,7 +2,8 @@
   <schema_version>3.0</schema_version>
   <name>daylighting_controls</name>
   <uid>9cb0fb2d-d95d-400c-9833-3be2db6a75ec</uid>
-  <version_id>383ca39d-f7f7-4c62-a767-27c87dafdaba</version_id>
+  <version_id>cfba4ddd-ca70-4fd4-949d-967d5cbc36d8</version_id>
+  <version_modified>20160415T153247Z</version_modified>
   <xml_checksum>9B7BB4D8</xml_checksum>
   <class_name>DaylightingControls</class_name>
   <display_name>Daylighting Controls</display_name>
@@ -168,13 +169,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>58FDA795</checksum>
+      <checksum>C7BFE292</checksum>
     </file>
     <file>
       <filename>Standards.Space.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>BC71E5CA</checksum>
+      <checksum>AA8A437C</checksum>
     </file>
   </files>
 </measure>

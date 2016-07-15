@@ -54,7 +54,7 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
 		remove_existing_controls.setDefaultValue('false')
 		remove_existing_controls.setDescription('Remove any existing daylight controls from model')
 		args << remove_existing_controls
-		
+
     return args
   end
 
@@ -75,7 +75,7 @@ class DaylightingControls < OpenStudio::Ruleset::ModelUserScript
     end    
     
     # assign the user inputs to variables
-    force_placement = runner.getBoolArgumentValue('force_placement', user_arguments)    
+    force_placement = runner.getBoolArgumentValue('force_placement', user_arguments)
     add_maps = runner.getBoolArgumentValue('add_maps', user_arguments)
     remove_existing_controls = runner.getBoolArgumentValue('remove_existing_controls', user_arguments)
     

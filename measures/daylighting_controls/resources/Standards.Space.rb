@@ -1532,8 +1532,8 @@ class OpenStudio::Model::Space
     else
       OpenStudio::logFree(OpenStudio::Warn, "openstudio.model.Space", "Space #{space_name} is an unknown space type, assuming office and 300 Lux daylight setpoint")
       daylight_stpt_lux = 300
-    end    
-    
+    end
+   
     # Get the zone that the space is in
     zone = self.thermalZone
     if zone.empty?
